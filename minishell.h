@@ -1,6 +1,4 @@
-#pragma once
-
-#include "libft.h"
+ #include "libft/libft.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <readline/readline.h>

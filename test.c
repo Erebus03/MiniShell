@@ -95,9 +95,9 @@ int extract_quoted_string(char *input, char **result, char quote_char)
     int has_closing_quote = 0;
     
     // Find the closing quote
-    while (input[i] && input[i] != quote_char)
+    while (input[i] && input[i] != quote_char) //skip but regarde $ for expantion
         i++;
-    
+
     if (input[i] == quote_char)
     {
         has_closing_quote = 1;
@@ -185,10 +185,6 @@ int extract_special_token(char *input, char **result, int *type)
     return len;
 }
 
-/**
- * Tokenizes the input string into a list of tokens
- * Returns a linked list of tokens
- */
 t_token *tokenize_command(char *input)
 {
     t_token *tokens = NULL;
@@ -222,7 +218,7 @@ t_token *tokenize_command(char *input)
         }
         // Handle pipe and redirections
         else if (input[i] == '|' || input[i] == '<' || input[i] == '>')
-        {
+    	{
             token_len = extract_special_token(input + i, &token_value, &type);
             if (token_len == 0)
                 goto error;
@@ -265,13 +261,9 @@ t_token **split_commands(char *input)
     t_token **commands;
     int cmd_count = 1;
     int i = 0;
-    
-    // First tokenize the entire input
     tokens = tokenize_command(input);
     if (!tokens)
         return NULL;
-    
-    // Count the number of commands (separated by pipes)
     current = tokens;
     while (current)
     {
@@ -279,20 +271,15 @@ t_token **split_commands(char *input)
             cmd_count++;
         current = current->next;
     }
-    
-    // Allocate memory for the commands array (plus NULL terminator)
     commands = malloc(sizeof(t_token *) * (cmd_count + 1));
     if (!commands)
     {
         free_tokens(&tokens);
         return NULL;
     }
-    
-    // Split the tokens into commands
     current = tokens;
     commands[0] = current;
     i = 1;
-    
     while (current)
     {
         if (current->type == TOKEN_PIPE)
@@ -306,7 +293,6 @@ t_token **split_commands(char *input)
         else
             current = current->next;
     }
-    
     commands[cmd_count] = NULL;
     return commands;
 }

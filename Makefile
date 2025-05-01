@@ -1,8 +1,8 @@
 NAME = minishell
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -Ilibft
+CFLAGS =   #-Wall -Wextra -Werror
 
-SRC = main.c split_cmd.c
+SRC = main.c parsing/split_cmd.c
 OBJ = $(SRC:.c=.o)
 
 LIBFT = libft/libft.a
@@ -13,7 +13,7 @@ $(LIBFT):
 	$(MAKE) -C libft
 
 $(NAME): $(OBJ) $(LIBFT)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT) -lreadline
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
