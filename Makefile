@@ -1,8 +1,8 @@
 NAME = minishell
 CC = cc
-CFLAGS =   #-Wall -Wextra -Werror
+CFLAGS =   -Wall -Wextra -Werror
 
-SRC = main.c parsing/split_cmd.c
+SRC = main.c
 OBJ = $(SRC:.c=.o)
 
 LIBFT = libft/libft.a
