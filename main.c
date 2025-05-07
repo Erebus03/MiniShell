@@ -29,22 +29,31 @@ int validate_quotes(t_general *ctx)
     return 1;
 }
 
-char *join_key_value(const char *key, const char *value) {
-    int len = strlen(key) + strlen(value) + 2; // +1 for '=' and +1 for '\0'
-    char *result = malloc(len);
-    if (!result) return NULL;
-    ft_strcpy(result, key);
-    ft_strcat(result, "=");
-    ft_strcat(result, value);
+char *join_key_value(const char *key, const char *value)
+{
+    int keylen = ft_strlen(key);
+    int len = keylen + ft_strlen(value) + 1; // +1 for '=' and +1 for '\0'
+    char *result = malloc(len + 1);
+    if (!result)
+	return NULL;
+    ft_memcpy(result, key, keylen);
+    ft_memcpy(result + keylen, "=", 1);
+    ft_memcpy(result + keylen + 1, value, ft_strlen(value));
+    result[len] = '\0';
+
+
+    // ft_strcpy(result, key);
+    //ft_strcat(result, "=");
+    //ft_strcat(result, value);
     return result;
 }
 char	**copy_envp(t_env_var *lst)
 {
-	t_env_var *tmp;
+	t_env_var *tmp = NULL;
 	char **envp;
-	char *key;
-	char *value;
-	char *varf;
+	//char *key;
+	//char *value;
+	//char *varf;
 	int i;
 
 	i = 0;
@@ -57,8 +66,10 @@ char	**copy_envp(t_env_var *lst)
 	i = 0;
 	while (lst)
 	{
-		join_key_value(lst->key, lst->value);
+		envp[i++] = join_key_value(lst->key, lst->value);
+		lst = lst->next;
 	}
+	return envp;
 
 }
 
@@ -79,12 +90,11 @@ int main(int ac, char **av, char **envp)
   		context.input = readline("\001\033[32m\002minihell $> \001\033[0m\002");
 		if (ft_strncmp(context.input, "exit", 4) == 0)
 				exit(0);
-		if (validate_quotes(&context) == 0) // this "'"fffFFF"'" cleans to 'fffFFF'
-			printf("SYNTAX ERROR: unclosed quotes\n");
+		//if (validate_quotes(&context) == 0) // this "'"fffFFF"'" cleans to 'fffFFF'
+		//	printf("SYNTAX ERROR: unclosed quotes\n");
   	  	printf("u entered '%s'\n", context.input);
 		add_history(context.input);
 		// parse_cmd(lst, cmd);
 	}
-
 	return (0);
 }
