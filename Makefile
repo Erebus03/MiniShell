@@ -2,7 +2,7 @@ NAME = minishell
 CC = cc
 CFLAGS =   -Wall -Wextra -Werror
 
-SRC = main.c
+SRC = main.c utils/env_vars.c
 OBJ = $(SRC:.c=.o)
 
 LIBFT = libft/libft.a

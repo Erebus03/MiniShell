@@ -1,37 +1,12 @@
- #include "libft/libft.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-
-
-// typedef struct s_m
-// {
-// 	t_cmd *cmd;
-// 	char **env;
-// 	int exit_status;
-// }	t_m;
-
-// typedef struct s_cmd
-// {
-// 	char **cmd;
-// 	t_red *red;
-// 	t_cmd *next;
-// }	t_cmd;
-
-// typedef struct s_red
-// {
-// 	char *str;
-// 	int type;
-// 	t_red *next;
-// }	t_red;
-// 
+#include "libft/libft.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
 #include <stdbool.h>
 #include <unistd.h>
+#include <readline/readline.h>
+#include <readline/history.h>
 
 typedef enum e_error_code
 {
@@ -85,9 +60,12 @@ typedef struct s_command
 
 typedef struct s_general
 {
-    char            *input;      // input string
-    char            **envp;      // environment variables
-    t_error_code    error;       // last error code
-    char            *error_msg;  // detailed error message
-    int             exit_status; // last command exit status
+    char            *input;		// input string
+    t_env_var		*envlst;	// environment variables
+    char			**envarr;	// environment variables
+    t_error_code    error;		// last error code
+    char            *error_msg;	// detailed error message
+    int             exit_status;// last command exit status
 }	t_general;
+
+t_env_var* list_env_vars(t_env_var **envlst, char **envp);

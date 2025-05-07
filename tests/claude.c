@@ -247,46 +247,30 @@ void free_redirs(t_redir **redirs)
     }
     *redirs = NULL;
 }
-
-/**
- * Frees all commands in the list and their resources
- */
 void free_commands(t_command **commands)
 {
     t_command *current;
     t_command *next;
     int i;
-    
     if (!commands || !*commands)
         return;
     current = *commands;
     while (current)
     {
         next = current->next;
-        
-        // Free argv array
         if (current->argv)
         {
             for (i = 0; i < current->argc; i++)
                 free(current->argv[i]);
             free(current->argv);
         }
-        
-        // Free redirections
         free_redirs(&current->redirs);
-        
-        // Free tokens
         free_tokens(&current->tokens);
-        
         free(current);
         current = next;
     }
     *commands = NULL;
 }
-
-/**
- * Set error information in the parser context
- */
 void set_error(t_parser_ctx *ctx, t_error_code code, char *msg)
 {
     ctx->error = code;
@@ -295,26 +279,16 @@ void set_error(t_parser_ctx *ctx, t_error_code code, char *msg)
     ctx->error_msg = strdup(msg);
 }
 
-/**
- * Checks if character is whitespace
- */
 bool is_whitespace(char c)
 {
     return (c == ' ' || c == '\t' || c == '\n');
 }
 
-/**
- * Checks if character is an operator
- */
 bool is_operator(char c)
 {
     return (c == '|' || c == '<' || c == '>');
 }
 
-/**
- * Handles quoted strings (both single and double quotes)
- * Returns the number of characters processed
- */
 int handle_quotes(t_parser_ctx *ctx, int i, char **value)
 {
     int start = i;
