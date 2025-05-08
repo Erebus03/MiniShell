@@ -41,37 +41,37 @@ char *join_key_value(const char *key, const char *value)
     ft_memcpy(result + keylen + 1, value, ft_strlen(value));
     result[len] = '\0';
 
-
-    // ft_strcpy(result, key);
-    //ft_strcat(result, "=");
-    //ft_strcat(result, value);
     return result;
 }
-char	**copy_envp(t_env_var *lst)
+void	copy_envp(t_general *ctx)
 {
 	t_env_var *tmp = NULL;
-	char **envp;
 	//char *key;
 	//char *value;
 	//char *varf;
 	int i;
 
 	i = 0;
+	tmp = ctx->envlst;
+
+	//get lst size
 	while (tmp)
 	{
 		i++;
 		tmp = tmp->next;
 	}
-	envp = malloc((i + 1) * sizeof(char *));
+	//allocate for the array
+	ctx->envarr = malloc((i + 1) * sizeof(char *));
+	
+	
 	i = 0;
-	while (lst)
+	tmp = ctx->envlst;
+	//for every variable, join key + '=' + value 
+	while (tmp)
 	{
-		envp[i++] = join_key_value(lst->key, lst->value);
-		lst = lst->next;
+		ctx->envarr[i++] = join_key_value(tmp->key, tmp->value);
+		tmp = tmp->next;
 	}
-
-	return envp;
-
 }
 
 int main(int ac, char **av, char **envp)
@@ -81,6 +81,7 @@ int main(int ac, char **av, char **envp)
 	t_general context;
 
 	context.envlst = NULL;
+	context.envarr = NULL;
 	if (ac != 1)
 	{
 		printf("$> ./Your Program\n");
@@ -94,6 +95,13 @@ int main(int ac, char **av, char **envp)
 		tmp = tmp->next;
 	}
 
+	// function to make a 2D array of envp list, store in context.envarr
+	copy_envp(&context);
+	for (int i = 0; context.envarr[i]; i++) {
+		printf("var(%d) = %s\n", i, context.envarr[i]);
+	}
+	write(1, "\nizfinish\n", 10);
+	
 	while(37)
 	{
   		context.input = readline("\001\033[32m\002minihell $> \001\033[0m\002");
