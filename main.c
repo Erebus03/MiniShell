@@ -69,6 +69,7 @@ char	**copy_envp(t_env_var *lst)
 		envp[i++] = join_key_value(lst->key, lst->value);
 		lst = lst->next;
 	}
+
 	return envp;
 
 }
@@ -79,12 +80,20 @@ int main(int ac, char **av, char **envp)
 	(void)av;
 	t_general context;
 
+	context.envlst = NULL;
 	if (ac != 1)
 	{
 		printf("$> ./Your Program\n");
 		exit(1);
 	}
-	context.envlst = list_env_vars(&context.envlst, envp);
+	list_env_vars(&context.envlst, envp);
+
+	t_env_var *tmp = context.envlst;
+	while (tmp) {
+		printf("(%p) [%s=%s]\n", tmp, tmp->key, tmp->value);
+		tmp = tmp->next;
+	}
+
 	while(37)
 	{
   		context.input = readline("\001\033[32m\002minihell $> \001\033[0m\002");

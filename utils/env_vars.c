@@ -13,33 +13,31 @@ t_env_var *new_var(char *key, char *value)
 	return env;
 }
 
-void    add_variable(t_env_var **lst, t_env_var *new)
+// Add a variable to the environment list
+void add_variable(t_env_var **lst, t_env_var *new_var)
 {
-		t_env_var *tmp;
-	
-        if (!lst || !new)
-                return ;
-        if (!*lst)
-        {
-			// printf("first to be appended (%s=%s)[%p]\n", new->key, new->value, new);
-			*lst = new;
-			return ;
-        }
-    	tmp = *lst;
-		// printf ("staring with %p(%s=%s)\n", tmp, tmp->key, tmp->value);
-    	int i = 0;
-		while (tmp->next)
-		{
-			// printf("passing (%%s=%%s)[%p]\n", tmp); //tmp->key, tmp->value, tmp);
-        	tmp = tmp->next;
-			i++;
-		}
-		// printf("skipped %d vars\nappended %s=%s\nto %s=%s\n",
-		// 	i, new->key, new->value, tmp->key, tmp->value);
-        tmp->next = new;
+    t_env_var *tmp;
+
+    if (!lst || !new_var) {
+        return;
+    }
+    
+    if (*lst == NULL) {
+        printf("List is empty, setting head to %p\n", (void*)new_var);
+        *lst = new_var;
+        return;
+    }
+    
+    tmp = *lst;
+    while (tmp->next) {
+        tmp = tmp->next;
+    }
+    
+    printf("Adding %p at end of list after %p\n", (void*)new_var, (void*)tmp);
+    tmp->next = new_var;
 }
 
-t_env_var* list_env_vars(t_env_var **envlst, char **envp)
+void	list_env_vars(t_env_var **envlst, char **envp)
 {
 	int (i), (j), (val_len);
 	char *key;
@@ -47,6 +45,7 @@ t_env_var* list_env_vars(t_env_var **envlst, char **envp)
 	t_env_var* variable;
 
 	i = 0;
+
 	while (envp[i] != NULL)
 	{
 		j = 0;
@@ -70,10 +69,12 @@ t_env_var* list_env_vars(t_env_var **envlst, char **envp)
 		// printf("%s<-\n", envp[i]);
 		// printf("kkk=%s\nvvv=%s<-\n", key, value);
 		// printf("key=%s\nval=%s<-\n", variable->key, variable->value);
+		// printf("\njj\n%p\n%p\n", envlst, variable);
 		
 		add_variable(envlst, variable);
 		// write(1, "added one new variable\n\n", 25);
 		i++;
 	}
-	return NULL;
+	// write(1, "jjjjd one new variable\n\n", 25);
+	// printf("lst(%p) head(%p)\n", envlst, *envlst);
 }

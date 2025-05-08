@@ -68,4 +68,4 @@ typedef struct s_general
     int             exit_status;// last command exit status
 }	t_general;
 
-t_env_var* list_env_vars(t_env_var **envlst, char **envp);
+void list_env_vars(t_env_var **envlst, char **envp);
