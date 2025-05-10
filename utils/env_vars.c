@@ -1,5 +1,20 @@
 #include "../minishell.h"
 
+/* didnt work it yet */
+char *get_env_value(char *var_name, char **envp)
+{
+    int i = 0;
+    int var_len = ft_strlen(var_name);
+    
+    while (envp[i])
+    {
+        if (strncmp(envp[i], var_name, var_len) == 0 && envp[i][var_len] == '=')
+            return strdup(envp[i] + var_len + 1);
+        i++;
+    }
+    return strdup("");	// change later
+}
+
 t_env_var *new_var(char *key, char *value)
 {
 	t_env_var* env;
@@ -11,6 +26,51 @@ t_env_var *new_var(char *key, char *value)
 	env->value = value;
 	env->next = NULL;
 	return env;
+}
+
+char *join_key_value(const char *key, const char *value)
+{
+    int keylen = ft_strlen(key);
+    int len = keylen + ft_strlen(value) + 1;// +1 for '='
+    char *result = malloc(len + 1);
+    if (!result)
+		return NULL;
+    if (!ft_memcpy(result, key, keylen))
+		return NULL;
+    if (!ft_memcpy(result + keylen, "=", 1))
+		return NULL;
+    if (!ft_memcpy(result + keylen + 1, value, ft_strlen(value)))
+		return NULL;
+    result[len] = '\0';
+
+    return result;
+}
+void	copy_envp(t_general *ctx)
+{
+	t_env_var *tmp = NULL;
+	int i;
+
+	i = 0;
+	tmp = ctx->envlst;
+
+	//get lst size
+	while (tmp)
+	{
+		i++;
+		tmp = tmp->next;
+	}
+	//allocate for the array
+	ctx->envarr = malloc((i + 1) * sizeof(char *));
+	
+	
+	i = 0;
+	tmp = ctx->envlst;
+	//for every variable, join key + '=' + value 
+	while (tmp)
+	{
+		ctx->envarr[i++] = join_key_value(tmp->key, tmp->value);
+		tmp = tmp->next;
+	}
 }
 
 // Add a variable to the environment list

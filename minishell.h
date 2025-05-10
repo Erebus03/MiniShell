@@ -31,7 +31,7 @@ typedef struct s_token
 {
     char            *value;      // token content
     t_token_type    type;        // token type
-    bool            is_expanded; // was this token expanded (from variable)
+    bool            t_general; // was this token expanded (from variable)
     struct s_token  *next;       // next token in the list
 }	t_token;
 
@@ -69,3 +69,30 @@ typedef struct s_general
 }	t_general;
 
 void list_env_vars(t_env_var **envlst, char **envp);
+void	copy_envp(t_general *ctx);
+void	parse_command(t_general *ctx);
+
+
+
+t_token *new_token(char *value, t_token_type type, bool t_general);
+void    add_token(t_token **tokens, t_token *new_token);
+void    free_tokens(t_token **tokens);
+t_command *new_command(void);
+void    add_command(t_command **commands, t_command *new_cmd);
+void    free_commands(t_command **commands);
+t_redir *new_redir(t_token_type type, char *file);
+void    add_redir(t_redir **redirs, t_redir *new_redir);
+void    free_redirs(t_redir **redirs);
+bool    is_whitespace(char c);
+bool    is_operator(char c);
+int     handle_quotes(t_general *ctx, int i, char **value);
+int     handle_word(t_general *ctx, int i, char **value);
+int     handle_operator(t_general *ctx, int i, t_token_type *type, char **value);
+int     handle_dollar(t_general *ctx, int i, char **value);
+t_token *tokenize_input(t_general *ctx);
+t_command *parse_commands(t_general *ctx);
+t_error_code process_tokens(t_command *cmd);
+void    print_tokens(t_token *tokens);
+void    print_commands(t_command *commands);
+void    set_error(t_general *ctx, t_error_code code, char *msg);
+char    *get_env_value(char *var_name, char **envp);

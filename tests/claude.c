@@ -37,7 +37,7 @@ typedef struct s_token
 {
     char            *value;      // token content
     t_token_type    type;        // token type
-    bool            is_expanded; // was this token expanded (from variable)
+    bool            t_general; // was this token expanded (from variable)
     struct s_token  *next;       // next token in the list
 } t_token;
 
@@ -74,10 +74,10 @@ typedef struct s_parser_ctx
     t_error_code    error;       // last error code
     char            *error_msg;  // detailed error message
     int             exit_status; // last command exit status
-} t_parser_ctx;
+} t_general;
 
 /* Forward declarations */
-t_token *new_token(char *value, t_token_type type, bool is_expanded);
+t_token *new_token(char *value, t_token_type type, bool t_general);
 void    add_token(t_token **tokens, t_token *new_token);
 void    free_tokens(t_token **tokens);
 t_command *new_command(void);
@@ -88,22 +88,22 @@ void    add_redir(t_redir **redirs, t_redir *new_redir);
 void    free_redirs(t_redir **redirs);
 bool    is_whitespace(char c);
 bool    is_operator(char c);
-int     handle_quotes(t_parser_ctx *ctx, int i, char **value);
-int     handle_word(t_parser_ctx *ctx, int i, char **value);
-int     handle_operator(t_parser_ctx *ctx, int i, t_token_type *type, char **value);
-int     handle_dollar(t_parser_ctx *ctx, int i, char **value);
-t_token *tokenize_input(t_parser_ctx *ctx);
-t_command *parse_commands(t_parser_ctx *ctx);
+int     handle_quotes(t_general *ctx, int i, char **value);
+int     handle_word(t_general *ctx, int i, char **value);
+int     handle_operator(t_general *ctx, int i, t_token_type *type, char **value);
+int     handle_dollar(t_general *ctx, int i, char **value);
+t_token *tokenize_input(t_general *ctx);
+t_command *parse_commands(t_general *ctx);
 t_error_code process_tokens(t_command *cmd);
 void    print_tokens(t_token *tokens);
 void    print_commands(t_command *commands);
-void    set_error(t_parser_ctx *ctx, t_error_code code, char *msg);
+void    set_error(t_general *ctx, t_error_code code, char *msg);
 char    *get_env_value(char *var_name, char **envp);
 
 /**
  * Creates a new token
  */
-t_token *new_token(char *value, t_token_type type, bool is_expanded)
+t_token *new_token(char *value, t_token_type type, bool t_general)
 {
     t_token *token;
     
@@ -112,7 +112,7 @@ t_token *new_token(char *value, t_token_type type, bool is_expanded)
         return NULL;
     token->value = value;
     token->type = type;
-    token->is_expanded = is_expanded;
+    token->t_general = t_general;
     token->next = NULL;
     return token;
 }
@@ -271,7 +271,7 @@ void free_commands(t_command **commands)
     }
     *commands = NULL;
 }
-void set_error(t_parser_ctx *ctx, t_error_code code, char *msg)
+void set_error(t_general *ctx, t_error_code code, char *msg)
 {
     ctx->error = code;
     if (ctx->error_msg)
@@ -289,7 +289,7 @@ bool is_operator(char c)
     return (c == '|' || c == '<' || c == '>');
 }
 
-int handle_quotes(t_parser_ctx *ctx, int i, char **value)
+int handle_quotes(t_general *ctx, int i, char **value)
 {
     int start = i;
     char quote_char = ctx->input[i];
@@ -322,14 +322,14 @@ int handle_quotes(t_parser_ctx *ctx, int i, char **value)
     result[j] = '\0';
     
     *value = result;
-    return i + 1 - start + j; // Return total length processed
+    return i + 2 - start + j; // Return total length processed
 }
 
 /**
  * Handles word tokens (non-whitespace, non-operator sequences)
  * Returns the number of characters processed
  */
-int handle_word(t_parser_ctx *ctx, int i, char **value)
+int handle_word(t_general *ctx, int i, char **value)
 {
     int start = i;
     char *result;
@@ -360,7 +360,7 @@ int handle_word(t_parser_ctx *ctx, int i, char **value)
  * Handles operator tokens (|, <, >, >>, <<)
  * Returns the number of characters processed
  */
-int handle_operator(t_parser_ctx *ctx, int i, t_token_type *type, char **value)
+int handle_operator(t_general *ctx, int i, t_token_type *type, char **value)
 {
     int len = 1;
     char *result;
@@ -431,7 +431,7 @@ char *get_env_value(char *var_name, char **envp)
  * Handles variable expansion ($VAR)
  * Returns the number of characters processed from input
  */
-int handle_dollar(t_parser_ctx *ctx, int i, char **value)
+int handle_dollar(t_general *ctx, int i, char **value)
 {
     int start = i;
     char var_name[256] = {0};
@@ -469,7 +469,7 @@ int handle_dollar(t_parser_ctx *ctx, int i, char **value)
 /**
  * Tokenizes the input string into tokens
  */
-t_token *tokenize_input(t_parser_ctx *ctx)
+t_token *tokenize_input(t_general *ctx)
 {
     t_token *tokens = NULL;
     t_token *new;
@@ -477,7 +477,7 @@ t_token *tokenize_input(t_parser_ctx *ctx)
     t_token_type token_type;
     int i = 0;
     int len;
-    bool is_expanded;
+    bool t_general;
     
     while (ctx->input[i])
     {
@@ -488,7 +488,7 @@ t_token *tokenize_input(t_parser_ctx *ctx)
         if (!ctx->input[i])
             break;
         
-        is_expanded = false;
+        t_general = false;
         
         // Handle quotes
         if (ctx->input[i] == '"' || ctx->input[i] == '\'')
@@ -617,20 +617,17 @@ t_error_code process_tokens(t_command *cmd)
                 next = current->next;
             }
         }
-        
         current = next;
     }
-    
     cmd->argv[arg_count] = NULL;
-    cmd->argc = arg_count;
-    
     return SUCCESS;
 }
 
 /**
  * Split tokens into commands based on pipe operators
  */
-t_command *parse_commands(t_parser_ctx *ctx)
+
+t_command	*parse_commands(t_general *ctx)
 {
     t_token *all_tokens = tokenize_input(ctx);
     t_command *commands = NULL;
@@ -732,7 +729,7 @@ void print_tokens(t_token *tokens)
         printf("Token: [%s] (type: %s, expanded: %s)\n", 
                current->value, 
                type_str[current->type], 
-               current->is_expanded ? "yes" : "no");
+               current->t_general ? "yes" : "no");
         current = current->next;
     }
 }
@@ -793,7 +790,7 @@ void print_commands(t_command *commands)
 /**
  * Initialize parser context
  */
-void init_parser_ctx(t_parser_ctx *ctx, char *input, char **envp, int exit_status)
+void init_general(t_general *ctx, char *input, char **envp, int exit_status)
 {
     ctx->input = input;
     ctx->envp = envp;
@@ -805,7 +802,7 @@ void init_parser_ctx(t_parser_ctx *ctx, char *input, char **envp, int exit_statu
 /**
  * Free parser context resources
  */
-void free_parser_ctx(t_parser_ctx *ctx)
+void free_parser_ctx(t_general *ctx)
 {
     if (ctx->error_msg)
         free(ctx->error_msg);
@@ -815,17 +812,18 @@ void free_parser_ctx(t_parser_ctx *ctx)
 /**
  * Example usage
  */
+
 int main(int argc, char **argv, char **envp)
 {
     char input[1024];
     t_command *commands;
-    t_parser_ctx ctx;
+    t_general ctx;
     int exit_status = 0;
     
     while (1)
     {
-        printf("minishell> ");
-        if (fgets(input, 1024, stdin) == NULL)
+        printf("claudeshell> ");
+        if (fgets(input, 1024, stdin) == NULL)		//	readline()
             break;
         
         // Remove trailing newline
@@ -836,7 +834,7 @@ int main(int argc, char **argv, char **envp)
             break;
         
         // Initialize parser context
-        init_parser_ctx(&ctx, input, envp, exit_status);
+        init_general(&ctx, input, envp, exit_status);
         
         // Parse commands
         commands = parse_commands(&ctx);
@@ -852,10 +850,8 @@ int main(int argc, char **argv, char **envp)
             print_commands(commands);
             free_commands(&commands);
         }
-        
         // Free parser context resources
         free_parser_ctx(&ctx);
     }
-    
     return 0;
 }
