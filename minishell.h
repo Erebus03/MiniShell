@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
+/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:58 by araji             #+#    #+#             */
-/*   Updated: 2025/05/11 10:57:58 by araji            ###   ########.fr       */
+/*   Updated: 2025/05/11 14:44:07 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,3 +108,4 @@ void    print_tokens(t_token *tokens);
 void    print_commands(t_command *commands);
 void    set_error(t_general *ctx, t_error_code code, char *msg);
 char    *get_env_value(char *var_name, char **envp);
+t_env_var	*new_var(char *key, char *value);
