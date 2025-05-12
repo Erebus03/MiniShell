@@ -122,8 +122,8 @@ int	handle_dollar(t_general *ctx, int i, char **value)
 	char	var_name[256];
 	char	exit_str[12];
 
-	ft_memset(var_name, 0, sizeof(var_name));
 	int (start), (var_len);
+	ft_memset(var_name, 0, sizeof(var_name));
 	var_len = 0;
 	start = i++; //skipped $ char
 	if (ctx->input[++i] == '?') // $?

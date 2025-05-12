@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_vars.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:58:07 by araji             #+#    #+#             */
-/*   Updated: 2025/05/11 14:59:11 by araji            ###   ########.fr       */
+/*   Updated: 2025/05/11 20:58:59 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*get_env_value(char *var_name, char **envp)
 	while (envp[i])
 	{
 		if (ft_strncmp(envp[i], var_name, var_len) == 0
-		&& envp[i][var_len] == '=')
+			&& envp[i][var_len] == '=')
 			return (ft_strdup(envp[i] + var_len + 1));
 		i++;
 	}

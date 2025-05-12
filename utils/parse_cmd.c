@@ -15,7 +15,7 @@
 /**
  * Split tokens into commands based on pipe operators
  */
-t_command	*parse_commands(t_general *ctx)
+t_command	*parse_command(t_general *ctx)
 {
 	t_token *(all_tokens), *(cmd_start), *(current), *(prev);
 	t_command *(commands), *(new_cmd);
@@ -78,19 +78,19 @@ t_command	*parse_commands(t_general *ctx)
 	return (commands);
 }
 
-void	parse_command(t_general *ctx)
-{
-	char	*type_str[] = {"WORD", "PIPE", "REDIR_IN",
-		"REDIR_OUT", "REDIR_APPEND", "HEREDOC"};
+// void	parse_command(t_general *ctx)
+// {
+// 	char	*type_str[] = {"WORD", "PIPE", "REDIR_IN",
+// 		"REDIR_OUT", "REDIR_APPEND", "HEREDOC"};
 
-	t_token *(all_tokens), *(current);
-	all_tokens = tokenize_input(ctx);
-	current = all_tokens;
-	while (current)
-	{
-		printf("Token: [%s](type: %s))\n",
-			current->value,
-			type_str[current->type]);
-		current = current->next;
-	}
-}
+// 	t_token *(all_tokens), *(current);
+// 	all_tokens = tokenize_input(ctx);
+// 	current = all_tokens;
+// 	while (current)
+// 	{
+// 		printf("Token: [%s](type: %s))\n",
+// 			current->value,
+// 			type_str[current->type]);
+// 		current = current->next;
+// 	}
+// }

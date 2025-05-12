@@ -15,17 +15,18 @@
 /**
  * Print all tokens in a command for debugging
  */
-void print_tokens(t_token *tokens)
+void	print_tokens(t_token *tokens)
 {
 	t_token	*current;
-	char	*type_str[] = {"WORD", "PIPE", "REDIR_IN", "REDIR_OUT", "REDIR_APPEND", "HEREDOC"};
+	char	*type_str[] = {"WORD", "PIPE", "REDIR_IN",
+		"REDIR_OUT", "REDIR_APPEND", "HEREDOC"};
 
 	current = tokens;
 	while (current)
 	{
-		printf("Token: [%s] (%s)\n", 
-				current->value, 
-				type_str[current->type]);
+		printf("Token: [%s] (%s)\n",
+			current->value,
+			type_str[current->type]);
 		current = current->next;
 	}
 }
@@ -36,13 +37,15 @@ void print_tokens(t_token *tokens)
 void	print_redirections(t_redir *redirs)
 {
 	t_redir	*current;
-	char	*type_str[] = {"WORD", "PIPE", "REDIR_IN", "REDIR_OUT", "REDIR_APPEND", "HEREDOC"};
+	char	*type_str[] = {"WORD", "PIPE", "REDIR_IN",
+		"REDIR_OUT", "REDIR_APPEND", "HEREDOC"};
+
 	current = redirs;
 	while (current)
 	{
-		printf("  Redirection: type=%s, file=%s\n", 
-				type_str[current->type], 
-				current->file);
+		printf("  Redirection: type=%s, file=%s\n",
+			type_str[current->type],
+			current->file);
 		current = current->next;
 	}
 }
@@ -72,4 +75,3 @@ void print_commands(t_command *commands)
 		current = current->next;
 	}
 }
-
