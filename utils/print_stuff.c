@@ -55,13 +55,14 @@ void	print_redirections(t_redir *redirs)
  */
 void print_commands(t_command *commands)
 {
+	// printf("commands(%p)[%s]\n", commands, commands->cmd[1]);
 	int i = 1;
 	t_command *current = commands;
 	int j;
 	while (current)
 	{
 		printf("Command %d:\n", i++);
-		for (j = 0; current->cmd != NULL; j++)
+		for (j = 0; current->cmd[j] != NULL; j++)
 			printf(" [%s]", current->cmd[j]);
 		printf("\n");
 		if (current->redirs)
@@ -69,7 +70,7 @@ void print_commands(t_command *commands)
 			printf("  Redirections:\n");
 			print_redirections(current->redirs);
 		}
-		printf("  Original Tokens:\n");
+		printf("\nOriginal Tokens:\n");
 		print_tokens(current->tokens);
 		printf("\n");
 		current = current->next;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
+/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:58 by araji             #+#    #+#             */
-/*   Updated: 2025/05/11 21:04:57 by araji            ###   ########.fr       */
+/*   Updated: 2025/05/13 15:48:04 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void			free_redirs(t_redir **redirs);
 void			free_commands(t_command **commands);
 void			list_env_vars(t_env_var **envlst, char **envp);
 void			copy_envp(t_general *ctx);
-char			*get_env_value(char *var_name, char **envp);
+char			*get_env_value(char *var_name, t_env_var *lst);
 t_command		*parse_command(t_general *ctx);
 t_token			*tokenize_input(t_general *ctx);
 t_error_code	process_tokens(t_command *cmd);

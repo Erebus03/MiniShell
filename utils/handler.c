@@ -12,7 +12,7 @@
 
 #include "../minishell.h"
 
-int	handle_quotes(t_general *ctx, int i, char **value)
+int	handle_quotes_mine(t_general *ctx, int i, char **value)
 {
 	char (quote_char);
 	char *(result);
@@ -126,7 +126,9 @@ int	handle_dollar(t_general *ctx, int i, char **value)
 	ft_memset(var_name, 0, sizeof(var_name));
 	var_len = 0;
 	start = i++; //skipped $ char
-	if (ctx->input[++i] == '?') // $?
+
+	// printf("\n");
+	if (ctx->input[i] == '?') // $?
 	{
 		snprintf(exit_str, sizeof(exit_str), "%d", ctx->exit_status);
 		*value = strdup(exit_str);
@@ -140,8 +142,88 @@ int	handle_dollar(t_general *ctx, int i, char **value)
 	}
 	var_name[var_len] = '\0';
 	if (var_len > 0)
-		*value = get_env_value(var_name, ctx->envarr);
+		*value = get_env_value(var_name, ctx->envlst);
 	else
-		*value = strdup("$"); // Just $ without variable name
+		*value = ft_strdup("$"); // Just $ without variable name
 	return (i - start);
+}
+
+int handle_quotes_claude(t_general *ctx, int i, char **value)
+{
+    char quote_char;
+    char *result;
+    char *temp_value;
+    int j, start, processed;
+    int result_size;
+    
+    quote_char = ctx->input[i];
+    start = i;
+    i++;
+
+    // First pass: calculate required size and check for unclosed quotes
+    result_size = 0;
+    j = i;
+    while (ctx->input[j] && ctx->input[j] != quote_char)
+    {
+        if (quote_char == '"' && ctx->input[j] == '$')
+        {
+            // Skip the environment variable for now, just counting
+            processed = handle_dollar(ctx, j, &temp_value);
+            if (processed <= 0)
+                return (-1);
+            if (temp_value)
+            {
+                result_size += strlen(temp_value);
+                free(temp_value); // Free temporary value
+            }
+            j += processed;
+        }
+        else
+        {
+            result_size++;
+            j++;
+        }
+    }
+    
+    if (!ctx->input[j])
+    {
+        set_error(ctx, ERROR_QUOTES, "Unclosed quote");
+        return (-1);
+    }
+    
+    // Allocate space for the result
+    result = malloc(result_size + 1); // +1 for null terminator
+    if (!result) //cleanup()
+        return (-1);
+    
+    // Second pass: actually build the string
+    j = 0;
+    while (ctx->input[i] && ctx->input[i] != quote_char)
+    {
+        if (quote_char == '"' && ctx->input[i] == '$')
+        {
+            processed = handle_dollar(ctx, i, &temp_value);
+            if (processed <= 0)
+            {
+                free(result);
+                return (-1);
+            }
+            if (temp_value)
+            {
+                strcpy(result + j, temp_value);
+                j += strlen(temp_value);
+                free(temp_value);
+            }
+            i += processed;
+        }
+        else
+        {
+            result[j++] = ctx->input[i++];
+        }
+    }
+    
+    result[j] = '\0';
+    *value = result;
+    
+    return (i + 1 - start); // Return total length processed including the closing quote
 }

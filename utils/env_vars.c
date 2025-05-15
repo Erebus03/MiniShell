@@ -3,27 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   env_vars.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
+/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:58:07 by araji             #+#    #+#             */
-/*   Updated: 2025/05/11 20:58:59 by araji            ###   ########.fr       */
+/*   Updated: 2025/05/13 15:53:19 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 /* didnt work with it yet */
-char	*get_env_value(char *var_name, char **envp)
+char	*get_env_value(char *var_name, t_env_var *lst)
 {
-	int (i), (var_len);
-	i = 0;
+	t_env_var *(tmp);
+	int (var_len);
 	var_len = ft_strlen(var_name);
-	while (envp[i])
+	tmp = lst;
+	while (tmp)
 	{
-		if (ft_strncmp(envp[i], var_name, var_len) == 0
-			&& envp[i][var_len] == '=')
-			return (ft_strdup(envp[i] + var_len + 1));
-		i++;
+		if (ft_strncmp(tmp->key, var_name, var_len) == 0)
+			return (ft_strdup(tmp->value));
+		tmp = tmp->next;
 	}
 	return (ft_strdup("")); // change later
 }

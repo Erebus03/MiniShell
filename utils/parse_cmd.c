@@ -75,6 +75,7 @@ t_command	*parse_command(t_general *ctx)
 		}
 		add_command(&commands, new_cmd);
 	}
+	print_commands(commands);
 	return (commands);
 }
 

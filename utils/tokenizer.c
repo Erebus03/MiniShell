@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokinizer.c                                        :+:      :+:    :+:   */
+/*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 15:46:34 by araji             #+#    #+#             */
-/*   Updated: 2025/05/11 15:47:42 by araji            ###   ########.fr       */
+/*   Updated: 2025/05/13 16:56:19 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ t_token	*tokenize_input(t_general *ctx)
 		else if (ctx->input[i] == '$')
 		{
 			len = handle_dollar(ctx, i, &token_value);
+			
 			if (len < 0)
 				return (NULL);// cleanp()
 			new = new_token(token_value, TOKEN_WORD, true);
