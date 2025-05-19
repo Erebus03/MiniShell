@@ -29,3 +29,21 @@ bool	is_operator(char c)
 {
 	return (c == '|' || c == '<' || c == '>');
 }
+
+bool	is_quote(char c)
+{
+	return (c == '"' || c == '\'');
+}
+
+int	tokens_size(t_token *lst)
+{
+	int	i;
+
+	i = 0;
+	while (lst != NULL)
+	{
+		i++;
+		lst = lst->next;
+	}
+	return (i);
+}

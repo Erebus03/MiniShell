@@ -26,6 +26,8 @@ t_command	*parse_command(t_general *ctx)
 	prev = NULL;
 	if (!all_tokens)
 		return (NULL);
+	// printf("\n\n*****************************\n\n");
+  	print_tokens(all_tokens);
 	while (current)
 	{
 		if (current->type == TOKEN_PIPE)
@@ -75,7 +77,8 @@ t_command	*parse_command(t_general *ctx)
 		}
 		add_command(&commands, new_cmd);
 	}
-	print_commands(commands);
+	// printf("\n\n*****************************\n\n");
+	// print_commands(commands);
 	return (commands);
 }
 

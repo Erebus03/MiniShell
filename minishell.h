@@ -6,7 +6,7 @@
 /*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:58 by araji             #+#    #+#             */
-/*   Updated: 2025/05/13 15:48:04 by araji            ###   ########.fr       */
+/*   Updated: 2025/05/19 20:00:33 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ typedef struct s_token
 {
     char            *value;		// token content
     t_token_type    type;		// token type
-    bool            t_general;	// was this token expanded (from variable)
+    bool            expanded;	// was this token expanded (from variable)
     struct s_token  *next;		// next token in the list
 }	t_token;
 
@@ -81,7 +81,7 @@ typedef struct s_general
 }	t_general;
 
 t_redir			*new_redir(t_token_type type, char *file);
-t_token			*new_token(char *value, t_token_type type, bool t_general);
+t_token			*new_token(char *value, t_token_type type, bool expanded);
 t_command		*new_command(void);
 t_env_var		*new_var(char *key, char *value);
 void			add_token(t_token **tokens, t_token *new_token);
@@ -104,4 +104,9 @@ void			print_tokens(t_token *tokens);
 void			print_commands(t_command *commands);
 bool			is_whitespace(char c);
 bool			is_operator(char c);
+bool			is_quote(char c);
 void			set_error(t_general *ctx, t_error_code code, char *msg);
+
+
+void			join_tokens(t_token *tokens, t_token *new, int);
+int				tokens_size(t_token *lst);
