@@ -12,9 +12,6 @@
 
 #include "../minishell.h"
 
-/**
- * Adds a token to the end of the token list
- */
 void	add_token(t_token **tokens, t_token *new_token)
 {
 	t_token	*current;
@@ -30,9 +27,6 @@ void	add_token(t_token **tokens, t_token *new_token)
 	current->next = new_token;
 }
 
-/**
- * Adds a command to the end of the command list
- */
 void	add_command(t_command **commands, t_command *new_cmd)
 {
 	t_command	*current;
@@ -48,9 +42,6 @@ void	add_command(t_command **commands, t_command *new_cmd)
 	current->next = new_cmd;
 }
 
-/**
- * Adds a redirection to the end of the redirection list
- */
 void	add_redir(t_redir **redirs, t_redir *new_redir)
 {
 	t_redir	*current;

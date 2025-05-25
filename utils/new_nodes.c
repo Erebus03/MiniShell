@@ -12,10 +12,7 @@
 
 #include "../minishell.h"
 
-/**
- * Creates a new token
- */
-t_token	*new_token(char *value, t_token_type type, bool t_general)
+t_token	*new_token(char *value, t_token_type type, bool expanded)
 {
 	t_token	*token;
 
@@ -24,14 +21,11 @@ t_token	*new_token(char *value, t_token_type type, bool t_general)
 		return (NULL);
 	token->value = value;
 	token->type = type;
-	token->t_general = t_general;
+	token->expanded = expanded;
 	token->next = NULL;
 	return (token);
 }
 
-/**
- * Creates a new command
- */
 t_command	*new_command(void)
 {
 	t_command	*cmd;
@@ -46,9 +40,6 @@ t_command	*new_command(void)
 	return (cmd);
 }
 
-/**
- * Creates a new redirection
- */
 t_redir	*new_redir(t_token_type type, char *file)
 {
 	t_redir	*redir;

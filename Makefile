@@ -4,7 +4,7 @@ CFLAGS =   -Wall -Wextra -Werror
 
 SRC = main.c utils/env_vars.c utils/parse_cmd.c utils/add_nodes.c utils/free_nodes.c utils/handler.c \
 	utils/mini_funcs.c utils/new_nodes.c utils/print_stuff.c utils/process_tokens.c utils/tokenizer.c \
-	utils/handel_quotes.c
+	utils/expantion.c
 OBJ = $(SRC:.c=.o)
 
 LIBFT = libft/libft.a

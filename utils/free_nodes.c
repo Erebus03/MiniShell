@@ -40,9 +40,6 @@ void	free_commands(t_command **commands)
 	*commands = NULL;
 }
 
-/**
- * Frees all redirections in the list
- */
 void	free_redirs(t_redir **redirs)
 {
 	t_redir	*current;
@@ -61,9 +58,6 @@ void	free_redirs(t_redir **redirs)
 	*redirs = NULL;
 }
 
-/**
- * Frees all tokens in the list
- */
 void	free_tokens(t_token **tokens)
 {
 	t_token	*current;

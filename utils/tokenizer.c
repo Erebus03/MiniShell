@@ -6,7 +6,7 @@
 /*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 15:46:34 by araji             #+#    #+#             */
-/*   Updated: 2025/05/19 20:05:19 by araji            ###   ########.fr       */
+/*   Updated: 2025/05/20 20:49:33 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,22 +87,17 @@ t_token	*tokenize_input(t_general *ctx)
 			add_token(&tokens, new);
 			i += len;
 		}
-		//join two words if no white space is between them
+		// join two words if no white space is between them
 		if (tokens_size(tokens) > 1)
 			if (new->type == TOKEN_WORD && skipped == 0)
-			{
-				printf("found words mlaqin\n");
-				join_tokens(tokens, new, tokens_size(tokens));
-			}
+				join_tokens(tokens, tokens_size(tokens));
 		skipped = 0;
 	}
 	return (tokens);
 }
 
-void	join_tokens(t_token *tokens, t_token *new, int size)
+void	join_tokens(t_token *tokens, int size)
 {
-	printf("\njoining %s with last word\n", new->value);
-	
 	t_token *lastnode;
 	char *str;
 	int	i;
@@ -118,5 +113,4 @@ void	join_tokens(t_token *tokens, t_token *new, int size)
 	tokens->next = NULL;
 	free(lastnode->value);
 	free(lastnode);
-	// printf("node before last is %s\n", tokens->value);
 }

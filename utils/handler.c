@@ -12,64 +12,38 @@
 
 #include "../minishell.h"
 
-int	handle_quotes_mine(t_general *ctx, int i, char **value)
-{
-	char (quote_char);
-	char *(result);
-	int (j), (start);
-	quote_char = ctx->input[i];
-	start = i;
-	i++;
-	while (ctx->input[i] && ctx->input[i] != quote_char)
-		i++;
-	if (!ctx->input[i])
-	{
-		set_error(ctx, ERROR_QUOTES, "Unclosed quote");
-		return (-1);
-	}
-	result = malloc(i - start);
-	if (!result) //cleanup()
-		return (-1);
-	j = 0;
-	start++;
-	while (start < i)
-		result[j++] = ctx->input[start++];
-	result[j] = '\0';
-	*value = result;
-	return (i + 2 - start + j); // Return total length processed
-}
+/* normal words with no whitespace or operators */
 
-/**
- * Handles word tokens (non-whitespace, non-operator sequences)
- * Returns the number of characters processed
- */
-int	handle_word(t_general *ctx, int i, char **value)
+int handle_word(t_general *ctx, int i, char **value)
 {
-	char *(result);
-	int (start), (j);
-	j = 0;
+	char	*result;
+	int		start, word_end, result_size;
+
 	start = i;
-	while (ctx->input[i] && !is_whitespace(ctx->input[i])
-		&& !is_operator(ctx->input[i]) && !is_quote(ctx->input[i]))
-		i++;
-	result = malloc(i - start + 1);
+	word_end = i;
+	while (ctx->input[word_end] && !is_whitespace(ctx->input[word_end])
+		&& !is_operator(ctx->input[word_end]) && !is_quote(ctx->input[word_end]))
+		word_end++;
+	result_size = calculate_expansion_size(ctx, start, ctx->input[word_end]);
+	if (result_size < 0)
+		return (-1);
+	result = (char *)ft_calloc(result_size + 1, sizeof(char));
 	if (!result)
 	{
 		set_error(ctx, ERROR_MEMORY, "Memory allocation failed");
 		return (-1);
 	}
-	j = 0;
-	while (start < i)
-		result[j++] = ctx->input[start++];
-	result[j] = '\0';
+	if (build_expanded_string(ctx, start, ctx->input[word_end], result) < 0)
+	{
+		free(result);
+		return (-1);
+	}
 	*value = result;
-	return (i - start + j);
+	return (word_end - start);
 }
 
-/**
- * Handles operator tokens (|, <, >, >>, <<)
- * Returns the number of characters processed
- */
+/* Handles operator tokens (|, <, >, >>, <<) */
+
 int	handle_operator(t_general *ctx, int i, t_token_type *type, char **value)
 {
 	bool (has_next);
@@ -113,28 +87,52 @@ int	handle_operator(t_general *ctx, int i, t_token_type *type, char **value)
 	return (len);
 }
 
-/**
- * Handles variable expansion ($VAR)
- * Returns the number of characters processed from input
- */
+/*	Handel quoted  strs
+	real commands should splitted when passed to env vars (e.i. ls    -l -a) */
+
+int handle_quotes(t_general *ctx, int i, char **value)
+{
+	int (start), (result_size), (final_pos);
+	char (quote_char);
+	char *(result);
+	quote_char = ctx->input[i];
+	start = i;
+	i++;
+	result_size = calculate_expansion_size(ctx, i, quote_char);
+	if (result_size < 0)
+		return (-1);
+	result = (char *)malloc(result_size + 1);
+	if (!result)
+		return (-1);
+	final_pos = build_expanded_string(ctx, i, quote_char, result);
+	if (final_pos < 0)
+	{
+		free(result);
+		return (-1);
+	}
+	*value = result;
+	return (final_pos + 1 - start);
+}
+
+/* Handles var expansion ($VAR) */
+
 int	handle_dollar(t_general *ctx, int i, char **value)
 {
 	char	var_name[256];
-	char	exit_str[12];
+	// char	exit_str[12];
 
 	int (start), (var_len);
 	ft_memset(var_name, 0, sizeof(var_name));
 	var_len = 0;
 	start = i++; //skipped $ char
-
-	// printf("\n");
 	if (ctx->input[i] == '?') // $?
 	{
-		snprintf(exit_str, sizeof(exit_str), "%d", ctx->exit_status);
-		*value = strdup(exit_str);
+		printf("\nexit status >%d<\n", ctx->exit_status);
+		/*	allocate for *value to put exit_status in
+			fill it strdup(itoa(exit_status)))	*/
 		return (2);
 	}
-	while (ctx->input[i] && (isalnum(ctx->input[i]) || ctx->input[i] == '_'))
+	while (ctx->input[i] && (ft_isalnum(ctx->input[i]) || ctx->input[i] == '_'))
 	{
 		if (var_len < 255)
 			var_name[var_len++] = ctx->input[i];
@@ -147,3 +145,58 @@ int	handle_dollar(t_general *ctx, int i, char **value)
 		*value = ft_strdup("$"); // Just $ without variable name
 	return (i - start);
 }
+
+
+// int	handle_word_mine(t_general *ctx, int i, char **value)
+// {
+// 	char *(result);
+// 	int (start), (j);
+// 	j = 0;
+// 	start = i;
+// 	while (ctx->input[i] && !is_whitespace(ctx->input[i])
+// 		&& !is_operator(ctx->input[i]) && !is_quote(ctx->input[i]))
+// 	{
+// 		/* IF A DOLLAR IS FOUND EXPAND THE VAR */
+// 		i++;
+// 	}
+// 	result = malloc(i - start + 1);
+// 	if (!result)
+// 	{
+// 		set_error(ctx, ERROR_MEMORY, "Memory allocation failed");
+// 		return (-1);
+// 	}
+// 	j = 0;
+// 	while (start < i)
+// 		result[j++] = ctx->input[start++];
+// 	result[j] = '\0';
+// 	*value = result;
+// 	return (i - start + j);
+// }
+
+
+// int	handle_quotes_mine(t_general *ctx, int i, char **value)
+// {
+// 	char (quote_char);
+// 	char *(result);
+// 	int (j), (start);
+// 	quote_char = ctx->input[i];
+// 	start = i;
+// 	i++;
+// 	while (ctx->input[i] && ctx->input[i] != quote_char)
+// 		i++;
+// 	if (!ctx->input[i])
+// 	{
+// 		set_error(ctx, ERROR_QUOTES, "Unclosed quote");
+// 		return (-1);
+// 	}
+// 	result = malloc(i - start);
+// 	if (!result) //cleanup()
+// 		return (-1);
+// 	j = 0;
+// 	start++;
+// 	while (start < i)
+// 		result[j++] = ctx->input[start++];
+// 	result[j] = '\0';
+// 	*value = result;
+// 	return (i + 2 - start + j); // Return total length processed
+// }
