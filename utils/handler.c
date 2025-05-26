@@ -16,9 +16,8 @@
 
 int handle_word(t_general *ctx, int i, char **value)
 {
-	char	*result;
-	int		start, word_end, result_size;
-
+	char	*(result);
+	int		(start), (word_end), (result_size);
 	start = i;
 	word_end = i;
 	while (ctx->input[word_end] && !is_whitespace(ctx->input[word_end])
@@ -116,6 +115,7 @@ int handle_quotes(t_general *ctx, int i, char **value)
 
 /* Handles var expansion ($VAR) */
 
+// handel dollar should be fixed to handel more than 255 var names
 int	handle_dollar(t_general *ctx, int i, char **value)
 {
 	char	var_name[256];

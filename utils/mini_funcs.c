@@ -47,3 +47,16 @@ int	tokens_size(t_token *lst)
 	}
 	return (i);
 }
+
+int	token_has_whitespace(char *value)
+{
+	int	(i);
+	i = 0;
+	while (value[i])
+	{
+		if (is_whitespace(value[i]))
+			return (1);
+		i++;
+	}
+	return (0);
+}

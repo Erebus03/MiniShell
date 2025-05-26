@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 15:46:34 by araji             #+#    #+#             */
-/*   Updated: 2025/05/20 20:49:33 by araji            ###   ########.fr       */
+/*   Updated: 2025/05/26 02:11:25 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_token	*tokenize_input(t_general *ctx)
 		while (ctx->input[i] && is_whitespace(ctx->input[i]))
 		{
 			i++;
-			skipped = 1;	
+			skipped = 1;
 		}
 		if (!ctx->input[i])
 			break ;
@@ -34,13 +34,13 @@ t_token	*tokenize_input(t_general *ctx)
 		{
 			len = handle_quotes(ctx, i, &token_value);
 			if (len < 0)
-				return (NULL);// cleanp()
-			new = new_token(token_value, TOKEN_WORD, false);
+				return (NULL);	//	cleanup()
+			if (token_has_whitespace(token_value))
+				new = split_token_value(tokens, token_value);
+			else
+				new = new_token(token_value, TOKEN_WORD, false);
 			if (!new)
-			{
-				set_error(ctx, ERROR_MEMORY, "Memory allocation failed");
-				return (NULL);// cleanp()
-			}
+				return (NULL);	//	cleanp()
 			add_token(&tokens, new);
 			i += len;
 		}
@@ -51,10 +51,7 @@ t_token	*tokenize_input(t_general *ctx)
 				return (NULL);// cleanp()
 			new = new_token(token_value, token_type, false);
 			if (!new)
-			{
-				set_error(ctx, ERROR_MEMORY, "Memory allocation failed");
 				return (NULL);// cleanp()
-			}
 			add_token(&tokens, new);
 			i += len;
 		}
@@ -66,10 +63,7 @@ t_token	*tokenize_input(t_general *ctx)
 				return (NULL);// cleanp()
 			new = new_token(token_value, TOKEN_WORD, true);
 			if (!new)
-			{
-				set_error(ctx, ERROR_MEMORY, "Memory allocation failed");
 				return (NULL);// cleanp()
-			}
 			add_token(&tokens, new);
 			i += len;
 		}
@@ -80,14 +74,10 @@ t_token	*tokenize_input(t_general *ctx)
 				return (NULL);	// cleanp()
 			new = new_token(token_value, TOKEN_WORD, false);
 			if (!new)
-			{
-				set_error(ctx, ERROR_MEMORY, "Memory allocation failed");
 				return (NULL);	// cleanp()
-			}
 			add_token(&tokens, new);
 			i += len;
 		}
-		// join two words if no white space is between them
 		if (tokens_size(tokens) > 1)
 			if (new->type == TOKEN_WORD && skipped == 0)
 				join_tokens(tokens, tokens_size(tokens));
@@ -114,3 +104,4 @@ void	join_tokens(t_token *tokens, int size)
 	free(lastnode->value);
 	free(lastnode);
 }
+
