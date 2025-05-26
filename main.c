@@ -6,7 +6,7 @@
 /*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:53 by araji             #+#    #+#             */
-/*   Updated: 2025/05/13 16:02:02 by araji            ###   ########.fr       */
+/*   Updated: 2025/05/26 19:20:58 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ int	validate_quotes(t_general *ctx)
 	return (1);
 }
 
-void	init_general_struct(t_general *context)
+void	init_general_struct(t_general *context, char *value)
 {
-	context->input = NULL;
+	context->input = value;
 	context->envlst = NULL;
 	context->envarr = NULL;
 	context->error = SUCCESS;
@@ -56,7 +56,7 @@ int	main(int ac, char **av, char **envp)
 	t_general	context;
 
 	(void)av;
-	init_general_struct(&context);
+	init_general_struct(&context, NULL);
 	if (ac != 1)
 	{
 		printf("$> ./Your Program\n");

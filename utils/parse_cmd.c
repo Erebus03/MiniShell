@@ -26,7 +26,8 @@ t_command	*parse_command(t_general *ctx)
 	prev = NULL;
 	if (!all_tokens)
 		return (NULL);
-	// printf("\n\n*****************************\n\n");
+
+	printf("\n\nfinal result\n");
   	print_tokens(all_tokens);
 	while (current)
 	{
@@ -36,10 +37,7 @@ t_command	*parse_command(t_general *ctx)
 				prev->next = NULL;
 			new_cmd = new_command();
 			if (!new_cmd)
-			{
-				set_error(ctx, ERROR_MEMORY, "Memory allocation failed");
 				return (NULL);// cleanp()
-			}
 			new_cmd->tokens = cmd_start;
 			if (process_tokens(new_cmd) != SUCCESS)
 			{
@@ -77,8 +75,6 @@ t_command	*parse_command(t_general *ctx)
 		}
 		add_command(&commands, new_cmd);
 	}
-	// printf("\n\n*****************************\n\n");
-	// print_commands(commands);
 	return (commands);
 }
 

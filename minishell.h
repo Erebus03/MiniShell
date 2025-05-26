@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
+/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:58 by araji             #+#    #+#             */
-/*   Updated: 2025/05/25 21:27:05 by araji            ###   ########.fr       */
+/*   Updated: 2025/05/26 19:25:07 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,9 +111,10 @@ void			set_error(t_general *ctx, t_error_code code, char *msg);
 void			join_tokens(t_token *tokens, int);
 int				tokens_size(t_token *lst);
 
+void			init_general_struct(t_general *context, char *value);
 
 int				calculate_expansion_size(t_general *ctx, int start, char stop_char);
 int				build_expanded_string(t_general *ctx, int start, char stop_char, char *result);
 
-int				token_has_whitespace(char *value);
-t_token			*split_token_value(t_token *token ,char *value);
+int				to_be_split(char *value);
+t_token			*split_token_value(char *value);

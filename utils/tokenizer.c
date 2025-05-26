@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
+/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 15:46:34 by araji             #+#    #+#             */
-/*   Updated: 2025/05/26 02:11:25 by araji            ###   ########.fr       */
+/*   Updated: 2025/05/26 22:24:47 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 t_token	*tokenize_input(t_general *ctx)
 {
+	int index = 0;
+
+	
 	t_token *(tokens), *(new);
 	char *(token_value);
 	t_token_type (token_type);
@@ -35,10 +38,8 @@ t_token	*tokenize_input(t_general *ctx)
 			len = handle_quotes(ctx, i, &token_value);
 			if (len < 0)
 				return (NULL);	//	cleanup()
-			if (token_has_whitespace(token_value))
-				new = split_token_value(tokens, token_value);
-			else
-				new = new_token(token_value, TOKEN_WORD, false);
+			
+			new = new_token(token_value, TOKEN_WORD, false);
 			if (!new)
 				return (NULL);	//	cleanp()
 			add_token(&tokens, new);
@@ -61,7 +62,15 @@ t_token	*tokenize_input(t_general *ctx)
 			
 			if (len < 0)
 				return (NULL);// cleanp()
-			new = new_token(token_value, TOKEN_WORD, true);
+			if (to_be_split(token_value))
+			{
+				new = split_token_value(token_value);
+				printf("IN HANDEL DOLLAR : got var back split\n");
+				print_tokens(new);
+				printf("end\n");	
+			}
+			else
+				new = new_token(token_value, TOKEN_WORD, true);
 			if (!new)
 				return (NULL);// cleanp()
 			add_token(&tokens, new);
@@ -69,10 +78,20 @@ t_token	*tokenize_input(t_general *ctx)
 		}
 		else
 		{
+			printf("im in handel word\n");
 			len = handle_word(ctx, i, &token_value);
 			if (len < 0)
 				return (NULL);	// cleanp()
-			new = new_token(token_value, TOKEN_WORD, false);
+			if (to_be_split(token_value))
+			{
+				printf("%s should be split\n", token_value);
+				new = split_token_value(token_value);
+				printf("IN HANDEL WORD : got var back split\n");
+				print_tokens(new);
+				printf("end\n");	
+			}
+			else
+				new = new_token(token_value, TOKEN_WORD, false);
 			if (!new)
 				return (NULL);	// cleanp()
 			add_token(&tokens, new);
@@ -82,12 +101,17 @@ t_token	*tokenize_input(t_general *ctx)
 			if (new->type == TOKEN_WORD && skipped == 0)
 				join_tokens(tokens, tokens_size(tokens));
 		skipped = 0;
+		
+		printf("\n%dth etiration\n", index++);
+		print_tokens(tokens);
 	}
 	return (tokens);
 }
 
 void	join_tokens(t_token *tokens, int size)
 {
+
+	printf("joining...\n");
 	t_token *lastnode;
 	char *str;
 	int	i;

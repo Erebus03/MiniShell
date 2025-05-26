@@ -48,13 +48,13 @@ int	tokens_size(t_token *lst)
 	return (i);
 }
 
-int	token_has_whitespace(char *value)
+int	to_be_split(char *value)
 {
 	int	(i);
 	i = 0;
 	while (value[i])
 	{
-		if (is_whitespace(value[i]))
+		if (is_whitespace(value[i]) || is_operator(value[i]))
 			return (1);
 		i++;
 	}

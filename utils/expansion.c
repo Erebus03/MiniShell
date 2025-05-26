@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expantion.c                                        :+:      :+:    :+:   */
+/*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
+/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 21:41:16 by araji             #+#    #+#             */
-/*   Updated: 2025/05/26 00:37:41 by araji            ###   ########.fr       */
+/*   Updated: 2025/05/26 21:06:17 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,37 +72,15 @@ int	build_expanded_string(t_general *ctx, int start, char stop_char, char *resul
 	return (i);
 }
 
-t_token	*split_token_value(t_token *token, char *value)
+t_token	*split_token_value(char *value)
 {
-	t_token	*new_token;
-	int		i, j, start;
+	t_general	tmp;
+	init_general_struct(&tmp, value);
+	t_token		*new_tokenss = tokenize_input(&tmp);
 
-	if (!value || !*value)
-		return (token);
-	i = 0;
-	start = 0;
-	while (value[i])
-	{
-		if (is_whitespace(value[i]) || is_operator(value[i]))
-		{
-			if (i > start)
-			{
-				new_token = new_token(strndup(value + start, i - start), TOKEN_WORD, false);
-				add_token(&token, new_token);
-			}
-			if (is_operator(value[i]))
-			{
-				new_token = new_token(strndup(value + i, 1), TOKEN_OPERATOR, false);
-				add_token(&token, new_token);
-			}
-			start = i + 1;
-		}
-		i++;
-	}
-	if (i > start)
-	{
-		new_token = new_token(strndup(value + start, i - start), TOKEN_WORD, false);
-		add_token(&token, new_token);
-	}
-	return (token);
+	
+	// // ill create a general, put the value as original inpt
+	// tokenize normally how i would tokenize the normal input
+	// free it, link it
+	return new_tokenss;
 }
