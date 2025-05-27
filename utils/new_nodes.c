@@ -23,6 +23,7 @@ t_token	*new_token(char *value, t_token_type type, bool expanded)
 	token->type = type;
 	token->expanded = expanded;
 	token->next = NULL;
+	token->prev = NULL;
 	return (token);
 }
 

@@ -27,7 +27,6 @@ t_command	*parse_command(t_general *ctx)
 	if (!all_tokens)
 		return (NULL);
 
-	printf("\n\nfinal result\n");
   	print_tokens(all_tokens);
 	while (current)
 	{

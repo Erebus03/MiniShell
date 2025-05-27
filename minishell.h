@@ -6,7 +6,7 @@
 /*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:58 by araji             #+#    #+#             */
-/*   Updated: 2025/05/26 19:25:07 by araji            ###   ########.fr       */
+/*   Updated: 2025/05/27 02:26:16 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct s_token
     t_token_type    type;		// token type
     bool            expanded;	// was this token expanded (from variable)
     struct s_token  *next;		// next token in the list
+    struct s_token  *prev;		// prev token
 }	t_token;
 
 typedef struct s_env_var
@@ -110,6 +111,7 @@ void			set_error(t_general *ctx, t_error_code code, char *msg);
 
 void			join_tokens(t_token *tokens, int);
 int				tokens_size(t_token *lst);
+t_token			*last_token(t_token *lst);
 
 void			init_general_struct(t_general *context, char *value);
 

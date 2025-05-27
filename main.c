@@ -6,7 +6,7 @@
 /*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:53 by araji             #+#    #+#             */
-/*   Updated: 2025/05/26 19:20:58 by araji            ###   ########.fr       */
+/*   Updated: 2025/05/27 02:27:04 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	main(int ac, char **av, char **envp)
 		// this "'"fffFFF"'" cleans to 'fffFFF' shit weird
 		if (validate_quotes(&context) == 0)
 			printf("SYNTAX ERROR: unclosed quotes\n");
-		printf("full command: ~%s~\n\n", context.input);
+		// printf("full command: ~%s~\n\n", context.input);
 		add_history(context.input);
 		parse_command(&context);
 	}

@@ -48,6 +48,13 @@ int	tokens_size(t_token *lst)
 	return (i);
 }
 
+t_token	*last_token(t_token *lst)
+{
+	while (lst->next)
+		lst = lst->next;
+	return (lst);
+}
+
 int	to_be_split(char *value)
 {
 	int	(i);

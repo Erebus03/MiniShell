@@ -6,7 +6,7 @@
 /*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 21:41:16 by araji             #+#    #+#             */
-/*   Updated: 2025/05/26 21:06:17 by araji            ###   ########.fr       */
+/*   Updated: 2025/05/27 03:21:09 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,9 @@ t_token	*split_token_value(char *value)
 	init_general_struct(&tmp, value);
 	t_token		*new_tokenss = tokenize_input(&tmp);
 
-	
+	printf("\n\nsplit tokens\n");
+	print_tokens(new_tokenss);
+	printf("out\n\n");
 	// // ill create a general, put the value as original inpt
 	// tokenize normally how i would tokenize the normal input
 	// free it, link it
