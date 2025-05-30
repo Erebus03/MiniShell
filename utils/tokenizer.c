@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 15:46:34 by araji             #+#    #+#             */
-/*   Updated: 2025/05/27 03:22:53 by araji            ###   ########.fr       */
+/*   Updated: 2025/05/30 06:18:28 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,18 +56,22 @@ t_token	*tokenize_input(t_general *ctx)
 		else if (ctx->input[i] == '$')
 		{
 			len = handle_dollar(ctx, i, &token_value);
+			
 			if (len < 0)
 				return (NULL);// cleanp()
-			if (to_be_split(token_value))
+			if (token_value)
 			{
-				new = split_token_value(token_value);
-				skipped = 1;
+				if (to_be_split(token_value))
+				{
+					new = split_token_value(token_value);
+					skipped = 1;
+				}
+				else
+					new = new_token(token_value, TOKEN_WORD, true);
+				if (!new)
+					return (NULL);// cleanp()
+				add_token(&tokens, new);
 			}
-			else
-				new = new_token(token_value, TOKEN_WORD, true);
-			if (!new)
-				return (NULL);// cleanp()
-			add_token(&tokens, new);
 			i += len;
 		}
 		else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 21:41:16 by araji             #+#    #+#             */
-/*   Updated: 2025/05/27 03:21:09 by araji            ###   ########.fr       */
+/*   Updated: 2025/05/30 06:14:17 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,11 @@ int	calculate_expansion_size(t_general *ctx, int i, char stop_char) //	i = start
 	result_size = 0;
 	while (ctx->input[i] && ctx->input[i] != stop_char)
 	{
-		if (ctx->input[i] == '$')
+		if (ctx->input[i] == '$' && stop_char == '"')
 		{
 			processed = handle_dollar(ctx, i, &temp_value);
+			write(1, "temp_value: ", 12);
+			printf("temp_value: %p\n", temp_value);
 			if (processed <= 0)	// error handling
 				return (-1);
 			if (temp_value)
@@ -49,7 +51,7 @@ int	build_expanded_string(t_general *ctx, int start, char stop_char, char *resul
 	j = 0;
 	while (ctx->input[i] && ctx->input[i] != stop_char)
 	{
-		if (ctx->input[i] == '$')
+		if (ctx->input[i] == '$' && stop_char == '"')
 		{
 			processed = handle_dollar(ctx, i, &temp_value);
 			// split the input into tokens if the var has white spaces

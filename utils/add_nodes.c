@@ -60,3 +60,17 @@ void	add_redir(t_redir **redirs, t_redir *new_redir)
 		current = current->next;
 	current->next = new_redir;
 }
+
+// void	add_addr(t_general *ctx, t_memory *new_addr)
+// {
+// 	t_memory	*tmp;
+// 	if (!ctx->mem_manager)
+// 	{
+// 		ctx->mem_manager = new_addr;
+// 		return ;
+// 	}
+// 	tmp = ctx->mem_manager;
+// 	while (tmp->next)
+// 		tmp = tmp->next;
+// 	tmp->next = new_addr;
+// }
