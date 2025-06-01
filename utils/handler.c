@@ -43,7 +43,6 @@ int handle_word(t_general *ctx, int i, char **value)
 		return (-1);
 	}
 	*value = result;
-	printf("value: %p\n", *value);
 	return (word_end - start);
 }
 
@@ -147,8 +146,6 @@ int	handle_dollar(t_general *ctx, int i, char **value)
 	
 	ft_memcpy(var_name, ctx->input + start + 1, var_len);
 	var_name[var_len] = '\0';
-	printf("var_name: %s\n", var_name);
-	printf("var_len : %d\n", var_len);
 	
 
 	if (var_len > 0)
@@ -156,6 +153,5 @@ int	handle_dollar(t_general *ctx, int i, char **value)
 	else
 		*value = ft_strdup("$");
 
-	printf("value: %s\n", *value);
 	return (i - start);
 }

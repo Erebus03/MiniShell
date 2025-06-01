@@ -6,7 +6,7 @@
 /*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 21:41:16 by araji             #+#    #+#             */
-/*   Updated: 2025/06/01 09:32:16 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/01 13:08:57 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ int	calculate_expansion_size(t_general *ctx, int i, char stop_char) //	i = start
 		if (ctx->input[i] == '$' && stop_char != '\'')
 		{
 			processed = handle_dollar(ctx, i, &temp_value);
-			write(1, "temp_value: ", 12);
-			printf("temp_value: %p\n", temp_value);
 			if (processed <= 0)	// error handling
 				return (-1);
 			if (temp_value)

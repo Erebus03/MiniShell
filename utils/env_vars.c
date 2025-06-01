@@ -6,7 +6,7 @@
 /*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:58:07 by araji             #+#    #+#             */
-/*   Updated: 2025/06/01 06:02:54 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/01 13:08:46 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ char	*get_env_value(char *var_name, t_env_var *lst)
 			return (ft_strdup(tmp->value));
 		tmp = tmp->next;
 	}
-	printf("Variable '%s' not found in environment.\n", var_name);
 	return (NULL); // change later
 }
 

@@ -6,7 +6,7 @@
 /*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 15:46:34 by araji             #+#    #+#             */
-/*   Updated: 2025/06/01 13:04:45 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/01 13:10:17 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ t_token	*tokenize_input(t_general *ctx)
 				if (to_be_split(token_value))
 				{
 					new = split_token_value(token_value);
-					printf("\n\n\ntoken_value[0] = >%c<\n\n\n", token_value[0]);
 					if (is_whitespace(token_value[0]) || is_operator(token_value[0]))
 						skipped = 1;
 				}
@@ -109,7 +108,6 @@ t_token	*tokenize_input(t_general *ctx)
 			{
 				// printf("%s should be split\n", token_value);
 				new = split_token_value(token_value);
-				// printf("\n\n\ntoken_value[0] = %c\n\n\n", token_value[0]);
 				if (is_whitespace(token_value[0]) || is_operator(token_value[0]))
 					skipped = 1;
 			}
@@ -123,8 +121,6 @@ t_token	*tokenize_input(t_general *ctx)
 		// printf("new.value = %s\nskipped = %d\n", new->value, skipped);
 		if (tokens_size(tokens) > 1)
 		{
-			printf("new token     [%s]\n", new->value);
-			printf("newtoken.prev [%s]\n", (new->prev)->value);
 			// printf("last_token(tokens)->prev)->value = %s\n", (last_token(tokens)->prev)->value);
 			if (new->type == TOKEN_WORD && skipped == 0 && (new->prev)->type == TOKEN_WORD)
 				join_tokens(tokens, new);
@@ -142,7 +138,7 @@ void	join_tokens(t_token *tokens, t_token *new)
 	while (tokens != new->prev)
 		tokens = tokens->next;
 	
-	printf("\njoining [%s] with [%s]\n\n", tokens->value, (tokens->next)->value);
+	// printf("\njoining [%s] with [%s]\n\n", tokens->value, (tokens->next)->value);
 
 	str = ft_strjoin(tokens->value, (tokens->next)->value);
 	free(tokens->value);
