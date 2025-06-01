@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
+/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 21:41:16 by araji             #+#    #+#             */
-/*   Updated: 2025/05/30 06:14:17 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/01 09:32:16 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	calculate_expansion_size(t_general *ctx, int i, char stop_char) //	i = start
 	result_size = 0;
 	while (ctx->input[i] && ctx->input[i] != stop_char)
 	{
-		if (ctx->input[i] == '$' && stop_char == '"')
+		if (ctx->input[i] == '$' && stop_char != '\'')
 		{
 			processed = handle_dollar(ctx, i, &temp_value);
 			write(1, "temp_value: ", 12);
@@ -51,7 +51,7 @@ int	build_expanded_string(t_general *ctx, int start, char stop_char, char *resul
 	j = 0;
 	while (ctx->input[i] && ctx->input[i] != stop_char)
 	{
-		if (ctx->input[i] == '$' && stop_char == '"')
+		if (ctx->input[i] == '$' && stop_char != '\'')
 		{
 			processed = handle_dollar(ctx, i, &temp_value);
 			// split the input into tokens if the var has white spaces
@@ -74,17 +74,20 @@ int	build_expanded_string(t_general *ctx, int start, char stop_char, char *resul
 	return (i);
 }
 
-t_token	*split_token_value(char *value)
+t_token	*split_token_value(char *value)//, int *skipped)
 {
 	t_general	tmp;
 	init_general_struct(&tmp, value);
-	t_token		*new_tokenss = tokenize_input(&tmp);
 
-	printf("\n\nsplit tokens\n");
-	print_tokens(new_tokenss);
-	printf("out\n\n");
+	t_token		*new_tokens = tokenize_input(&tmp);
+
+	// printf("split tokens\n");
+	// print_tokens(new_tokens);
+	// printf("out\n\n");
+
+
 	// // ill create a general, put the value as original inpt
 	// tokenize normally how i would tokenize the normal input
 	// free it, link it
-	return new_tokenss;
+	return new_tokens;
 }

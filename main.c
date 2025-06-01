@@ -6,7 +6,7 @@
 /*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:53 by araji             #+#    #+#             */
-/*   Updated: 2025/05/27 02:27:04 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/01 06:03:12 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	main(int ac, char **av, char **envp)
 	while (37)
 	{
 		context.input = readline("\001\033[32m\002minihell $> \001\033[0m\002");
-		if (ft_strncmp(context.input, "exit", 4) == 0) // cleanup()
+		if (ft_strcmp(context.input, "exit") == 0) // cleanup()
 			exit(0);
 		// this "'"fffFFF"'" cleans to 'fffFFF' shit weird
 		if (validate_quotes(&context) == 0)

@@ -23,6 +23,11 @@ int handle_word(t_general *ctx, int i, char **value)
 	while (ctx->input[word_end] && !is_whitespace(ctx->input[word_end])
 		&& !is_operator(ctx->input[word_end]) && !is_quote(ctx->input[word_end]))
 		word_end++;
+	// printf("WORD IS :");
+	// for (int k = start; k < word_end; k++) {
+	// 	printf("%c", ctx->input[k]);
+	// }
+	// printf("\n");
 	result_size = calculate_expansion_size(ctx, start, ctx->input[word_end]);
 	if (result_size < 0)
 		return (-1);
@@ -134,14 +139,16 @@ int	handle_dollar(t_general *ctx, int i, char **value)
 		var_len++;
 	}
 
+	
 	var_name = (char *)malloc(var_len + 1);
 	if (!var_name)
-	    return (0);
+		return (0);
 	// cleanup(ctx, ERROR_MEMORY, "Memory allocation failed");
 	
 	ft_memcpy(var_name, ctx->input + start + 1, var_len);
 	var_name[var_len] = '\0';
 	printf("var_name: %s\n", var_name);
+	printf("var_len : %d\n", var_len);
 	
 
 	if (var_len > 0)
@@ -149,6 +156,6 @@ int	handle_dollar(t_general *ctx, int i, char **value)
 	else
 		*value = ft_strdup("$");
 
-	printf("value: %p\n", *value);
+	printf("value: %s\n", *value);
 	return (i - start);
 }
