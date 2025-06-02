@@ -6,7 +6,7 @@
 /*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:58 by araji             #+#    #+#             */
-/*   Updated: 2025/06/01 10:12:08 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/02 10:44:53 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ typedef struct s_general
     t_error_code    error;		// last error code
     char            *error_msg;	// detailed error message
     int             exit_status;// last command exit status
+    int             no_expand_heredoc;// last command exit status
 }	t_general;
 
 t_redir			*new_redir(t_token_type type, char *file);

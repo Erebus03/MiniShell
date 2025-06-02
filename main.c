@@ -6,7 +6,7 @@
 /*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:53 by araji             #+#    #+#             */
-/*   Updated: 2025/06/01 06:03:12 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/02 10:44:32 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	init_general_struct(t_general *context, char *value)
 	context->error = SUCCESS;
 	context->error_msg = NULL;
 	context->exit_status = 0;
+	context->no_expand_heredoc = 0;
 }
 
 int	main(int ac, char **av, char **envp)

@@ -1,0 +1,43 @@
+bash-5.2$ << $"USER"
+> 
+bash: warning: here-document at line 60 delimited by end-of-file (wanted `USER')
+bash-5.2$ << "$USER"
+> 
+bash: warning: here-document at line 61 delimited by end-of-file (wanted `$USER')
+bash-5.2$ << $
+> 
+bash: warning: here-document at line 62 delimited by end-of-file (wanted `$')
+bash-5.2$ << $USER
+> 
+bash: warning: here-document at line 63 delimited by end-of-file (wanted `$USER')
+bash-5.2$ << $"USER"
+> 
+bash: warning: here-document at line 64 delimited by end-of-file (wanted `USER')
+bash-5.2$ << $""
+> 
+bash: warning: here-document at line 65 delimited by end-of-file (wanted `')
+bash-5.2$ << $''
+> 
+bash: warning: here-document at line 66 delimited by end-of-file (wanted `')
+bash-5.2$ << $U"U"
+> 
+bash: warning: here-document at line 67 delimited by end-of-file (wanted `$UU')
+bash-5.2$ << $"UU"
+> 
+bash: warning: here-document at line 68 delimited by end-of-file (wanted `UU')
+bash-5.2$ << "$""UU"
+> 
+bash: warning: here-document at line 69 delimited by end-of-file (wanted `$UU')
+bash-5.2$ << '$'"UU"
+> 
+bash: warning: here-document at line 70 delimited by end-of-file (wanted `$UU')
+bash-5.2$ << $"UU"
+> 
+bash: warning: here-document at line 71 delimited by end-of-file (wanted `UU')
+bash-5.2$ << $"UU"^C
+
+
+******************
+
+
+

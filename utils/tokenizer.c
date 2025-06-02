@@ -6,7 +6,7 @@
 /*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 15:46:34 by araji             #+#    #+#             */
-/*   Updated: 2025/06/01 13:10:17 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/02 13:00:02 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,12 @@ t_token	*tokenize_input(t_general *ctx)
 		}
 		if (!ctx->input[i])
 			break ;
+		if (tokens && (last_token(tokens))->type == TOKEN_HEREDOC)
+		{
+			printf("last token = %s\n", (last_token(tokens))->value);
+			ctx->no_expand_heredoc = 1;
+			printf("changed ctx.n_xp_doc %d\n", ctx->no_expand_heredoc);
+		}
 		if ((ctx->input[i] == '"' || ctx->input[i] == '\''))
 		{
 			len = handle_quotes(ctx, i, &token_value);
@@ -78,8 +84,10 @@ t_token	*tokenize_input(t_general *ctx)
 			// 	printf("%c", ctx->input[k]);
 			// }
 			// printf("\n");
-			len = handle_dollar(ctx, i, &token_value);
-			
+			if (ctx->no_expand_heredoc == 0)
+				len = handle_dollar(ctx, i, &token_value);
+			else
+				len = handle_word(ctx, i, &token_value);
 			if (len < 0)
 				return (NULL);// cleanp()
 			if (token_value)
@@ -119,6 +127,7 @@ t_token	*tokenize_input(t_general *ctx)
 			i += len;
 		}
 		// printf("new.value = %s\nskipped = %d\n", new->value, skipped);
+		ctx->no_expand_heredoc = 0;
 		if (tokens_size(tokens) > 1)
 		{
 			// printf("last_token(tokens)->prev)->value = %s\n", (last_token(tokens)->prev)->value);

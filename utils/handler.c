@@ -23,15 +23,10 @@ int handle_word(t_general *ctx, int i, char **value)
 	while (ctx->input[word_end] && !is_whitespace(ctx->input[word_end])
 		&& !is_operator(ctx->input[word_end]) && !is_quote(ctx->input[word_end]))
 		word_end++;
-	// printf("WORD IS :");
-	// for (int k = start; k < word_end; k++) {
-	// 	printf("%c", ctx->input[k]);
-	// }
-	// printf("\n");
 	result_size = calculate_expansion_size(ctx, start, ctx->input[word_end]);
 	if (result_size < 0)
 		return (-1);
-	result = (char *)ft_calloc(result_size + 1, sizeof(char));
+	result = (char *)malloc(result_size + 1 * sizeof(char));
 	if (!result)
 	{
 		set_error(ctx, ERROR_MEMORY, "Memory allocation failed");
@@ -94,7 +89,7 @@ int	handle_operator(t_general *ctx, int i, t_token_type *type, char **value)
 /*	Handel quoted  strs
 	real commands should splitted when passed to env vars (e.i. ls    -l -a) */
 
-int handle_quotes(t_general *ctx, int i, char **value)
+int	handle_quotes(t_general *ctx, int i, char **value)
 {
 	int (start), (result_size), (final_pos);
 	char (quote_char);

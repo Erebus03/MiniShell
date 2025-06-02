@@ -6,7 +6,7 @@
 /*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 21:41:16 by araji             #+#    #+#             */
-/*   Updated: 2025/06/01 13:08:57 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/02 12:56:15 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,9 @@ int	calculate_expansion_size(t_general *ctx, int i, char stop_char) //	i = start
 	result_size = 0;
 	while (ctx->input[i] && ctx->input[i] != stop_char)
 	{
-		if (ctx->input[i] == '$' && stop_char != '\'')
+		if (ctx->input[i] == '$' && stop_char != '\'' && ctx->no_expand_heredoc == 0)
 		{
+			// printf("calculating size with ctx->no_expand_heredoc = %d", ctx->no_expand_heredoc);
 			processed = handle_dollar(ctx, i, &temp_value);
 			if (processed <= 0)	// error handling
 				return (-1);
@@ -49,8 +50,9 @@ int	build_expanded_string(t_general *ctx, int start, char stop_char, char *resul
 	j = 0;
 	while (ctx->input[i] && ctx->input[i] != stop_char)
 	{
-		if (ctx->input[i] == '$' && stop_char != '\'')
+		if (ctx->input[i] == '$' && stop_char != '\'' && ctx->no_expand_heredoc == 0)
 		{
+			// printf("proccessing char [%c] with ctx->no_expand_heredoc == %d\n", ctx->input[i], ctx->no_expand_heredoc);
 			processed = handle_dollar(ctx, i, &temp_value);
 			// split the input into tokens if the var has white spaces
 			// link the tokens in a separate function
@@ -69,6 +71,8 @@ int	build_expanded_string(t_general *ctx, int start, char stop_char, char *resul
 			result[j++] = ctx->input[i++];
 	}
 	result[j] = '\0';
+
+	printf("\nvalue we got from built_expanded_string [%s]\n\n", result);
 	return (i);
 }
 
