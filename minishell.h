@@ -6,7 +6,7 @@
 /*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:58 by araji             #+#    #+#             */
-/*   Updated: 2025/06/02 10:44:53 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/03 05:32:23 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,11 @@ typedef struct s_env_var
 
 typedef struct s_redir
 {
-    t_token_type    type;        // redirection type
-    char            *file;       // file or heredoc delimiter
-    int             fd;          // file descriptor (for execution)
-    struct s_redir  *next;       // next redirection
+    t_token_type    type;        		// redirection type
+    char            *file;       		// file or heredoc delimiter
+    int             fd;          		// file descriptor (for execution)
+	int				expand_in_heredec;	// should i expand inside the heredec or not
+    struct s_redir  *next;       		// next redirection
 }	t_redir;
 
 typedef struct s_command

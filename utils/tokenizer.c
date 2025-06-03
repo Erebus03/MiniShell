@@ -6,29 +6,11 @@
 /*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 15:46:34 by araji             #+#    #+#             */
-/*   Updated: 2025/06/02 13:00:02 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/03 11:50:43 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-
-// minihell $> $HOME"$HOM"E
-// var_name: HOME
-// value: 0x562a6f032e00
-// var_name: HOM
-// value: 0x562a6f032e40
-// temp_value: temp_value: 0x562a6f032e40
-// var_name: HOM
-// value: 0x562a6f032e80
-
-// joining [/home/araji] with [/home/araji]
-
-// value: 0x562a6f032e40
-
-// joining [/home/araji/home/araji] with [E]
-
-// Token: [/home/araji/home/arajiE] (WORD)
 
 t_token	*tokenize_input(t_general *ctx)
 {
@@ -36,6 +18,7 @@ t_token	*tokenize_input(t_general *ctx)
 	char *(token_value);
 	t_token_type (token_type);
 	int (len), (i), (skipped);
+
 	tokens = NULL;
 	i = 0;
 	skipped = 0;
@@ -49,21 +32,20 @@ t_token	*tokenize_input(t_general *ctx)
 		if (!ctx->input[i])
 			break ;
 		if (tokens && (last_token(tokens))->type == TOKEN_HEREDOC)
-		{
-			printf("last token = %s\n", (last_token(tokens))->value);
 			ctx->no_expand_heredoc = 1;
-			printf("changed ctx.n_xp_doc %d\n", ctx->no_expand_heredoc);
-		}
 		if ((ctx->input[i] == '"' || ctx->input[i] == '\''))
 		{
+			printf("in q_h() [%c]\n", ctx->input[i]);
 			len = handle_quotes(ctx, i, &token_value);
 			if (len < 0)
 				return (NULL);	//	cleanup()
-			
-			new = new_token(token_value, TOKEN_WORD, false);
-			if (!new)
-				return (NULL);	//	cleanp()
-			add_token(&tokens, new);
+			if (token_value[0])
+			{
+				new = new_token(token_value, TOKEN_WORD, false);
+				if (!new)
+					return (NULL);	//	cleanp()
+				add_token(&tokens, new);
+			}
 			i += len;
 		}
 		else if (is_operator(ctx->input[i]))
@@ -79,15 +61,10 @@ t_token	*tokenize_input(t_general *ctx)
 		}
 		else if (ctx->input[i] == '$')
 		{
-			// printf("handling env var..\n");
-			// for (int k = i; ctx->input[k]; k++) {
-			// 	printf("%c", ctx->input[k]);
-			// }
-			// printf("\n");
 			if (ctx->no_expand_heredoc == 0)
 				len = handle_dollar(ctx, i, &token_value);
 			else
-				len = handle_word(ctx, i, &token_value);
+				continue;// = handle_word(ctx, i, &token_value);
 			if (len < 0)
 				return (NULL);// cleanp()
 			if (token_value)
@@ -128,13 +105,16 @@ t_token	*tokenize_input(t_general *ctx)
 		}
 		// printf("new.value = %s\nskipped = %d\n", new->value, skipped);
 		ctx->no_expand_heredoc = 0;
+		printf("\nskipi?  %d\nvalue = [%s]\ncurretn cahr(%c) with len = (%d)\n\n",
+					skipped, token_value,ctx->input[i+len], len);
 		if (tokens_size(tokens) > 1)
 		{
 			// printf("last_token(tokens)->prev)->value = %s\n", (last_token(tokens)->prev)->value);
 			if (new->type == TOKEN_WORD && skipped == 0 && (new->prev)->type == TOKEN_WORD)
 				join_tokens(tokens, new);
 		}
-		skipped = 0;
+		if (token_value && ctx->input[i - len] != '$')
+			skipped = 0;
 	}
 	return (tokens);
 }
@@ -147,7 +127,7 @@ void	join_tokens(t_token *tokens, t_token *new)
 	while (tokens != new->prev)
 		tokens = tokens->next;
 	
-	// printf("\njoining [%s] with [%s]\n\n", tokens->value, (tokens->next)->value);
+	printf("\njoining [%s] with [%s]\n\n", tokens->value, (tokens->next)->value);
 
 	str = ft_strjoin(tokens->value, (tokens->next)->value);
 	free(tokens->value);

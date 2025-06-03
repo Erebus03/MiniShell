@@ -41,3 +41,42 @@ bash-5.2$ << $"UU"^C
 
 
 
+HANDEL AMBEGIUOS COMMANDD $A="BAL BLA" OR EMPTY
+
+
+
+*************************
+
+minihell $> 'f
+SYNTAX ERROR: unclosed quotes
+Token: [f\] (WORD)
+minihell $> 'ff
+SYNTAX ERROR: unclosed quotes
+Token: [ff�U] (WORD)
+minihell $> 
+
+
+i think this was just a printf error
+
+*****************************
+
+
+make a heredoc flag to figure out if u'll expand in the input or nuh
+ 
+ 
+ 
+*******
+
+minihell $> '
+SYNTAX ERROR: unclosed quotes
+Token: [d�U] (WORD)
+minihell $> \'
+SYNTAX ERROR: unclosed quotes
+Token: [\d�U] (WORD)
+minihell $> 
+
+idk wtf is this 
+
+
+************
+

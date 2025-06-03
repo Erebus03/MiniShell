@@ -6,7 +6,7 @@
 /*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 21:41:16 by araji             #+#    #+#             */
-/*   Updated: 2025/06/02 12:56:15 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/03 09:19:07 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ int	build_expanded_string(t_general *ctx, int start, char stop_char, char *resul
 	}
 	result[j] = '\0';
 
-	printf("\nvalue we got from built_expanded_string [%s]\n\n", result);
 	return (i);
 }
 

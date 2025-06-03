@@ -132,8 +132,6 @@ int	handle_dollar(t_general *ctx, int i, char **value)
 		i++;
 		var_len++;
 	}
-
-	
 	var_name = (char *)malloc(var_len + 1);
 	if (!var_name)
 		return (0);
@@ -142,11 +140,14 @@ int	handle_dollar(t_general *ctx, int i, char **value)
 	ft_memcpy(var_name, ctx->input + start + 1, var_len);
 	var_name[var_len] = '\0';
 	
-
+	// printf("input[%ld]===(%c)\nI = %d\n", strlen(ctx->input), ctx->input[strlen(ctx->input)], i);
 	if (var_len > 0)
 		*value = get_env_value(var_name, ctx->envlst);
+	else if (ctx->input[i] != '\0')
+		*value = NULL;
 	else
 		*value = ft_strdup("$");
-
+	
+	free(var_name);
 	return (i - start);
 }
