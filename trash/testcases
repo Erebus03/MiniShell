@@ -10,19 +10,19 @@ bash: warning: here-document at line 62 delimited by end-of-file (wanted `$')
 bash-5.2$ << $USER
 > 
 bash: warning: here-document at line 63 delimited by end-of-file (wanted `$USER')
-bash-5.2$ << $"USER"
+bash-5.2$ << $"USER" 					JST WITH HEREDOC 	THIS SHIT ONT WORKING YET, I KEEP $ ALWAYS
 > 
 bash: warning: here-document at line 64 delimited by end-of-file (wanted `USER')
-bash-5.2$ << $""
+bash-5.2$ << $""															HERE ALSO
 > 
 bash: warning: here-document at line 65 delimited by end-of-file (wanted `')
-bash-5.2$ << $''
+bash-5.2$ << $''				JST WITH HEREDOC					HERE ALSO
 > 
 bash: warning: here-document at line 66 delimited by end-of-file (wanted `')
 bash-5.2$ << $U"U"
 > 
 bash: warning: here-document at line 67 delimited by end-of-file (wanted `$UU')
-bash-5.2$ << $"UU"
+bash-5.2$ << $"UU"		$ DOESNT GET GOT
 > 
 bash: warning: here-document at line 68 delimited by end-of-file (wanted `UU')
 bash-5.2$ << "$""UU"
@@ -31,12 +31,15 @@ bash: warning: here-document at line 69 delimited by end-of-file (wanted `$UU')
 bash-5.2$ << '$'"UU"
 > 
 bash: warning: here-document at line 70 delimited by end-of-file (wanted `$UU')
-bash-5.2$ << $"UU"
+bash-5.2$ << $"UU"  DOLLAR NOT REMOVED HERE ALSO
 > 
 bash: warning: here-document at line 71 delimited by end-of-file (wanted `UU')
 bash-5.2$ << $"UU"^C
 
-
+minihell $> << $U"U"
+Token: [<<] (HEREDOC)
+Token: [$U] (WORD)
+Token: [U] (WORD)
 ******************
 
 
@@ -72,11 +75,56 @@ SYNTAX ERROR: unclosed quotes
 Token: [d�U] (WORD)
 minihell $> \'
 SYNTAX ERROR: unclosed quotes
-Token: [\d�U] (WORD)
-minihell $> 
+Token: [\d�U] (WORD)minihell $> << $"USER"
 
-idk wtf is this 
+skipi?  0
+value = [<<]
+curretn cahr(") with len = (2)
 
 
-************
+skipi?  1
+value = [$]
+curretn cahr(U) with len = (1)
 
+in q_h() ["]
+
+skipi?  1
+value = [USER]
+curretn cahr() with len = (6)
+
+Token: [<<] (HEREDOC)
+Token: [$] (WORD)
+Token: [USER] (WORD)
+curretn cahr() with len = (2)
+
+^C
+bash-5.2$ 
+
+***********
+
+
+minihell $> << $"USER"
+
+skipi?  0
+value = [<<]
+curretn cahr(") with len = (2)
+
+
+skipi?  1
+value = [$]
+curretn cahr(U) with len = (1)
+
+in q_h() ["]
+
+skipi?  1
+value = [USER]
+curretn cahr() with len = (6)
+
+Token: [<<] (HEREDOC)
+Token: [$] (WORD)
+Token: [USER] (WORD)
+
+
+*******************
+
+"$" should be null

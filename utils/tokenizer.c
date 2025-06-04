@@ -6,7 +6,7 @@
 /*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 15:46:34 by araji             #+#    #+#             */
-/*   Updated: 2025/06/03 11:50:43 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/04 07:53:24 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,11 @@ t_token	*tokenize_input(t_general *ctx)
 			ctx->no_expand_heredoc = 1;
 		if ((ctx->input[i] == '"' || ctx->input[i] == '\''))
 		{
-			printf("in q_h() [%c]\n", ctx->input[i]);
+			// printf("in q_h() [%c]\n", ctx->input[i]);
 			len = handle_quotes(ctx, i, &token_value);
 			if (len < 0)
 				return (NULL);	//	cleanup()
-			if (token_value[0])
+			if (token_value)   //	[0])
 			{
 				new = new_token(token_value, TOKEN_WORD, false);
 				if (!new)
@@ -64,7 +64,7 @@ t_token	*tokenize_input(t_general *ctx)
 			if (ctx->no_expand_heredoc == 0)
 				len = handle_dollar(ctx, i, &token_value);
 			else
-				continue;// = handle_word(ctx, i, &token_value);
+				len = handle_word(ctx, i, &token_value);
 			if (len < 0)
 				return (NULL);// cleanp()
 			if (token_value)
@@ -105,8 +105,8 @@ t_token	*tokenize_input(t_general *ctx)
 		}
 		// printf("new.value = %s\nskipped = %d\n", new->value, skipped);
 		ctx->no_expand_heredoc = 0;
-		printf("\nskipi?  %d\nvalue = [%s]\ncurretn cahr(%c) with len = (%d)\n\n",
-					skipped, token_value,ctx->input[i+len], len);
+		// printf("\nskipi?  %d\nvalue = [%s]\ncurretn cahr(%c) with len = (%d)\n\n",
+					// skipped, token_value,ctx->input[i+len], len);
 		if (tokens_size(tokens) > 1)
 		{
 			// printf("last_token(tokens)->prev)->value = %s\n", (last_token(tokens)->prev)->value);

@@ -6,7 +6,7 @@
 /*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 21:41:16 by araji             #+#    #+#             */
-/*   Updated: 2025/06/03 09:19:07 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/03 19:55:18 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ int	calculate_expansion_size(t_general *ctx, int i, char stop_char) //	i = start
 				result_size += ft_strlen(temp_value);
 				free(temp_value);
 			}
+			else
+				result_size++;
 			i += processed;
 		}
 		else
@@ -52,11 +54,9 @@ int	build_expanded_string(t_general *ctx, int start, char stop_char, char *resul
 	{
 		if (ctx->input[i] == '$' && stop_char != '\'' && ctx->no_expand_heredoc == 0)
 		{
-			// printf("proccessing char [%c] with ctx->no_expand_heredoc == %d\n", ctx->input[i], ctx->no_expand_heredoc);
 			processed = handle_dollar(ctx, i, &temp_value);
-			// split the input into tokens if the var has white spaces
-			// link the tokens in a separate function
-			// prossed the noraml work;
+
+			printf("\ntmp_val = %s\nproccessed = %d\nwere at char [%c]\n", temp_value, processed, ctx->input[i]);
 			if (processed <= 0)
 				return (-1);
 			if (temp_value)
@@ -64,6 +64,10 @@ int	build_expanded_string(t_general *ctx, int start, char stop_char, char *resul
 				strcpy(result + j, temp_value);	// build func
 				j += ft_strlen(temp_value);
 				free(temp_value);
+			}
+			else
+			{
+				result[j++] = ctx->input[i++];
 			}
 			i += processed;
 		}
