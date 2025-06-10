@@ -32,6 +32,8 @@ t_error_code process_tokens(t_command *cmd)
             // Redirections need a file name
             if (!current->next || current->next->type != TOKEN_WORD)
                 return ERROR_SYNTAX;
+			// if (current->prev && current->prev->type == TOKEN_HEREDOC)
+			// 	c
             current = current->next; // Skip the file name
         }
         current = current->next;
@@ -63,6 +65,8 @@ t_error_code process_tokens(t_command *cmd)
             if (next && next->type == TOKEN_WORD)
             {
                 redir = new_redir(current->type, next->value);
+				if (current->type == TOKEN_HEREDOC)
+					redir->expand_in_heredec = (current->quoted_delimliter != 1);
                 if (!redir)
                     return ERROR_MEMORY;
                 add_redir(&cmd->redirs, redir);

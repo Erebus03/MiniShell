@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:58 by araji             #+#    #+#             */
-/*   Updated: 2025/06/03 05:32:23 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/05 16:59:46 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,20 +32,21 @@ typedef enum e_error_code
 typedef enum e_token_type
 {
     TOKEN_WORD,
-    TOKEN_PIPE,       // |
-    TOKEN_REDIR_IN,   // <
-    TOKEN_REDIR_OUT,  // >
-    TOKEN_REDIR_APPEND, // >>
-    TOKEN_HEREDOC     // <<
+    TOKEN_PIPE,			// |
+    TOKEN_REDIR_IN,		// <
+    TOKEN_REDIR_OUT,	// >
+    TOKEN_REDIR_APPEND,	// >>
+    TOKEN_HEREDOC		// <<
 }	t_token_type;
 
 typedef struct s_token
 {
-    char            *value;		// token content
-    t_token_type    type;		// token type
-    bool            expanded;	// was this token expanded (from variable)
-    struct s_token  *next;		// next token in the list
-    struct s_token  *prev;		// prev token
+    char            *value;				// token content
+    t_token_type    type;				// token type
+    bool            expanded;			// was this token expanded (from variable)
+    struct s_token  *next;				// next token in the list
+    struct s_token  *prev;				// prev token
+    int				quoted_delimliter;	// last command exit status
 }	t_token;
 
 typedef struct s_env_var

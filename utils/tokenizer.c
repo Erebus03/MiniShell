@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 15:46:34 by araji             #+#    #+#             */
-/*   Updated: 2025/06/04 07:53:24 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/05 18:14:09 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ t_token	*tokenize_input(t_general *ctx)
 			ctx->no_expand_heredoc = 1;
 		if ((ctx->input[i] == '"' || ctx->input[i] == '\''))
 		{
-			// printf("in q_h() [%c]\n", ctx->input[i]);
 			len = handle_quotes(ctx, i, &token_value);
 			if (len < 0)
 				return (NULL);	//	cleanup()
@@ -44,6 +43,8 @@ t_token	*tokenize_input(t_general *ctx)
 				new = new_token(token_value, TOKEN_WORD, false);
 				if (!new)
 					return (NULL);	//	cleanp()
+				if (ctx->no_expand_heredoc == 1)
+					new->quoted_delimliter = 1;
 				add_token(&tokens, new);
 			}
 			i += len;
@@ -61,10 +62,7 @@ t_token	*tokenize_input(t_general *ctx)
 		}
 		else if (ctx->input[i] == '$')
 		{
-			if (ctx->no_expand_heredoc == 0)
-				len = handle_dollar(ctx, i, &token_value);
-			else
-				len = handle_word(ctx, i, &token_value);
+			len = handle_dollar(ctx, i, &token_value);
 			if (len < 0)
 				return (NULL);// cleanp()
 			if (token_value)
@@ -85,36 +83,41 @@ t_token	*tokenize_input(t_general *ctx)
 		}
 		else
 		{
-			// printf("word starts with %c\n", ctx->input[i]);
 			len = handle_word(ctx, i, &token_value);
 			if (len < 0)
 				return (NULL);	// cleanp()
-			if (to_be_split(token_value))
-			{
-				// printf("%s should be split\n", token_value);
-				new = split_token_value(token_value);
-				if (is_whitespace(token_value[0]) || is_operator(token_value[0]))
-					skipped = 1;
-			}
-			else
-				new = new_token(token_value, TOKEN_WORD, false);
+				
+			/* 	WHY IM CHECKING THIS??	*/
+			// if (to_be_split(token_value))
+			// {
+			// 	// printf("%s should be split\n", token_value);
+			// 	new = split_token_value(token_value);
+			// 	if (is_whitespace(token_value[0]) || is_operator(token_value[0]))
+			// 		skipped = 1;
+			// }
+			// else
+			new = new_token(token_value, TOKEN_WORD, false);
+			
 			if (!new)
 				return (NULL);	// cleanp()
 			add_token(&tokens, new);
 			i += len;
 		}
-		// printf("new.value = %s\nskipped = %d\n", new->value, skipped);
-		ctx->no_expand_heredoc = 0;
-		// printf("\nskipi?  %d\nvalue = [%s]\ncurretn cahr(%c) with len = (%d)\n\n",
-					// skipped, token_value,ctx->input[i+len], len);
+		
+		printf("skipped = %d\n", skipped);
 		if (tokens_size(tokens) > 1)
 		{
-			// printf("last_token(tokens)->prev)->value = %s\n", (last_token(tokens)->prev)->value);
 			if (new->type == TOKEN_WORD && skipped == 0 && (new->prev)->type == TOKEN_WORD)
 				join_tokens(tokens, new);
 		}
-		if (token_value && ctx->input[i - len] != '$')
+		/*  RESET VARS	*/
+		
+		/*	I NEED TO KNOW WHY DID I SET THIS CONDITION   && ctx->input[i - len] != '$'	*/
+		// if (token_value)
 			skipped = 0;
+
+		if (is_whitespace(ctx->input[i + 1]) || ctx->input[i + 1] == '\0')
+			ctx->no_expand_heredoc = 0;
 	}
 	return (tokens);
 }

@@ -1,52 +1,5 @@
-bash-5.2$ << $"USER"
-> 
-bash: warning: here-document at line 60 delimited by end-of-file (wanted `USER')
-bash-5.2$ << "$USER"
-> 
-bash: warning: here-document at line 61 delimited by end-of-file (wanted `$USER')
-bash-5.2$ << $
-> 
-bash: warning: here-document at line 62 delimited by end-of-file (wanted `$')
-bash-5.2$ << $USER
-> 
-bash: warning: here-document at line 63 delimited by end-of-file (wanted `$USER')
-bash-5.2$ << $"USER" 					JST WITH HEREDOC 	THIS SHIT ONT WORKING YET, I KEEP $ ALWAYS
-> 
-bash: warning: here-document at line 64 delimited by end-of-file (wanted `USER')
-bash-5.2$ << $""															HERE ALSO
-> 
-bash: warning: here-document at line 65 delimited by end-of-file (wanted `')
-bash-5.2$ << $''				JST WITH HEREDOC					HERE ALSO
-> 
-bash: warning: here-document at line 66 delimited by end-of-file (wanted `')
-bash-5.2$ << $U"U"
-> 
-bash: warning: here-document at line 67 delimited by end-of-file (wanted `$UU')
-bash-5.2$ << $"UU"		$ DOESNT GET GOT
-> 
-bash: warning: here-document at line 68 delimited by end-of-file (wanted `UU')
-bash-5.2$ << "$""UU"
-> 
-bash: warning: here-document at line 69 delimited by end-of-file (wanted `$UU')
-bash-5.2$ << '$'"UU"
-> 
-bash: warning: here-document at line 70 delimited by end-of-file (wanted `$UU')
-bash-5.2$ << $"UU"  DOLLAR NOT REMOVED HERE ALSO
-> 
-bash: warning: here-document at line 71 delimited by end-of-file (wanted `UU')
-bash-5.2$ << $"UU"^C
-
-minihell $> << $U"U"
-Token: [<<] (HEREDOC)
-Token: [$U] (WORD)
-Token: [U] (WORD)
-******************
-
-
 
 HANDEL AMBEGIUOS COMMANDD $A="BAL BLA" OR EMPTY
-
-
 
 *************************
 
@@ -63,68 +16,66 @@ i think this was just a printf error
 
 *****************************
 
-
 make a heredoc flag to figure out if u'll expand in the input or nuh
  
- 
- 
-*******
-
-minihell $> '
-SYNTAX ERROR: unclosed quotes
-Token: [d�U] (WORD)
-minihell $> \'
-SYNTAX ERROR: unclosed quotes
-Token: [\d�U] (WORD)minihell $> << $"USER"
-
-skipi?  0
-value = [<<]
-curretn cahr(") with len = (2)
+	I DID
 
 
-skipi?  1
-value = [$]
-curretn cahr(U) with len = (1)
-
-in q_h() ["]
-
-skipi?  1
-value = [USER]
-curretn cahr() with len = (6)
-
-Token: [<<] (HEREDOC)
-Token: [$] (WORD)
-Token: [USER] (WORD)
-curretn cahr() with len = (2)
-
-^C
-bash-5.2$ 
 
 ***********
 
+THIS OEN IS FIXED BUT NOT THE LATER ONE
+					minihell $> << $"USER"
 
-minihell $> << $"USER"
-
-skipi?  0
-value = [<<]
-curretn cahr(") with len = (2)
+					skipi?  0
+					value = [<<]
+					curretn cahr(") with len = (2)
 
 
-skipi?  1
-value = [$]
-curretn cahr(U) with len = (1)
+					skipi?  1
+					value = [$]
+					curretn cahr(U) with len = (1)
 
-in q_h() ["]
+					in q_h() ["]
 
-skipi?  1
-value = [USER]
-curretn cahr() with len = (6)
+					skipi?  1
+					value = [USER]
+					curretn cahr() with len = (6)
 
-Token: [<<] (HEREDOC)
-Token: [$] (WORD)
-Token: [USER] (WORD)
+					Token: [<<] (HEREDOC)
+					Token: [$] (WORD)
+					Token: [USER] (WORD)
 
+STILL DONT KNOW WHAT HAPPENS   //    FIXED
+
+	minihell $> << d$"USER"
+	current char[ ]
+	current char["]
+
+	joining [d$] with [USER]
+
+	current char[]
+	Token: [<<] (HEREDOC)
+	Token: [d$USER] (WORD)
+
+*******************
+		DONE
+"$" shouldn't be null
+					wym? 
+		er3bus@ANOUAR:/mnt/c/Users/21260$ << "$"
+		>
+		-bash: warning: here-document at line 8 delimited by end-of-file (wanted `$')
+		er3bus@ANOUAR:/mnt/c/Users/21260$ "$"
+		$: command not found
+		er3bus@ANOUAR:/mnt/c/Users/21260$
+
+*******************
+		DONE
+er3bus@ANOUAR:/mnt/c/Users/21260$  <<ff$"HOME"
+>
+-bash: warning: here-document at line 10 delimited by end-of-file (wanted `ffHOME')
+
+dollar should get got
 
 *******************
 
-"$" should be null

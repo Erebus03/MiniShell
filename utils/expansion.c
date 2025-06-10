@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 21:41:16 by araji             #+#    #+#             */
-/*   Updated: 2025/06/03 19:55:18 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/04 19:15:01 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	build_expanded_string(t_general *ctx, int start, char stop_char, char *resul
 		{
 			processed = handle_dollar(ctx, i, &temp_value);
 
-			printf("\ntmp_val = %s\nproccessed = %d\nwere at char [%c]\n", temp_value, processed, ctx->input[i]);
+			// printf("\ntmp_val = %s\nproccessed = %d\nwere at char [%c]\n", temp_value, processed, ctx->input[i]);
 			if (processed <= 0)
 				return (-1);
 			if (temp_value)

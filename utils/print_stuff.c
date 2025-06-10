@@ -24,9 +24,10 @@ void	print_tokens(t_token *tokens)
 	current = tokens;
 	while (current)
 	{
-		printf("Token: [%s] (%s)\n",
+		printf("Token: [%s] (%s) (%d)\n",
 			current->value,
-			type_str[current->type]);
+			type_str[current->type],
+			current->quoted_delimliter);
 		current = current->next;
 	}
 }

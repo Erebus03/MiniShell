@@ -21,8 +21,11 @@ int handle_word(t_general *ctx, int i, char **value)
 	start = i;
 	word_end = i;
 	while (ctx->input[word_end] && !is_whitespace(ctx->input[word_end])
-		&& !is_operator(ctx->input[word_end]) && !is_quote(ctx->input[word_end]))
+		&& !is_operator(ctx->input[word_end]) && !is_quote(ctx->input[word_end])
+		&& ctx->input[word_end] != '$')
 		word_end++;
+
+
 	result_size = calculate_expansion_size(ctx, start, ctx->input[word_end]);
 	if (result_size < 0)
 		return (-1);
@@ -38,6 +41,7 @@ int handle_word(t_general *ctx, int i, char **value)
 		return (-1);
 	}
 	*value = result;
+	// printf("\nhandel word got %s\n\n", result);
 	return (word_end - start);
 }
 
@@ -116,7 +120,7 @@ int	handle_quotes(t_general *ctx, int i, char **value)
 /* Handles var expansion ($VAR) */
 
 int	handle_dollar(t_general *ctx, int i, char **value)
-{	
+{
 	char	*var_name;
 
 	int (start), (var_len);
@@ -141,13 +145,14 @@ int	handle_dollar(t_general *ctx, int i, char **value)
 	var_name[var_len] = '\0';
 	
 	// printf("input[%ld]===(%c)\nI = %d\n", strlen(ctx->input), ctx->input[strlen(ctx->input)], i);
-	if (var_len > 0)
+	if (var_len > 0 && ctx->no_expand_heredoc == 0)
 		*value = get_env_value(var_name, ctx->envlst);
+	else if (var_len > 0 && ctx->no_expand_heredoc == 1)
+		*value = ft_strjoin("$", var_name);
 	else if (ctx->input[i] != '\0')
 		*value = NULL;
 	else
 		*value = ft_strdup("$");
-	
-	free(var_name);
+
 	return (i - start);
 }

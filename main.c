@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:53 by araji             #+#    #+#             */
-/*   Updated: 2025/06/03 05:56:30 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/08 20:57:10 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,11 @@ int	main(int ac, char **av, char **envp)
 		// 									context.input[strlen(context.input) ]);
 
 		if (validate_quotes(&context) == 0)
+		{
 			printf("SYNTAX ERROR: unclosed quotes\n");
+			add_history(context.input);
+			continue;
+		}
 		add_history(context.input);
 		parse_command(&context);
 	}
@@ -96,3 +100,4 @@ int	main(int ac, char **av, char **envp)
 // 	printf("var(%d) = %s\n", i, context.envarr[i]);
 // }
 // write(1, "\nizfinish\n\n", 10);
+

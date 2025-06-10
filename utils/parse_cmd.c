@@ -20,6 +20,30 @@ t_command	*parse_command(t_general *ctx)
 	t_token *(all_tokens), *(cmd_start), *(current), *(prev);
 	t_command *(commands), *(new_cmd);
 	all_tokens = tokenize_input(ctx);
+
+	/*	should i check for imbegious commands here or what
+		
+		cant check after splitting env_var cuz it also be split by operator
+		or maybe check just the first two, there would necesserally be two tokens
+		if theyre words => imbegious
+		maybe that cant work either, what if there is one word in env_var,
+		but there os already a word before
+
+
+	*/
+	/* for now */
+	for (t_token* tmp = all_tokens; tmp; tmp = tmp->next)
+	{
+		if (tmp->value[0] == '>' || tmp->value[0] == '<') {
+			if (tmp->next && tmp->next->type == TOKEN_WORD) {
+				if (tmp->next->next && tmp->next->next->type == TOKEN_WORD) {
+					printf("Bash :  ambiguous redirect\n");
+					exit(124);
+				}
+			}
+		}
+	}
+
 	commands = NULL;
 	cmd_start = all_tokens;
 	current = all_tokens;
@@ -63,7 +87,7 @@ t_command	*parse_command(t_general *ctx)
 		if (!new_cmd)
 		{
 			set_error(ctx, ERROR_MEMORY, "Memory allocation failed");
-			return (NULL);// cleanp()
+			return (NULL);// cleanup()
 		}
 		new_cmd->tokens = cmd_start;
 		if (process_tokens(new_cmd) != SUCCESS)
