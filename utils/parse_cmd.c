@@ -32,18 +32,22 @@ t_command	*parse_command(t_general *ctx)
 
 	*/
 	/* for now */
-	for (t_token* tmp = all_tokens; tmp; tmp = tmp->next)
-	{
-		if (tmp->value[0] == '>' || tmp->value[0] == '<') {
-			if (tmp->next && tmp->next->type == TOKEN_WORD) {
-				if (tmp->next->next && tmp->next->next->type == TOKEN_WORD) {
-					printf("Bash :  ambiguous redirect\n");
-					exit(124);
-				}
-			}
-		}
-	}
+	// for (t_token* tmp = all_tokens; tmp; tmp = tmp->next)
+	// {
+	// 	if (ft_strcmp("<", tmp->value) == 0
+	// 		|| ft_strcmp(">", tmp->value) == 0
+	// 		|| ft_strcmp(">>", tmp->value) == 0)
+	// 	{				//  tmp->value[0] == '>' || tmp->value[0] == '<') {
+	// 		if (tmp->next && tmp->next->type == TOKEN_WORD) {
+	// 			if (tmp->next->next && tmp->next->next->type == TOKEN_WORD) {
+	// 				printf("Bash :  ambiguous redirect\n");
+	// 				exit(124);
+	// 			}
+	// 		}
+	// 	}
+	// }
 
+	
 	commands = NULL;
 	cmd_start = all_tokens;
 	current = all_tokens;

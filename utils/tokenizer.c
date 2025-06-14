@@ -6,7 +6,7 @@
 /*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 15:46:34 by araji             #+#    #+#             */
-/*   Updated: 2025/06/05 18:14:09 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/10 20:30:45 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ t_token	*tokenize_input(t_general *ctx)
 		printf("skipped = %d\n", skipped);
 		if (tokens_size(tokens) > 1)
 		{
-			if (new->type == TOKEN_WORD && skipped == 0 && (new->prev)->type == TOKEN_WORD)
+			if (new->type == TOKEN_WORD && skipped == 0 && new->prev && (new->prev)->type == TOKEN_WORD)
 				join_tokens(tokens, new);
 		}
 		/*  RESET VARS	*/
@@ -118,6 +118,8 @@ t_token	*tokenize_input(t_general *ctx)
 
 		if (is_whitespace(ctx->input[i + 1]) || ctx->input[i + 1] == '\0')
 			ctx->no_expand_heredoc = 0;
+	
+		write(1, "here \n", 6);
 	}
 	return (tokens);
 }
