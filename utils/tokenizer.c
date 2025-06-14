@@ -6,7 +6,7 @@
 /*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 15:46:34 by araji             #+#    #+#             */
-/*   Updated: 2025/06/10 20:30:45 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/14 15:21:30 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ t_token	*tokenize_input(t_general *ctx)
 				join_tokens(tokens, new);
 		}
 		/*  RESET VARS	*/
-		
+		// blablablablla
 		/*	I NEED TO KNOW WHY DID I SET THIS CONDITION   && ctx->input[i - len] != '$'	*/
 		// if (token_value)
 			skipped = 0;
