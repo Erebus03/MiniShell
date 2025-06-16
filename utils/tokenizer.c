@@ -6,7 +6,7 @@
 /*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 15:46:34 by araji             #+#    #+#             */
-/*   Updated: 2025/06/14 15:21:30 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/16 16:15:07 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,16 +86,6 @@ t_token	*tokenize_input(t_general *ctx)
 			len = handle_word(ctx, i, &token_value);
 			if (len < 0)
 				return (NULL);	// cleanp()
-				
-			/* 	WHY IM CHECKING THIS??	*/
-			// if (to_be_split(token_value))
-			// {
-			// 	// printf("%s should be split\n", token_value);
-			// 	new = split_token_value(token_value);
-			// 	if (is_whitespace(token_value[0]) || is_operator(token_value[0]))
-			// 		skipped = 1;
-			// }
-			// else
 			new = new_token(token_value, TOKEN_WORD, false);
 			
 			if (!new)
@@ -103,22 +93,17 @@ t_token	*tokenize_input(t_general *ctx)
 			add_token(&tokens, new);
 			i += len;
 		}
-		
 		printf("skipped = %d\n", skipped);
 		if (tokens_size(tokens) > 1)
 		{
 			if (new->type == TOKEN_WORD && skipped == 0 && new->prev && (new->prev)->type == TOKEN_WORD)
 				join_tokens(tokens, new);
 		}
-		/*  RESET VARS	*/
-		// blablablablla
-		/*	I NEED TO KNOW WHY DID I SET THIS CONDITION   && ctx->input[i - len] != '$'	*/
+		/*	I NEED TO KNOW WHY DID I SET THIS CONDITION   && ctx->input[i - len] != '$'	*/			/*  RESET VARS	*/
 		// if (token_value)
 			skipped = 0;
-
 		if (is_whitespace(ctx->input[i + 1]) || ctx->input[i + 1] == '\0')
 			ctx->no_expand_heredoc = 0;
-	
 		write(1, "here \n", 6);
 	}
 	return (tokens);
