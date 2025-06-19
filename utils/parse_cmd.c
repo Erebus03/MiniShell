@@ -56,6 +56,14 @@ t_command	*parse_command(t_general *ctx)
 		return (NULL);
 
   	print_tokens(all_tokens);
+
+	if (!check_syntax(ctx, all_tokens))
+	{
+		printf("minishell syntax error : exited with %d\n", ctx->exit_status);
+		return NULL;
+	}
+	printf("syntax good\n");
+
 	while (current)
 	{
 		if (current->type == TOKEN_PIPE)
@@ -105,19 +113,3 @@ t_command	*parse_command(t_general *ctx)
 	return (commands);
 }
 
-// void	parse_command(t_general *ctx)
-// {
-// 	char	*type_str[] = {"WORD", "PIPE", "REDIR_IN",
-// 		"REDIR_OUT", "REDIR_APPEND", "HEREDOC"};
-
-// 	t_token *(all_tokens), *(current);
-// 	all_tokens = tokenize_input(ctx);
-// 	current = all_tokens;
-// 	while (current)
-// 	{
-// 		printf("Token: [%s](type: %s))\n",
-// 			current->value,
-// 			type_str[current->type]);
-// 		current = current->next;
-// 	}
-// }

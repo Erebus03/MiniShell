@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
+/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:58 by araji             #+#    #+#             */
-/*   Updated: 2025/06/05 16:59:46 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/19 17:03:54 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,12 +73,19 @@ typedef struct s_command
     struct s_command *next;		// next command in pipeline
 }	t_command;
 
+typedef struct s_memory
+{
+	void			*ptr;
+	struct s_memory	*next;
+}	t_memory;
+
 typedef struct s_general
 {
     char            *input;		// input string
     t_env_var		*envlst;	// environment variables
     char			**envarr;	// environment variables
     t_error_code    error;		// last error code
+	t_memory		*heap;
     char            *error_msg;	// detailed error message
     int             exit_status;// last command exit status
     int             no_expand_heredoc;// last command exit status
@@ -117,6 +124,7 @@ int				tokens_size(t_token *lst);
 t_token			*last_token(t_token *lst);
 
 void			init_general_struct(t_general *context, char *value);
+int				validate_quotes(t_general *ctx);
 
 int				calculate_expansion_size(t_general *ctx, int start, char stop_char);
 int				build_expanded_string(t_general *ctx, int start, char stop_char, char *result);
@@ -124,3 +132,7 @@ int				build_expanded_string(t_general *ctx, int start, char stop_char, char *re
 int				to_be_split(char *value);
 t_token			*split_token_value(char *value);//, int *skipped);
 int				ft_strcmp(const char *s1, const char *s2);
+
+
+void			cleanup(t_general *ctx);
+int				check_syntax(t_general *ctx, t_token* tokens);
