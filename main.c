@@ -6,7 +6,7 @@
 /*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:53 by araji             #+#    #+#             */
-/*   Updated: 2025/06/19 21:29:44 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/20 17:33:19 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,14 @@ void	init_general_struct(t_general *context, char *value)
 	context->exit_status = 0;
 	context->no_expand_heredoc = 0;
 }
-
+void	run(void)
+{
+	return ;
+}	
 int	main(int ac, char **av, char **envp)
 {
 	t_general	(context);
+	t_command	*cmds;
 	(void)av;
 	init_general_struct(&context, NULL);
 	if (ac != 1)
@@ -35,11 +39,15 @@ int	main(int ac, char **av, char **envp)
 		exit(1);
 	}
 	list_env_vars(&context.envlst, envp);
+
 	while (37)
 	{
 		context.input = readline("\001\033[32m\002minihell $> \001\033[0m\002");
 		if (ft_strcmp(context.input, "exit") == 0)
-			exit(0); // exit with 2
+		{
+			write(1, "calling exit\n", 13);
+			clean_exit(&context, NULL, 0);  //exit(0); // exit with 2
+		}
 		// if (check_syntax(&context) == 0)
 		// {
 		// 	printf("syntax error\n");
@@ -48,7 +56,11 @@ int	main(int ac, char **av, char **envp)
 		// 	continue;
 		// }
 		add_history(context.input);
-		parse_command(&context);
+		/**/cmds = parse_command(&context);
+		run();
+		// print_commands(cmds);
+		// write(1, "zaba on the fly\n", 16);
+		free_commands(&cmds);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:58:07 by araji             #+#    #+#             */
-/*   Updated: 2025/06/01 13:08:46 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/20 14:52:09 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	copy_envp(t_general *ctx)
 		ctx->envarr[i++] = join_key_value(tmp->key, tmp->value);
 		tmp = tmp->next;
 	}
+	ctx->envarr[i] = NULL;
 }
 
 void	add_variable(t_env_var **lst, t_env_var *new_var)

@@ -6,7 +6,7 @@
 /*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 16:15:40 by araji             #+#    #+#             */
-/*   Updated: 2025/06/19 20:28:01 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/20 17:53:03 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int check_syntax(t_general *ctx, t_token* all_tokens)
 		ctx->exit_status = 2;
 		return 0;
 	}
-	printf("quotes are valid\n");
+	// printf("quotes are valid\n");
 	t_token *token = all_tokens;
 	while (token)
 	{
@@ -59,12 +59,12 @@ int check_syntax(t_general *ctx, t_token* all_tokens)
 			&& token->type != TOKEN_PIPE)
 			&& (!token->next || (token->next && token->next->type != TOKEN_WORD)))
 		{
-			ctx->exit_status = 2;
+			ctx->exit_status = 2; // bash exits with 0
 			return 0;
 		}
 		token = token->next;
 	}
-	printf("synatx valid\n");
+	// printf("synatx valid\n");
 	/*
 			Exit Code 2 - Confirmed Cases:
 			 Unclosed quotes: echo "unclosed → Exit code 2✅

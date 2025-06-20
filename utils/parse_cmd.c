@@ -46,7 +46,6 @@ t_command	*parse_command(t_general *ctx)
 	// 		}
 	// 	}
 	// }
-
 	
 	commands = NULL;
 	cmd_start = all_tokens;
@@ -62,7 +61,7 @@ t_command	*parse_command(t_general *ctx)
 		printf("minishell syntax error : exited with %d\n", ctx->exit_status);
 		return NULL;
 	}
-	printf("syntax good\n");
+	// printf("syntax good\n");
 
 	while (current)
 	{

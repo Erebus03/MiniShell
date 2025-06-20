@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
+/*
 void	add_addr(t_general *ctx, t_memory *new_addr)
 {
 	t_memory	*tmp;
@@ -56,13 +56,16 @@ void	*allocate(t_general *ctx, size_t size)
 	add_addr(ctx, new_addr(mem));
 	return mem;
 }
+*/
 
 void	cleanup(t_general *ctx)
 {
 	t_memory *tmp;
-
+	printf(" jheap ptr %p\n", ctx->heap);
 	while (ctx->heap)
 	{
+		write(1, "cleanig heap\n", 13);
+
 		tmp = ctx->heap;
 		ctx->heap = ctx->heap->next;
 
@@ -78,7 +81,12 @@ void	cleanup(t_general *ctx)
 
 void	clean_exit(t_general *ctx, char *errmsg, int errcode)
 {
-	printf("%s\n", errmsg);
-	cleanup(ctx);
+	(void)errmsg;
+	// printf("%s\n", errmsg);
+	write(1, "print failnt\n", 13);
+	// cleanup(ctx);
+	write(1, "cleanedupppp\n", 13);
+	free_envp(ctx, 'b');
+	write(1, "fred env m'b'\n", 13);
 	exit(errcode);
 }

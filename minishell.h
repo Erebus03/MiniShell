@@ -6,7 +6,7 @@
 /*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:58 by araji             #+#    #+#             */
-/*   Updated: 2025/06/19 17:03:54 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/20 15:14:29 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,8 @@ void			add_command(t_command **commands, t_command *new_cmd);
 void			free_tokens(t_token **tokens);
 void			free_redirs(t_redir **redirs);
 void			free_commands(t_command **commands);
+void			free_envp(t_general *ctx, int mode);
+
 void			list_env_vars(t_env_var **envlst, char **envp);
 void			copy_envp(t_general *ctx);
 char			*get_env_value(char *var_name, t_env_var *lst);
@@ -136,3 +138,6 @@ int				ft_strcmp(const char *s1, const char *s2);
 
 void			cleanup(t_general *ctx);
 int				check_syntax(t_general *ctx, t_token* tokens);
+
+
+void			clean_exit(t_general *ctx, char *errmsg, int errcode);

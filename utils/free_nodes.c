@@ -23,20 +23,29 @@ void	free_commands(t_command **commands)
 	current = *commands;
 	while (current)
 	{
+		// printf("current = %p\n",current);
 		next = current->next;
 		if (current->cmd)
 		{
+
+			// write(1, "first\n", 6);
 			i = -1;
-			while (current->cmd != NULL)
-				free(current->cmd[++i]);
+			if (current->cmd)
+				// printf("current(%p)[0] = %s\n",current->cmd, current->cmd[0]);
+			while (current->cmd[++i] != NULL)
+				free(current->cmd[i]);
 			free(current->cmd);
 		}
+		// write(1, "secnd\n", 6);
+
 		free_redirs(&current->redirs);
+		// write(1, "therd\n", 6);
 		free_tokens(&current->tokens);
+		// write(1, "forth\n", 6);
 		free(current);
 		current = next;
 	}
-	write(1, "freed commands\n", 15);
+	// write(1, "freed commands\n", 15);
 	*commands = NULL;
 }
 
@@ -74,4 +83,36 @@ void	free_tokens(t_token **tokens)
 		current = next;
 	}
 	*tokens = NULL;
+}
+
+void	free_envp(t_general *ctx, int mode)
+{
+	t_env_var	*(tmp);
+	int			(i);
+	if (mode == 'l' || mode == 'b')
+	{
+		while (ctx->envlst)
+		{
+			tmp = ctx->envlst;
+			ctx->envlst = ctx->envlst->next;
+			free(tmp->key);
+			free(tmp->value);
+			free(tmp);
+			tmp = NULL;
+		}
+		free(ctx->envlst);
+		ctx->envlst = NULL;
+	}
+	if (mode == 'a' || mode == 'b')
+	{
+		i = -1;
+		while (ctx->envarr[++i])
+		{
+			// printf("%s\n", ctx->envarr[i]);
+			free(ctx->envarr[i]);
+			ctx->envarr[i] = NULL;
+		}
+		free(ctx->envarr);
+		ctx->envarr = NULL;
+	}
 }

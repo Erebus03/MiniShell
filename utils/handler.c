@@ -128,8 +128,9 @@ int	handle_dollar(t_general *ctx, int i, char **value)
 	start = i++; //skipped $ char
 	if (ctx->input[i] == '?') // $?
 	{
-		printf("\nexit status >%d<\n", ctx->exit_status);// still doesnt change
-		return (0);
+		// printf("%d\n", ctx->exit_status);// still doesnt change
+		*value = ft_itoa(ctx->exit_status);
+		return (2);//ft_strlen(*value));
 	}
 	while (ctx->input[i] && (ft_isalnum(ctx->input[i]) || ctx->input[i] == '_'))
 	{

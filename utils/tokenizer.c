@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
+/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 15:46:34 by araji             #+#    #+#             */
-/*   Updated: 2025/06/16 16:15:07 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/20 18:40:17 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,13 @@ t_token	*tokenize_input(t_general *ctx)
 	t_token *(tokens), *(new);
 	char *(token_value);
 	t_token_type (token_type);
-	int (len), (i), (skipped);
+	int (len), (i), (skipped), (inputlen);
 
 	tokens = NULL;
 	i = 0;
+	inputlen = ft_strlen(ctx->input);
 	skipped = 0;
-	while (ctx->input[i])
+	while (i < inputlen && ctx->input[i])
 	{
 		while (ctx->input[i] && is_whitespace(ctx->input[i]))
 		{
@@ -93,7 +94,7 @@ t_token	*tokenize_input(t_general *ctx)
 			add_token(&tokens, new);
 			i += len;
 		}
-		printf("skipped = %d\n", skipped);
+		// printf("skipped = %d\n", skipped);
 		if (tokens_size(tokens) > 1)
 		{
 			if (new->type == TOKEN_WORD && skipped == 0 && new->prev && (new->prev)->type == TOKEN_WORD)
@@ -104,7 +105,7 @@ t_token	*tokenize_input(t_general *ctx)
 			skipped = 0;
 		if (is_whitespace(ctx->input[i + 1]) || ctx->input[i + 1] == '\0')
 			ctx->no_expand_heredoc = 0;
-		write(1, "here \n", 6);
+		// write(1, "here \n", 6);
 	}
 	return (tokens);
 }
