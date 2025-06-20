@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 15:46:34 by araji             #+#    #+#             */
-/*   Updated: 2025/06/20 18:40:17 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/20 20:45:53 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,12 @@ t_token	*tokenize_input(t_general *ctx)
 		{
 			len = handle_quotes(ctx, i, &token_value);
 			if (len < 0)
-				return (NULL);	//	cleanup()
-			if (token_value)   //	[0])
+				return (NULL);
+			if (token_value) 
 			{
 				new = new_token(token_value, TOKEN_WORD, false);
 				if (!new)
-					return (NULL);	//	cleanp()
+					return (NULL);
 				if (ctx->no_expand_heredoc == 1)
 					new->quoted_delimliter = 1;
 				add_token(&tokens, new);
@@ -54,10 +54,10 @@ t_token	*tokenize_input(t_general *ctx)
 		{
 			len = handle_operator(ctx, i, &token_type, &token_value);
 			if (len < 0)
-				return (NULL);// cleanp()
+				return (NULL);
 			new = new_token(token_value, token_type, false);
 			if (!new)
-				return (NULL);// cleanp()
+				return (NULL);
 			add_token(&tokens, new);
 			i += len;
 		}
@@ -65,7 +65,7 @@ t_token	*tokenize_input(t_general *ctx)
 		{
 			len = handle_dollar(ctx, i, &token_value);
 			if (len < 0)
-				return (NULL);// cleanp()
+				return (NULL);
 			if (token_value)
 			{
 				if (to_be_split(token_value))
@@ -77,7 +77,7 @@ t_token	*tokenize_input(t_general *ctx)
 				else
 					new = new_token(token_value, TOKEN_WORD, true);
 				if (!new)
-					return (NULL);// cleanp()
+					return (NULL);
 				add_token(&tokens, new);
 			}
 			i += len;
@@ -86,11 +86,11 @@ t_token	*tokenize_input(t_general *ctx)
 		{
 			len = handle_word(ctx, i, &token_value);
 			if (len < 0)
-				return (NULL);	// cleanp()
+				return (NULL);
 			new = new_token(token_value, TOKEN_WORD, false);
 			
 			if (!new)
-				return (NULL);	// cleanp()
+				return (NULL);
 			add_token(&tokens, new);
 			i += len;
 		}

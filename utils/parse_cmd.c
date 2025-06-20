@@ -62,7 +62,7 @@ t_command	*parse_command(t_general *ctx)
 		return NULL;
 	}
 	// printf("syntax good\n");
-
+	ctx->exit_status = 0;
 	while (current)
 	{
 		if (current->type == TOKEN_PIPE)
