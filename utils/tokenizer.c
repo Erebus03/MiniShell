@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
+/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 15:46:34 by araji             #+#    #+#             */
-/*   Updated: 2025/06/21 21:24:52 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/21 22:27:28 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ t_token	*tokenize_input(t_general *ctx)
 			len = handle_dollar(ctx, i, &token_value);
 			if (len < 0)
 				return (NULL);
-			printf("\n\nexpanded value = %p\n\n", token_value);
+			// printf("\n\nexpanded value = %p\n\n", token_value);
 			if (token_value)
 			{
 				if (to_be_split(token_value))
@@ -91,20 +91,20 @@ t_token	*tokenize_input(t_general *ctx)
 			new = new_token(token_value, TOKEN_WORD, false);
 			
 			if (token_value)
-				printf("word talen = %s\n", token_value);
+				// printf("word taken = %s\n", token_value);
 			if (!new)
 				return (NULL);
 			add_token(&tokens, new);
 			i += len;
 		}
-		printf("skipped = %d\n", skipped);
-		if (tokens_size(tokens) > 1)
+		// printf("token_value = %s	|	 skipped = %d\n", token_value, skipped);
+		if (token_value && tokens_size(tokens) > 1)
 		{
 			if (new->type == TOKEN_WORD && skipped == 0 && new->prev && (new->prev)->type == TOKEN_WORD)
 				join_tokens(tokens, new);
 		}
 		/*	I NEED TO KNOW WHY DID I SET THIS CONDITION   && ctx->input[i - len] != '$'	*/			/*  RESET VARS	*/
-		if (token_value)
+		if (token_value) // && ctx->input[i - len] != '$')
 			skipped = 0;
 		if (is_whitespace(ctx->input[i + 1]) || ctx->input[i + 1] == '\0')
 			ctx->no_expand_heredoc = 0;
