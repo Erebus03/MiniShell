@@ -16,7 +16,7 @@ void	add_token(t_token **tokens, t_token *new_token)
 {
 	t_token	*current;
 
-	if (!tokens)	
+	if (!tokens)
 		return ;
 	if (!*tokens)
 	{
@@ -26,7 +26,6 @@ void	add_token(t_token **tokens, t_token *new_token)
 	current = *tokens;
 	while (current->next)
 		current = current->next;
-	
 	current->next = new_token;
 	new_token->prev = current;
 }

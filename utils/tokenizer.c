@@ -6,7 +6,7 @@
 /*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 15:46:34 by araji             #+#    #+#             */
-/*   Updated: 2025/06/21 22:27:28 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/22 17:15:34 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_token	*tokenize_input(t_general *ctx)
 		}
 		if (!ctx->input[i])
 			break ;
-		if (tokens && (last_token(tokens))->type == TOKEN_HEREDOC)
+		if (tokens && (last_token(tokens))->type == THEREDOC)
 			ctx->no_expand_heredoc = 1;
 		if ((ctx->input[i] == '"' || ctx->input[i] == '\''))
 		{
@@ -41,7 +41,7 @@ t_token	*tokenize_input(t_general *ctx)
 				return (NULL);
 			if (token_value) 
 			{
-				new = new_token(token_value, TOKEN_WORD, false);
+				new = new_token(token_value, TWORD, false);
 				if (!new)
 					return (NULL);
 				if (ctx->no_expand_heredoc == 1)
@@ -76,7 +76,7 @@ t_token	*tokenize_input(t_general *ctx)
 						skipped = 1;
 				}
 				else
-					new = new_token(token_value, TOKEN_WORD, true);
+					new = new_token(token_value, TWORD, true);
 				if (!new)
 					return (NULL);
 				add_token(&tokens, new);
@@ -88,7 +88,7 @@ t_token	*tokenize_input(t_general *ctx)
 			len = handle_word(ctx, i, &token_value);
 			if (len < 0)
 				return (NULL);
-			new = new_token(token_value, TOKEN_WORD, false);
+			new = new_token(token_value, TWORD, false);
 			
 			if (token_value)
 				// printf("word taken = %s\n", token_value);
@@ -100,7 +100,7 @@ t_token	*tokenize_input(t_general *ctx)
 		// printf("token_value = %s	|	 skipped = %d\n", token_value, skipped);
 		if (token_value && tokens_size(tokens) > 1)
 		{
-			if (new->type == TOKEN_WORD && skipped == 0 && new->prev && (new->prev)->type == TOKEN_WORD)
+			if (new->type == TWORD && skipped == 0 && new->prev && (new->prev)->type == TWORD)
 				join_tokens(tokens, new);
 		}
 		/*	I NEED TO KNOW WHY DID I SET THIS CONDITION   && ctx->input[i - len] != '$'	*/			/*  RESET VARS	*/

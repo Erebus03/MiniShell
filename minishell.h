@@ -6,7 +6,7 @@
 /*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:58 by araji             #+#    #+#             */
-/*   Updated: 2025/06/20 15:14:29 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/22 17:14:12 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,12 @@ typedef enum e_error_code
 
 typedef enum e_token_type
 {
-    TOKEN_WORD,
-    TOKEN_PIPE,			// |
-    TOKEN_REDIR_IN,		// <
-    TOKEN_REDIR_OUT,	// >
-    TOKEN_REDIR_APPEND,	// >>
-    TOKEN_HEREDOC		// <<
+    TWORD,
+    TPIPE,			// |
+    TREDIR_IN,		// <
+    TREDIR_OUT,		// >
+    TREDIR_APPEND,	// >>
+    THEREDOC		// <<
 }	t_token_type;
 
 typedef struct s_token

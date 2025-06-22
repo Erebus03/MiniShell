@@ -56,27 +56,27 @@ int	handle_operator(t_general *ctx, int i, t_token_type *type, char **value)
 	has_next = (ctx->input[i + 1] != '\0');
 	if (ctx->input[i] == '|')
 	{
-		*type = TOKEN_PIPE;
+		*type = TPIPE;
 	}
 	else if (ctx->input[i] == '<')
 	{
 		if (has_next && ctx->input[i + 1] == '<')
 		{
-			*type = TOKEN_HEREDOC;
+			*type = THEREDOC;
 			len = 2;
 		}
 		else
-			*type = TOKEN_REDIR_IN;
+			*type = TREDIR_IN;
 	}
 	else if (ctx->input[i] == '>')
 	{
 		if (has_next && ctx->input[i + 1] == '>')
 		{
-			*type = TOKEN_REDIR_APPEND;
+			*type = TREDIR_APPEND;
 			len = 2;
 		}
 		else
-			*type = TOKEN_REDIR_OUT;
+			*type = TREDIR_OUT;
 	}
 	result = malloc(len + 1);
 	if (!result)

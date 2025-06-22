@@ -20,17 +20,12 @@ t_command	*parse_command(t_general *ctx)
 	t_token *(all_tokens), *(cmd_start), *(current), *(prev);
 	t_command *(commands), *(new_cmd);
 	all_tokens = tokenize_input(ctx);
-
 	/*	should i check for imbegious commands here or what
-		
 		cant check after splitting env_var cuz it also be split by operator
 		or maybe check just the first two, there would necesserally be two tokens
 		if theyre words => imbegious
 		maybe that cant work either, what if there is one word in env_var,
-		but there os already a word before
-
-
-	*/
+		but there os already a word before */
 	/* for now */
 	// for (t_token* tmp = all_tokens; tmp; tmp = tmp->next)
 	// {
@@ -38,22 +33,20 @@ t_command	*parse_command(t_general *ctx)
 	// 		|| ft_strcmp(">", tmp->value) == 0
 	// 		|| ft_strcmp(">>", tmp->value) == 0)
 	// 	{				//  tmp->value[0] == '>' || tmp->value[0] == '<') {
-	// 		if (tmp->next && tmp->next->type == TOKEN_WORD) {
-	// 			if (tmp->next->next && tmp->next->next->type == TOKEN_WORD) {
+	// 		if (tmp->next && tmp->next->type == TWORD) {
+	// 			if (tmp->next->next && tmp->next->next->type == TWORD) {
 	// 				printf("Bash :  ambiguous redirect\n");
 	// 				exit(124);
 	// 			}
 	// 		}
 	// 	}
 	// }
-	
 	commands = NULL;
 	cmd_start = all_tokens;
 	current = all_tokens;
 	prev = NULL;
 	if (!all_tokens)
 		return (NULL);
-
   	print_tokens(all_tokens);
 
 	if (!check_syntax(ctx, all_tokens))
@@ -61,11 +54,10 @@ t_command	*parse_command(t_general *ctx)
 		printf("minishell syntax error : exited with %d\n", ctx->exit_status);
 		return NULL;
 	}
-	// printf("syntax good\n");
 	ctx->exit_status = 0;
 	while (current)
 	{
-		if (current->type == TOKEN_PIPE)
+		if (current->type == TPIPE)
 		{
 			if (prev)
 				prev->next = NULL;

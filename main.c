@@ -6,7 +6,7 @@
 /*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:53 by araji             #+#    #+#             */
-/*   Updated: 2025/06/20 17:33:19 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/22 19:56:48 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int	main(int ac, char **av, char **envp)
 		exit(1);
 	}
 	list_env_vars(&context.envlst, envp);
-
 	while (37)
 	{
 		context.input = readline("\001\033[32m\002minihell $> \001\033[0m\002");
@@ -48,18 +47,10 @@ int	main(int ac, char **av, char **envp)
 			write(1, "calling exit\n", 13);
 			clean_exit(&context, NULL, 0);  //exit(0); // exit with 2
 		}
-		// if (check_syntax(&context) == 0)
-		// {
-		// 	printf("syntax error\n");
-		// 	add_history(context.input);
-		// 	// cleanup(&context);
-		// 	continue;
-		// }
 		add_history(context.input);
 		/**/cmds = parse_command(&context);
 		run();
 		// print_commands(cmds);
-		// write(1, "zaba on the fly\n", 16);
 		free_commands(&cmds);
 	}
 	return (0);
