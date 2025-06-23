@@ -60,17 +60,12 @@ void	*allocate(t_general *ctx, size_t size)
 
 void	cleanup(t_general *ctx)
 {
-	t_memory *tmp;
-	printf(" jheap ptr %p\n", ctx->heap);
+	t_memory	*tmp;
+
 	while (ctx->heap)
 	{
-		write(1, "cleanig heap\n", 13);
-
 		tmp = ctx->heap;
 		ctx->heap = ctx->heap->next;
-
-		printf("freeing %p\n", tmp->ptr);
-
 		free(tmp->ptr);
 		tmp->ptr = NULL;
 		free(tmp);

@@ -6,7 +6,7 @@
 /*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 15:46:34 by araji             #+#    #+#             */
-/*   Updated: 2025/06/22 17:15:34 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/23 22:15:05 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ t_token	*tokenize_input(t_general *ctx)
 	char *(token_value);
 	t_token_type (token_type);
 	int (len), (i), (skipped), (inputlen);
-
 	tokens = NULL;
 	i = 0;
 	inputlen = ft_strlen(ctx->input);
@@ -39,7 +38,7 @@ t_token	*tokenize_input(t_general *ctx)
 			len = handle_quotes(ctx, i, &token_value);
 			if (len < 0)
 				return (NULL);
-			if (token_value) 
+			if (token_value)
 			{
 				new = new_token(token_value, TWORD, false);
 				if (!new)
@@ -66,13 +65,13 @@ t_token	*tokenize_input(t_general *ctx)
 			len = handle_dollar(ctx, i, &token_value);
 			if (len < 0)
 				return (NULL);
-			// printf("\n\nexpanded value = %p\n\n", token_value);
 			if (token_value)
 			{
 				if (to_be_split(token_value))
 				{
 					new = split_token_value(token_value);
-					if (is_whitespace(token_value[0]) || is_operator(token_value[0]))
+					if (is_whitespace(token_value[0])
+						|| is_operator(token_value[0]))
 						skipped = 1;
 				}
 				else
@@ -89,26 +88,21 @@ t_token	*tokenize_input(t_general *ctx)
 			if (len < 0)
 				return (NULL);
 			new = new_token(token_value, TWORD, false);
-			
-			if (token_value)
-				// printf("word taken = %s\n", token_value);
 			if (!new)
 				return (NULL);
 			add_token(&tokens, new);
 			i += len;
 		}
-		// printf("token_value = %s	|	 skipped = %d\n", token_value, skipped);
 		if (token_value && tokens_size(tokens) > 1)
 		{
-			if (new->type == TWORD && skipped == 0 && new->prev && (new->prev)->type == TWORD)
+			if (new->type == TWORD && skipped == 0 && new->prev
+				&& (new->prev)->type == TWORD)
 				join_tokens(tokens, new);
 		}
-		/*	I NEED TO KNOW WHY DID I SET THIS CONDITION   && ctx->input[i - len] != '$'	*/			/*  RESET VARS	*/
-		if (token_value) // && ctx->input[i - len] != '$')
+		if (token_value)
 			skipped = 0;
 		if (is_whitespace(ctx->input[i + 1]) || ctx->input[i + 1] == '\0')
 			ctx->no_expand_heredoc = 0;
-		// write(1, "here \n", 6);
 	}
 	return (tokens);
 }
@@ -120,19 +114,14 @@ void	join_tokens(t_token *tokens, t_token *new)
 	str = NULL;
 	while (tokens != new->prev)
 		tokens = tokens->next;
-	
-	printf("\njoining [%s] with [%s]\n\n", tokens->value, (tokens->next)->value);
-
+	printf("\njoining [%s]-[%s]\n\n", tokens->value, (tokens->next)->value);
 	str = ft_strjoin(tokens->value, (tokens->next)->value);
 	free(tokens->value);
 	tokens->value = str;
-
 	next_node = new->next;
 	free(new->value);
 	free(new);
-	
 	tokens->next = next_node;
-
-    if (next_node)
-        next_node->prev = tokens;
+	if (next_node)
+		next_node->prev = tokens;
 }

@@ -47,33 +47,3 @@ int	tokens_size(t_token *lst)
 	}
 	return (i);
 }
-
-t_token	*last_token(t_token *lst)
-{
-	while (lst->next)
-		lst = lst->next;
-	return (lst);
-}
-
-int	to_be_split(char *value)
-{
-	int	(i);
-	i = 0;
-	while (value[i])
-	{
-		if (is_whitespace(value[i]) || is_operator(value[i]))
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-int	ft_strcmp(const char *s1, const char *s2)
-{
-	int	i;
-
-	i = 0;
-	while (s1[i] && s2[i] && s1[i] == s2[i])
-		i++;
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-}

@@ -6,7 +6,7 @@
 /*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:58 by araji             #+#    #+#             */
-/*   Updated: 2025/06/22 17:14:12 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/23 22:18:30 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,11 @@ typedef struct s_general
     int             no_expand_heredoc;// last command exit status
 }	t_general;
 
-t_redir			*new_redir(t_token_type type, char *file);
+/* s;odogdg */
 t_token			*new_token(char *value, t_token_type type, bool expanded);
 t_command		*new_command(void);
 t_env_var		*new_var(char *key, char *value);
+t_redir			*new_redir(t_token_type type, char *file);
 void			add_token(t_token **tokens, t_token *new_token);
 void			add_redir(t_redir **redirs, t_redir *new_redir);
 void			add_command(t_command **commands, t_command *new_cmd);
@@ -121,6 +122,10 @@ bool			is_quote(char c);
 void			set_error(t_general *ctx, t_error_code code, char *msg);
 
 
+char			*ft_strcpy(char *dest, const char *src);
+char			*ft_strncpy(char *dest, const char *src, size_t n);
+void			increment_val(int *value1, int *value2, int *value3, int *value4);
+
 void			join_tokens(t_token *tokens, t_token *new);
 int				tokens_size(t_token *lst);
 t_token			*last_token(t_token *lst);
@@ -129,7 +134,7 @@ void			init_general_struct(t_general *context, char *value);
 int				validate_quotes(t_general *ctx);
 
 int				calculate_expansion_size(t_general *ctx, int start, char stop_char);
-int				build_expanded_string(t_general *ctx, int start, char stop_char, char *result);
+int				build_exp_str(t_general *ctx, int start, char stop_char, char *result);
 
 int				to_be_split(char *value);
 t_token			*split_token_value(char *value);//, int *skipped);

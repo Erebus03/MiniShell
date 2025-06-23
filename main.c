@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
+/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:53 by araji             #+#    #+#             */
-/*   Updated: 2025/06/22 23:52:21 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/23 22:17:42 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,16 @@ void	init_general_struct(t_general *context, char *value)
 	context->exit_status = 0;
 	context->no_expand_heredoc = 0;
 }
+
 void	run(void)
 {
 	return ;
-}	
+}
+
 int	main(int ac, char **av, char **envp)
 {
-	t_general	(context);
-	t_command	*cmds;
+	t_general (context);
+	t_command *(cmds);
 	(void)av;
 	init_general_struct(&context, NULL);
 	if (ac != 1)
@@ -45,12 +47,11 @@ int	main(int ac, char **av, char **envp)
 		if (ft_strcmp(context.input, "exit") == 0)
 		{
 			write(1, "calling exit\n", 13);
-			clean_exit(&context, NULL, 0);  //exit(0); // exit with 2
+			clean_exit(&context, NULL, 0);
 		}
 		add_history(context.input);
 		cmds = parse_command(&context);
 		run();
-		// print_commands(cmds);
 		free_commands(&cmds);
 	}
 	return (0);

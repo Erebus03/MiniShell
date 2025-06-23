@@ -12,20 +12,7 @@
 
 #include "../minishell.h"
 
-/**
- * Split tokens into commands based on pipe operators
- */
-t_command	*parse_command(t_general *ctx)
-{
-	t_token *(all_tokens), *(cmd_start), *(current), *(prev);
-	t_command *(commands), *(new_cmd);
-	all_tokens = tokenize_input(ctx);
-	/*	should i check for imbegious commands here or what
-		cant check after splitting env_var cuz it also be split by operator
-		or maybe check just the first two, there would necesserally be two tokens
-		if theyre words => imbegious
-		maybe that cant work either, what if there is one word in env_var,
-		but there os already a word before */
+/*
 	/* for now */
 	// for (t_token* tmp = all_tokens; tmp; tmp = tmp->next)
 	// {
@@ -40,19 +27,32 @@ t_command	*parse_command(t_general *ctx)
 	// 			}
 	// 		}
 	// 	}
-	// }
+	// }	*/
+
+void	check_ambigiuos_redir(void)
+{
+	return ;
+}
+/**
+ * Split tokens into commands based on pipe operators
+ */
+
+t_command	*parse_command(t_general *ctx)
+{
+	t_token *(all_tokens), *(cmd_start), *(current), *(prev);
+	t_command *(commands), *(new_cmd);
+	all_tokens = tokenize_input(ctx);
 	commands = NULL;
 	cmd_start = all_tokens;
 	current = all_tokens;
 	prev = NULL;
 	if (!all_tokens)
 		return (NULL);
-  	print_tokens(all_tokens);
-
+	print_tokens(all_tokens);
 	if (!check_syntax(ctx, all_tokens))
 	{
 		printf("minishell syntax error : exited with %d\n", ctx->exit_status);
-		return NULL;
+		return (NULL);
 	}
 	ctx->exit_status = 0;
 	while (current)
@@ -63,18 +63,17 @@ t_command	*parse_command(t_general *ctx)
 				prev->next = NULL;
 			new_cmd = new_command();
 			if (!new_cmd)
-				return (NULL);// cleanp()
+				return (NULL);
 			new_cmd->tokens = cmd_start;
 			if (process_tokens(new_cmd) != SUCCESS)
 			{
-				set_error(ctx, ERROR_SYNTAX, "Syntax error in command");
 				free_commands(&new_cmd);
-				return (NULL);// cleanp()
+				return (NULL);
 			}
 			add_command(&commands, new_cmd);
-			free(current->value); // Free the pipe token value
+			free(current->value);
 			cmd_start = current->next;
-			free(current); // Free the pipe token
+			free(current);
 			current = cmd_start;
 			prev = NULL;
 		}
@@ -88,19 +87,14 @@ t_command	*parse_command(t_general *ctx)
 	{
 		new_cmd = new_command();
 		if (!new_cmd)
-		{
-			set_error(ctx, ERROR_MEMORY, "Memory allocation failed");
-			return (NULL);// cleanup()
-		}
+			return (NULL);
 		new_cmd->tokens = cmd_start;
 		if (process_tokens(new_cmd) != SUCCESS)
 		{
-			set_error(ctx, ERROR_SYNTAX, "Syntax error in command");
 			free_commands(&new_cmd);
-			return (NULL);// cleanp()
+			return (NULL);
 		}
 		add_command(&commands, new_cmd);
 	}
 	return (commands);
 }
-

@@ -13,19 +13,16 @@
 #include "../minishell.h"
 
 /* normal words with no whitespace or operators */
-
-int handle_word(t_general *ctx, int i, char **value)
+int	handle_word(t_general *ctx, int i, char **value)
 {
-	char	*(result);
-	int		(start), (word_end), (result_size);
+	char *(result);
+	int (start), (word_end), (result_size);
 	start = i;
 	word_end = i;
 	while (ctx->input[word_end] && !is_whitespace(ctx->input[word_end])
 		&& !is_operator(ctx->input[word_end]) && !is_quote(ctx->input[word_end])
 		&& ctx->input[word_end] != '$')
 		word_end++;
-
-
 	result_size = calculate_expansion_size(ctx, start, ctx->input[word_end]);
 	if (result_size < 0)
 		return (-1);
@@ -35,18 +32,16 @@ int handle_word(t_general *ctx, int i, char **value)
 		set_error(ctx, ERROR_MEMORY, "Memory allocation failed");
 		return (-1);
 	}
-	if (build_expanded_string(ctx, start, ctx->input[word_end], result) < 0)
+	if (build_exp_str(ctx, start, ctx->input[word_end], result) < 0)
 	{
 		free(result);
 		return (-1);
 	}
 	*value = result;
-	// printf("\nhandel word got %s\n\n", result);
 	return (word_end - start);
 }
 
 /* Handles operator tokens (|, <, >, >>, <<) */
-
 int	handle_operator(t_general *ctx, int i, t_token_type *type, char **value)
 {
 	bool (has_next);
@@ -80,11 +75,8 @@ int	handle_operator(t_general *ctx, int i, t_token_type *type, char **value)
 	}
 	result = malloc(len + 1);
 	if (!result)
-	{
-		set_error(ctx, ERROR_MEMORY, "Memory allocation failed");
 		return (-1);
-	}
-	strncpy(result, ctx->input + i, len);// make it
+	ft_strncpy(result, ctx->input + i, len);
 	result[len] = '\0';
 	*value = result;
 	return (len);
@@ -92,7 +84,6 @@ int	handle_operator(t_general *ctx, int i, t_token_type *type, char **value)
 
 /*	Handel quoted  strs
 	real commands should splitted when passed to env vars (e.i. ls    -l -a) */
-
 int	handle_quotes(t_general *ctx, int i, char **value)
 {
 	int (start), (result_size), (final_pos);
@@ -107,7 +98,7 @@ int	handle_quotes(t_general *ctx, int i, char **value)
 	result = (char *)malloc(result_size + 1);
 	if (!result)
 		return (-1);
-	final_pos = build_expanded_string(ctx, i, quote_char, result);
+	final_pos = build_exp_str(ctx, i, quote_char, result);
 	if (final_pos < 0)
 	{
 		free(result);
@@ -118,23 +109,19 @@ int	handle_quotes(t_general *ctx, int i, char **value)
 }
 
 /* Handles var expansion ($VAR) */
-
 int	handle_dollar(t_general *ctx, int i, char **value)
 {
-	char	*(var_name);
+	char *(var_name);
 	int (start), (var_len);
 	var_len = 0;
-	start = i++; //skipped $ char
-	if (ctx->input[i] == '?') // $?
+	start = i++;
+	if (ctx->input[i] == '?')
 	{
 		*value = ft_itoa(ctx->exit_status);
-		return (2);//ft_strlen(*value));
+		return (2);
 	}
 	while (ctx->input[i] && (ft_isalnum(ctx->input[i]) || ctx->input[i] == '_'))
-	{
-		i++;
-		var_len++;
-	}
+		increment_val(&i, &var_len, NULL, NULL);
 	var_name = (char *)malloc(var_len + 1);
 	if (!var_name)
 		return (0);

@@ -14,8 +14,8 @@
 
 void	free_commands(t_command **commands)
 {
-	t_command	*(current), *(next);
-	int			(i);
+	t_command *(current), *(next);
+	int (i);
 	if (!commands || !*commands)
 		return ;
 	current = *commands;
@@ -75,9 +75,9 @@ void	free_tokens(t_token **tokens)
 
 void	free_envp(t_general *ctx, int mode)
 {
-	t_env_var	*(tmp);
-	int			(i);
-	if (mode == 'l' || mode == 'b')
+	t_env_var *(tmp);
+	int (i);
+	if (ctx->envlst && (mode == 'l' || mode == 'b'))
 	{
 		while (ctx->envlst)
 		{
@@ -91,14 +91,11 @@ void	free_envp(t_general *ctx, int mode)
 		free(ctx->envlst);
 		ctx->envlst = NULL;
 	}
-	if (mode == 'a' || mode == 'b')
+	if (ctx->envarr && (mode == 'a' || mode == 'b'))
 	{
-		i = -1;
-		while (ctx->envarr[++i])
-		{
-			free(ctx->envarr[i]);
-			ctx->envarr[i] = NULL;
-		}
+		i = 0;
+		while (ctx->envarr[i])
+			free(ctx->envarr[i++]);
 		free(ctx->envarr);
 		ctx->envarr = NULL;
 	}

@@ -56,7 +56,6 @@ void	print_redirections(t_redir *redirs)
  */
 void print_commands(t_command *commands)
 {
-	// printf("commands(%p)[%s]\n", commands, commands->cmd[1]);
 	int i = 1;
 	t_command *current = commands;
 	int j;

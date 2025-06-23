@@ -6,7 +6,7 @@
 /*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 16:15:40 by araji             #+#    #+#             */
-/*   Updated: 2025/06/22 17:16:32 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/23 21:52:30 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,13 @@ int	validate_quotes(t_general *ctx)
 	return (1);
 }
 
+/* helper for norm */
+int	s_exitcode_nd_ret(t_general *ctx, int ret_value, int exit_stat)
+{
+	ctx->exit_status = exit_stat;
+	return (ret_value);
+}
+
 int	check_syntax(t_general *ctx, t_token *all_tokens)
 {
 	t_token *(token);
@@ -50,17 +57,12 @@ int	check_syntax(t_general *ctx, t_token *all_tokens)
 		{
 			if (!token->prev || !token->next
 				|| (token->next && token->next->type == TPIPE))
-			{
-				ctx->exit_status = 2;
-				return (0);
-			}
+				return (s_exitcode_nd_ret(ctx, 0, 2));
 		}
-		if ((token->type != TWORD
-				&& token->type != TPIPE)
+		if ((token->type != TWORD && token->type != TPIPE)
 			&& (!token->next || (token->next && token->next->type != TWORD)))
 		{
-			ctx->exit_status = 2;
-			return (0);
+			return (s_exitcode_nd_ret(ctx, 0, 2));
 		}
 		token = token->next;
 	}

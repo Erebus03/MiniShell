@@ -52,8 +52,7 @@ t_redir	*new_redir(t_token_type type, char *file)
 	redir->type = type;
 	redir->file = strdup(file);
 	redir->fd = -1;
-	redir->expand_in_heredec = 0;	//this controls if we gonna expand inside the heredec
-									// and it depends on whether the delimiter is quoted or not
+	redir->expand_in_heredec = 0;
 	redir->next = NULL;
 	return (redir);
 }
