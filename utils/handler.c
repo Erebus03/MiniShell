@@ -121,14 +121,12 @@ int	handle_quotes(t_general *ctx, int i, char **value)
 
 int	handle_dollar(t_general *ctx, int i, char **value)
 {
-	char	*var_name;
-
+	char	*(var_name);
 	int (start), (var_len);
 	var_len = 0;
 	start = i++; //skipped $ char
 	if (ctx->input[i] == '?') // $?
 	{
-		// printf("%d\n", ctx->exit_status);// still doesnt change
 		*value = ft_itoa(ctx->exit_status);
 		return (2);//ft_strlen(*value));
 	}
@@ -140,12 +138,8 @@ int	handle_dollar(t_general *ctx, int i, char **value)
 	var_name = (char *)malloc(var_len + 1);
 	if (!var_name)
 		return (0);
-	// cleanup(ctx, ERROR_MEMORY, "Memory allocation failed");
-	
 	ft_memcpy(var_name, ctx->input + start + 1, var_len);
 	var_name[var_len] = '\0';
-	
-	// printf("input[%ld]===(%c)\nI = %d\n", strlen(ctx->input), ctx->input[strlen(ctx->input)], i);
 	if (var_len > 0 && ctx->no_expand_heredoc == 0)
 		*value = get_env_value(var_name, ctx->envlst);
 	else if (var_len > 0 && ctx->no_expand_heredoc == 1)
@@ -154,6 +148,5 @@ int	handle_dollar(t_general *ctx, int i, char **value)
 		*value = NULL;
 	else
 		*value = ft_strdup("$");
-
 	return (i - start);
 }

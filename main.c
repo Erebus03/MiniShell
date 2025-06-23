@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:53 by araji             #+#    #+#             */
-/*   Updated: 2025/06/22 19:56:48 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/22 23:52:21 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	main(int ac, char **av, char **envp)
 			clean_exit(&context, NULL, 0);  //exit(0); // exit with 2
 		}
 		add_history(context.input);
-		/**/cmds = parse_command(&context);
+		cmds = parse_command(&context);
 		run();
 		// print_commands(cmds);
 		free_commands(&cmds);

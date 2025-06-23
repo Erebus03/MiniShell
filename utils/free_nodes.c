@@ -14,38 +14,26 @@
 
 void	free_commands(t_command **commands)
 {
-	t_command	*current;
-	t_command	*next;
-	int			i;
-
+	t_command	*(current), *(next);
+	int			(i);
 	if (!commands || !*commands)
 		return ;
 	current = *commands;
 	while (current)
 	{
-		// printf("current = %p\n",current);
 		next = current->next;
 		if (current->cmd)
 		{
-
-			// write(1, "first\n", 6);
 			i = -1;
-			if (current->cmd)
-				// printf("current(%p)[0] = %s\n",current->cmd, current->cmd[0]);
 			while (current->cmd[++i] != NULL)
 				free(current->cmd[i]);
 			free(current->cmd);
 		}
-		// write(1, "secnd\n", 6);
-
 		free_redirs(&current->redirs);
-		// write(1, "therd\n", 6);
 		free_tokens(&current->tokens);
-		// write(1, "forth\n", 6);
 		free(current);
 		current = next;
 	}
-	// write(1, "freed commands\n", 15);
 	*commands = NULL;
 }
 
@@ -108,7 +96,6 @@ void	free_envp(t_general *ctx, int mode)
 		i = -1;
 		while (ctx->envarr[++i])
 		{
-			// printf("%s\n", ctx->envarr[i]);
 			free(ctx->envarr[i]);
 			ctx->envarr[i] = NULL;
 		}
