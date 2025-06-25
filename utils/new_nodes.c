@@ -24,7 +24,7 @@ t_token	*new_token(char *value, t_token_type type, bool expanded)
 	token->expanded = expanded;
 	token->next = NULL;
 	token->prev = NULL;
-	token->quoted_delimliter = 0;
+	token->quoted_delim = 0;
 	return (token);
 }
 

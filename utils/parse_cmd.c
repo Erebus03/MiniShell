@@ -13,7 +13,7 @@
 #include "../minishell.h"
 
 /*
-	/* for now */
+
 	// for (t_token* tmp = all_tokens; tmp; tmp = tmp->next)
 	// {
 	// 	if (ft_strcmp("<", tmp->value) == 0
@@ -27,7 +27,8 @@
 	// 			}
 	// 		}
 	// 	}
-	// }	*/
+	// }
+*/
 
 void	check_ambigiuos_redir(void)
 {

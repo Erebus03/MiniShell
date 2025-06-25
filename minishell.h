@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:58 by araji             #+#    #+#             */
-/*   Updated: 2025/06/23 22:18:30 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/24 22:50:13 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef struct s_token
     bool            expanded;			// was this token expanded (from variable)
     struct s_token  *next;				// next token in the list
     struct s_token  *prev;				// prev token
-    int				quoted_delimliter;	// last command exit status
+    int				quoted_delim;	// last command exit status
 }	t_token;
 
 typedef struct s_env_var
@@ -81,17 +81,16 @@ typedef struct s_memory
 
 typedef struct s_general
 {
-    char            *input;		// input string
-    t_env_var		*envlst;	// environment variables
-    char			**envarr;	// environment variables
-    t_error_code    error;		// last error code
+    char            *input;				// input string
+    t_env_var		*envlst;			// environment variables
+    char			**envarr;			// environment variables
+    t_error_code    error;				// last error code
 	t_memory		*heap;
-    char            *error_msg;	// detailed error message
-    int             exit_status;// last command exit status
-    int             no_expand_heredoc;// last command exit status
+    char            *error_msg;			// detailed error message
+    int             exit_status;		// last command exit status
+    int             no_expand_heredoc;	// last command exit status
 }	t_general;
 
-/* s;odogdg */
 t_token			*new_token(char *value, t_token_type type, bool expanded);
 t_command		*new_command(void);
 t_env_var		*new_var(char *key, char *value);
@@ -137,7 +136,7 @@ int				calculate_expansion_size(t_general *ctx, int start, char stop_char);
 int				build_exp_str(t_general *ctx, int start, char stop_char, char *result);
 
 int				to_be_split(char *value);
-t_token			*split_token_value(char *value);//, int *skipped);
+t_token			*split_token_value(char *value);
 int				ft_strcmp(const char *s1, const char *s2);
 
 

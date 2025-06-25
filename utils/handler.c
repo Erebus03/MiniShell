@@ -42,6 +42,48 @@ int	handle_word(t_general *ctx, int i, char **value)
 }
 
 /* Handles operator tokens (|, <, >, >>, <<) */
+static void	set_operator_type(t_token_type *type, char c, char next, int *len)
+{
+	if (c == '|')
+		*type = TPIPE;
+	else if (c == '<')
+	{
+		if (next == '<')
+		{
+			*type = THEREDOC;
+			*len = 2;
+		}
+		else
+			*type = TREDIR_IN;
+	}
+	else if (c == '>')
+	{
+		if (next == '>')
+		{
+			*type = TREDIR_APPEND;
+			*len = 2;
+		}
+		else
+			*type = TREDIR_OUT;
+	}
+}
+
+int	handle_operator(t_general *ctx, int i, t_token_type *type, char **value)
+{
+	int (len);
+	char *(result);
+	len = 1;
+	set_operator_type(type, ctx->input[i], ctx->input[i + 1], &len);
+	result = malloc(len + 1);
+	if (!result)
+		return (-1);
+	ft_strncpy(result, ctx->input + i, len);
+	result[len] = '\0';
+	*value = result;
+	return (len);
+}
+
+/*
 int	handle_operator(t_general *ctx, int i, t_token_type *type, char **value)
 {
 	bool (has_next);
@@ -81,6 +123,7 @@ int	handle_operator(t_general *ctx, int i, t_token_type *type, char **value)
 	*value = result;
 	return (len);
 }
+*/
 
 /*	Handel quoted  strs
 	real commands should splitted when passed to env vars (e.i. ls    -l -a) */

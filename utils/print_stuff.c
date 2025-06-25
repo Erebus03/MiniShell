@@ -27,7 +27,7 @@ void	print_tokens(t_token *tokens)
 		printf("Token: [%s] (%s) (%d)\n",
 			current->value,
 			type_str[current->type],
-			current->quoted_delimliter);
+			current->quoted_delim);
 		current = current->next;
 	}
 }
@@ -54,11 +54,12 @@ void	print_redirections(t_redir *redirs)
 /**
  * Print all commands for debugging
  */
-void print_commands(t_command *commands)
+void	print_commands(t_command *commands)
 {
-	int i = 1;
-	t_command *current = commands;
-	int j;
+	int (i), (j);
+	t_command *(current);
+	i = 1;
+	current = commands;
 	while (current)
 	{
 		printf("Command %d:\n", i++);

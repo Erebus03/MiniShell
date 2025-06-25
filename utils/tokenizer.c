@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 15:46:34 by araji             #+#    #+#             */
-/*   Updated: 2025/06/23 22:15:05 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/24 22:50:38 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ t_token	*tokenize_input(t_general *ctx)
 				if (!new)
 					return (NULL);
 				if (ctx->no_expand_heredoc == 1)
-					new->quoted_delimliter = 1;
+					new->quoted_delim = 1;
 				add_token(&tokens, new);
 			}
 			i += len;
