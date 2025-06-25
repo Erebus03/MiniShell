@@ -38,44 +38,125 @@ void	check_ambigiuos_redir(void)
  * Split tokens into commands based on pipe operators
  */
 
-t_command	*parse_command(t_general *ctx)
+// t_command	*parse_command(t_general *ctx)
+// {
+// 	t_token *(all_tokens), *(cmd_start), *(current), *(prev);
+// 	t_command *(commands), *(new_cmd);
+// 	all_tokens = tokenize_input(ctx);
+// 	commands = NULL;
+// 	cmd_start = all_tokens;
+// 	current = all_tokens;
+// 	prev = NULL;
+// 	if (!all_tokens)
+// 		return (NULL);
+// 	print_tokens(all_tokens);
+// 	if (!check_syntax(ctx, all_tokens))
+// 	{
+// 		printf("minishell syntax error : exited with %d\n", ctx->exit_status);
+// 		return (NULL);
+// 	}
+// 	ctx->exit_status = 0;
+// 	while (current)
+// 	{
+// 		if (current->type == TPIPE)
+// 		{
+// 			if (prev)
+// 				prev->next = NULL;
+// 			new_cmd = new_command();
+// 			if (!new_cmd)
+// 				return (NULL);
+// 			new_cmd->tokens = cmd_start;
+// 			if (process_tokens(new_cmd) != SUCCESS)
+// 			{
+// 				free_commands(&new_cmd);
+// 				return (NULL);
+// 			}
+// 			add_command(&commands, new_cmd);
+// 			free(current->value);
+// 			cmd_start = current->next;
+// 			free(current);
+// 			current = cmd_start;
+// 			prev = NULL;
+// 		}
+// 		else
+// 		{
+// 			prev = current;
+// 			current = current->next;
+// 		}
+// 	}
+// 	if (cmd_start)
+// 	{
+// 		new_cmd = new_command();
+// 		if (!new_cmd)
+// 			return (NULL);
+// 		new_cmd->tokens = cmd_start;
+// 		if (process_tokens(new_cmd) != SUCCESS)
+// 		{
+// 			free_commands(&new_cmd);
+// 			return (NULL);
+// 		}
+// 		add_command(&commands, new_cmd);
+// 	}
+// 	return (commands);
+// }
+
+
+
+
+
+
+
+static t_command	*create_and_process_command(t_token *cmd_start)
 {
-	t_token *(all_tokens), *(cmd_start), *(current), *(prev);
-	t_command *(commands), *(new_cmd);
-	all_tokens = tokenize_input(ctx);
+	t_command	*new_cmd;
+
+	new_cmd = new_command();
+	if (!new_cmd)
+		return (NULL);
+	new_cmd->tokens = cmd_start;
+	if (process_tokens(new_cmd) != SUCCESS)
+	{
+		free_commands(&new_cmd);
+		return (NULL);
+	}
+	return (new_cmd);
+}
+
+static int	handle_pipe_token(t_command **commands, t_token **cmd_start,
+			t_token **current, t_token *prev)
+{
+	t_command	*new_cmd;
+
+	if (prev)
+		prev->next = NULL;
+	new_cmd = create_and_process_command(*cmd_start);
+	if (!new_cmd)
+		return (0);
+	add_command(commands, new_cmd);
+	free((*current)->value);
+	*cmd_start = (*current)->next;
+	free(*current);
+	*current = *cmd_start;
+	return (1);
+}
+
+static t_command	*process_command_tokens(t_token *all_tokens, t_token **last_start)
+{
+	t_token		*cmd_start;
+	t_token		*current;
+	t_token		*prev;
+	t_command	*commands;
+
 	commands = NULL;
 	cmd_start = all_tokens;
 	current = all_tokens;
 	prev = NULL;
-	if (!all_tokens)
-		return (NULL);
-	print_tokens(all_tokens);
-	if (!check_syntax(ctx, all_tokens))
-	{
-		printf("minishell syntax error : exited with %d\n", ctx->exit_status);
-		return (NULL);
-	}
-	ctx->exit_status = 0;
 	while (current)
 	{
 		if (current->type == TPIPE)
 		{
-			if (prev)
-				prev->next = NULL;
-			new_cmd = new_command();
-			if (!new_cmd)
+			if (handle_pipe_token(&commands, &cmd_start, &current, prev) == 0)
 				return (NULL);
-			new_cmd->tokens = cmd_start;
-			if (process_tokens(new_cmd) != SUCCESS)
-			{
-				free_commands(&new_cmd);
-				return (NULL);
-			}
-			add_command(&commands, new_cmd);
-			free(current->value);
-			cmd_start = current->next;
-			free(current);
-			current = cmd_start;
 			prev = NULL;
 		}
 		else
@@ -84,18 +165,45 @@ t_command	*parse_command(t_general *ctx)
 			current = current->next;
 		}
 	}
+	*last_start = cmd_start;
+	return (commands);
+}
+
+static t_command	*finalize_last_command(t_command *commands, t_token *cmd_start)
+{
+	t_command	*new_cmd;
+
 	if (cmd_start)
 	{
-		new_cmd = new_command();
+		new_cmd = create_and_process_command(cmd_start);
 		if (!new_cmd)
 			return (NULL);
-		new_cmd->tokens = cmd_start;
-		if (process_tokens(new_cmd) != SUCCESS)
-		{
-			free_commands(&new_cmd);
-			return (NULL);
-		}
 		add_command(&commands, new_cmd);
 	}
+	print_commands(commands);
 	return (commands);
+}
+
+t_command	*parse_command(t_general *ctx)
+{
+	t_token		*all_tokens;
+	t_token		*last_cmd_start;
+	t_command	*commands;
+
+	all_tokens = tokenize_input(ctx);
+	if (!all_tokens)
+		return (NULL);
+	print_tokens(all_tokens);
+	printf("\n**************************\n\n");
+	if (!check_syntax(ctx, all_tokens))
+	{
+		printf("minishell syntax error : exited with %d\n", ctx->exit_status);
+		return (NULL);
+	}
+	ctx->exit_status = 0;
+	commands = process_command_tokens(all_tokens, &last_cmd_start);
+	print_commands(commands);
+	if (!commands)
+		return (NULL);
+	return (finalize_last_command(commands, last_cmd_start));
 }

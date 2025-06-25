@@ -56,6 +56,7 @@ void	print_redirections(t_redir *redirs)
  */
 void	print_commands(t_command *commands)
 {
+	printf("printing with %p\n", commands);
 	int (i), (j);
 	t_command *(current);
 	i = 1;
