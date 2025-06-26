@@ -30,82 +30,14 @@
 	// }
 */
 
-void	check_ambigiuos_redir(void)
-{
-	return ;
-}
-/**
- * Split tokens into commands based on pipe operators
- */
-
-// t_command	*parse_command(t_general *ctx)
+// void	check_ambigiuos_redir(void)
 // {
-// 	t_token *(all_tokens), *(cmd_start), *(current), *(prev);
-// 	t_command *(commands), *(new_cmd);
-// 	all_tokens = tokenize_input(ctx);
-// 	commands = NULL;
-// 	cmd_start = all_tokens;
-// 	current = all_tokens;
-// 	prev = NULL;
-// 	if (!all_tokens)
-// 		return (NULL);
-// 	print_tokens(all_tokens);
-// 	if (!check_syntax(ctx, all_tokens))
-// 	{
-// 		printf("minishell syntax error : exited with %d\n", ctx->exit_status);
-// 		return (NULL);
-// 	}
-// 	ctx->exit_status = 0;
-// 	while (current)
-// 	{
-// 		if (current->type == TPIPE)
-// 		{
-// 			if (prev)
-// 				prev->next = NULL;
-// 			new_cmd = new_command();
-// 			if (!new_cmd)
-// 				return (NULL);
-// 			new_cmd->tokens = cmd_start;
-// 			if (process_tokens(new_cmd) != SUCCESS)
-// 			{
-// 				free_commands(&new_cmd);
-// 				return (NULL);
-// 			}
-// 			add_command(&commands, new_cmd);
-// 			free(current->value);
-// 			cmd_start = current->next;
-// 			free(current);
-// 			current = cmd_start;
-// 			prev = NULL;
-// 		}
-// 		else
-// 		{
-// 			prev = current;
-// 			current = current->next;
-// 		}
-// 	}
-// 	if (cmd_start)
-// 	{
-// 		new_cmd = new_command();
-// 		if (!new_cmd)
-// 			return (NULL);
-// 		new_cmd->tokens = cmd_start;
-// 		if (process_tokens(new_cmd) != SUCCESS)
-// 		{
-// 			free_commands(&new_cmd);
-// 			return (NULL);
-// 		}
-// 		add_command(&commands, new_cmd);
-// 	}
-// 	return (commands);
+// 	return ;
 // }
 
-
-
-
-
-
-
+/*
+	* Split tokens into commands based on pipe operators
+*/
 static t_command	*create_and_process_command(t_token *cmd_start)
 {
 	t_command	*new_cmd;
@@ -114,11 +46,8 @@ static t_command	*create_and_process_command(t_token *cmd_start)
 	if (!new_cmd)
 		return (NULL);
 	new_cmd->tokens = cmd_start;
-	if (process_tokens(new_cmd) != SUCCESS)
-	{
-		free_commands(&new_cmd);
+	if (process_tokens(new_cmd) != 1)
 		return (NULL);
-	}
 	return (new_cmd);
 }
 
@@ -140,13 +69,11 @@ static int	handle_pipe_token(t_command **commands, t_token **cmd_start,
 	return (1);
 }
 
-static t_command	*process_command_tokens(t_token *all_tokens, t_token **last_start)
+static t_command	*process_cmd_tokens(t_token *all_tokens,
+										t_token **last_start)
 {
-	t_token		*cmd_start;
-	t_token		*current;
-	t_token		*prev;
-	t_command	*commands;
-
+	t_token *(cmd_start), *(current), *(prev);
+	t_command *(commands);
 	commands = NULL;
 	cmd_start = all_tokens;
 	current = all_tokens;
@@ -155,7 +82,7 @@ static t_command	*process_command_tokens(t_token *all_tokens, t_token **last_sta
 	{
 		if (current->type == TPIPE)
 		{
-			if (handle_pipe_token(&commands, &cmd_start, &current, prev) == 0)
+			if (handle_pipe_token(&commands, &cmd_start, &current, prev) != 1)
 				return (NULL);
 			prev = NULL;
 		}
@@ -169,7 +96,8 @@ static t_command	*process_command_tokens(t_token *all_tokens, t_token **last_sta
 	return (commands);
 }
 
-static t_command	*finalize_last_command(t_command *commands, t_token *cmd_start)
+static t_command	*finalize_last_command(t_command *cmds,
+	t_token *cmd_start)
 {
 	t_command	*new_cmd;
 
@@ -178,10 +106,9 @@ static t_command	*finalize_last_command(t_command *commands, t_token *cmd_start)
 		new_cmd = create_and_process_command(cmd_start);
 		if (!new_cmd)
 			return (NULL);
-		add_command(&commands, new_cmd);
+		add_command(&cmds, new_cmd);
 	}
-	print_commands(commands);
-	return (commands);
+	return (cmds);
 }
 
 t_command	*parse_command(t_general *ctx)
@@ -194,16 +121,12 @@ t_command	*parse_command(t_general *ctx)
 	if (!all_tokens)
 		return (NULL);
 	print_tokens(all_tokens);
-	printf("\n**************************\n\n");
 	if (!check_syntax(ctx, all_tokens))
 	{
 		printf("minishell syntax error : exited with %d\n", ctx->exit_status);
 		return (NULL);
 	}
 	ctx->exit_status = 0;
-	commands = process_command_tokens(all_tokens, &last_cmd_start);
-	print_commands(commands);
-	if (!commands)
-		return (NULL);
+	commands = process_cmd_tokens(all_tokens, &last_cmd_start);
 	return (finalize_last_command(commands, last_cmd_start));
 }

@@ -63,6 +63,7 @@ void	print_commands(t_command *commands)
 	current = commands;
 	while (current)
 	{
+		printf("\n******************************\n\n");
 		printf("Command %d:\n", i++);
 		for (j = 0; current->cmd[j] != NULL; j++)
 			printf(" [%s]", current->cmd[j]);

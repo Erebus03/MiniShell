@@ -6,7 +6,7 @@
 /*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:53 by araji             #+#    #+#             */
-/*   Updated: 2025/06/25 20:26:11 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/26 23:14:55 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,7 @@ int	main(int ac, char **av, char **envp)
 		add_history(context.input);
 		cmds = parse_command(&context);
 		run();
-		// printf("cmds = %p\n", cmds);
-		// print_commands(cmds);
+		print_commands(cmds);
 		free_commands(&cmds);
 	}
 	return (0);

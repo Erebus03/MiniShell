@@ -12,13 +12,13 @@
 
 #include "../minishell.h"
 
-void	set_error(t_general *ctx, t_error_code code, char *msg)
-{
-	ctx->error = code;
-	if (ctx->error_msg)
-		free(ctx->error_msg);
-	ctx->error_msg = strdup(msg);
-}
+// void	set_error(t_general *ctx, int code, char *msg)
+// {
+// 	ctx->error = code;
+// 	if (ctx->error_msg)
+// 		free(ctx->error_msg);
+// 	ctx->error_msg = ft_strdup(msg);
+// }
 
 bool	is_whitespace(char c)
 {

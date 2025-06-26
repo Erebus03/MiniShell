@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
+/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:58 by araji             #+#    #+#             */
-/*   Updated: 2025/06/24 22:50:13 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/26 23:53:30 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,14 +81,14 @@ typedef struct s_memory
 
 typedef struct s_general
 {
-    char            *input;				// input string
+    char			*input;				// input string
     t_env_var		*envlst;			// environment variables
     char			**envarr;			// environment variables
-    t_error_code    error;				// last error code
+    int				error;				// last error code
 	t_memory		*heap;
-    char            *error_msg;			// detailed error message
-    int             exit_status;		// last command exit status
-    int             no_expand_heredoc;	// last command exit status
+    char			*error_msg;			// detailed error message
+    int				exit_status;		// last command exit status
+    int				no_expand_heredoc;	// last command exit status
 }	t_general;
 
 t_token			*new_token(char *value, t_token_type type, bool expanded);
@@ -108,7 +108,7 @@ void			copy_envp(t_general *ctx);
 char			*get_env_value(char *var_name, t_env_var *lst);
 t_command		*parse_command(t_general *ctx);
 t_token			*tokenize_input(t_general *ctx);
-t_error_code	process_tokens(t_command *cmd);
+int				process_tokens(t_command *cmd);
 int				handle_quotes(t_general *ctx, int i, char **value);
 int				handle_word(t_general *ctx, int i, char **value);
 int				handle_operator(t_general *ctx, int i, t_token_type *type, char **value);
@@ -118,7 +118,7 @@ void			print_commands(t_command *commands);
 bool			is_whitespace(char c);
 bool			is_operator(char c);
 bool			is_quote(char c);
-void			set_error(t_general *ctx, t_error_code code, char *msg);
+void			set_error(t_general *ctx, int code, char *msg);
 
 
 char			*ft_strcpy(char *dest, const char *src);

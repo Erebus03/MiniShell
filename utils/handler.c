@@ -28,10 +28,7 @@ int	handle_word(t_general *ctx, int i, char **value)
 		return (-1);
 	result = (char *)malloc(result_size + 1 * sizeof(char));
 	if (!result)
-	{
-		set_error(ctx, ERROR_MEMORY, "Memory allocation failed");
 		return (-1);
-	}
 	if (build_exp_str(ctx, start, ctx->input[word_end], result) < 0)
 	{
 		free(result);
