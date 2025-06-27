@@ -87,7 +87,7 @@ static int	count_args(t_token *tokens)
 	return (arg_count);
 }
 
-static int	process_word_token(t_command *cmd, t_token *current,
+static int	process_token_word(t_command *cmd, t_token *current,
 					int *arg_count)
 {
 	cmd->cmd[*arg_count] = ft_strdup(current->value);
@@ -122,7 +122,7 @@ static int	fill_cmd_array(t_command *cmd)
 		next = current->next;
 		if (current->type == TWORD)
 		{
-			result = process_word_token(cmd, current, &arg_count);
+			result = process_token_word(cmd, current, &arg_count);
 			if (result != 1)
 				return (result);
 		}

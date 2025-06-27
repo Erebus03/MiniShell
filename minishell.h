@@ -6,9 +6,12 @@
 /*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:58 by araji             #+#    #+#             */
-/*   Updated: 2025/06/26 23:53:30 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/27 23:45:59 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#ifndef MINISHELL_H
+#define MINISHELL_H
 
 #include "libft/libft.h"
 #include <stdio.h>
@@ -145,3 +148,14 @@ int				check_syntax(t_general *ctx, t_token* tokens);
 
 
 void			clean_exit(t_general *ctx, char *errmsg, int errcode);
+
+
+int				process_single_token(t_general *ctx, int i, t_token **tokens, int *skipped, t_token **last_added);
+int				process_quoted_token(t_general *ctx, int i, t_token **tokens, t_token **last_added);
+int				process_operator_token(t_general *ctx, int i, t_token **tokens, t_token **last_added);
+int				process_dollar_token(t_general *ctx, int i, t_token **tokens, int *skipped, t_token **last_added);
+int				process_word_token(t_general *ctx, int i, t_token **tokens, t_token **last_added);
+void			handle_token_joining(t_token *tokens, t_token *new, int skipped);
+int				skip_whitespace_and_track(t_general *ctx, int *i, int *skipped);
+
+#endif
