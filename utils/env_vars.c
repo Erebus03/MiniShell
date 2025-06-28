@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_vars.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:58:07 by araji             #+#    #+#             */
-/*   Updated: 2025/06/27 23:46:17 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/28 14:10:56 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,29 +88,29 @@ void	add_variable(t_env_var **lst, t_env_var *new_var)
 
 void	list_env_vars(t_env_var **envlst, char **envp)
 {
+	int	indx[3]; // i => indx[0] j => indx[1] val_len => indx[2]
 	t_env_var *(variable);
 	char *(key), *(value);
-	int (i), (j), (val_len);
-	i = -1;
-	while (envp[++i] != NULL)
+	indx[0] = -1;
+	while (envp[++(indx[0])] != NULL)
 	{
-		j = 0;
-		while (envp[i][j] != '=')
-			j++;
-		key = malloc(j + 1);
-		if (!key) //cleanup()
-			exit(1);
-		ft_memcpy(key, envp[i], j);
-		key[j++] = '\0';
-		val_len = ft_strlen(envp[i]) - j;
-		value = malloc(val_len + 1);
-		if (!value) //cleanup()
-			exit(1);
-		ft_memcpy(value, envp[i] + j, val_len);
-		value[val_len] = '\0';
+		indx[1] = 0;
+		while (envp[indx[0]][indx[1]] != '=')
+			(indx[1])++;
+		key = malloc(indx[1] + 1);
+		if (!key)
+			return ;
+		ft_memcpy(key, envp[indx[0]], indx[1]);
+		key[(indx[1])++] = '\0';
+		indx[2] = ft_strlen(envp[indx[0]]) - indx[1];
+		value = malloc((indx[2]) + 1);
+		if (!value)
+			return ;
+		ft_memcpy(value, envp[indx[0]] + indx[1], indx[2]);
+		value[indx[2]] = '\0';
 		variable = new_var(key, value);
-		if (!variable) //cleanup()
-			exit(1);
+		if (!variable)
+			return ;
 		add_variable(envlst, variable);
 	}
 }

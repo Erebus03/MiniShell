@@ -6,7 +6,7 @@
 /*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 15:46:34 by araji             #+#    #+#             */
-/*   Updated: 2025/06/28 04:44:18 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/28 14:22:44 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,30 +54,37 @@ int	process_single_token(t_general *ctx, int i, t_token **tokens,
 }
 
 /* Main tokenization function - refactored */
+/* int (i), (inputlen), (skipped), (len);
+   i = indx[0]
+   inputlen = indx[1]
+   skipped = indx[2]
+   len = indx[3]
+*/
 t_token	*tokenize_input(t_general *ctx)
 {
+	int	indx[4];
 	t_token *(tokens), *(last_added);
-	int (i), (inputlen), (skipped), (len);
 	tokens = NULL;
-	i = 0;
-	inputlen = ft_strlen(ctx->input);
-	skipped = 0;
-	while (i < inputlen && ctx->input[i])
+	// ft_bzero(&indx, sizeof(indx));
+	indx[0] = 0;
+	indx[2] = 0;
+	indx[1] = ft_strlen(ctx->input);
+	while (indx[0] < indx[1] && ctx->input[indx[0]])
 	{
-		skip_whitespace_and_track(ctx, &i, &skipped);
-		if (!ctx->input[i])
+		skip_whitespace_and_track(ctx, &(indx[0]), &(indx[2]));
+		if (!ctx->input[indx[0]])
 			break ;
 		if (tokens && (last_token(tokens))->type == THEREDOC)
 			ctx->no_expand_heredoc = 1;
-		len = process_single_token(ctx, i, &tokens, &skipped, &last_added);
-		if (len < 0)
+		indx[3] = process_single_token(ctx, indx[0], &tokens, &(indx[2]), &last_added);
+		if (indx[3] < 0)
 			return (NULL);
 		if (last_added)
-			handle_token_joining(tokens, last_added, skipped);
-		i += len;
+			handle_token_joining(tokens, last_added, indx[2]);
+		indx[0] += indx[3];
 		if (last_added && last_added->value)
-			skipped = 0;
-		if (is_whitespace(ctx->input[i]) || ctx->input[i] == '\0')
+			indx[2] = 0;
+		if (is_whitespace(ctx->input[indx[0]]) || ctx->input[indx[0]] == '\0')
 			ctx->no_expand_heredoc = 0;
 	}
 	return (tokens);

@@ -20,9 +20,9 @@ int	handle_word(t_general *ctx, int i, char **value)
 	start = i;
 	word_end = i;
 	while (ctx->input[word_end] && !is_whitespace(ctx->input[word_end])
-		&& (!is_operator(ctx->input[word_end]) || ctx->inside_env_var == 1)	//	this flag shuts off (kinda) operator check 
+		&& (!is_operator(ctx->input[word_end]) || ctx->inside_env_var == 1)
 		&& !is_quote(ctx->input[word_end]) && ctx->input[word_end] != '$')
-		word_end++;
+		word_end++; // inside_env_var flag shuts off (kinda) operator check 
 	result_size = calculate_expansion_size(ctx, start, ctx->input[word_end]);
 	if (result_size < 0)
 		return (-1);

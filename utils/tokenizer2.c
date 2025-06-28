@@ -6,7 +6,7 @@
 /*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 23:33:19 by araji             #+#    #+#             */
-/*   Updated: 2025/06/28 03:48:32 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/28 13:20:30 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,9 @@ int	process_operator_token(t_general *ctx, int i, t_token **tokens,
 int	process_dollar_token(t_general *ctx, int i, t_token **tokens, int *skipped,
 		t_token **last_added)
 {
-	char	*token_value;
-	t_token	*new;
-	int		len;
-
+	char *(token_value);
+	t_token *(new);
+	int (len);
 	len = handle_dollar(ctx, i, &token_value);
 	if (len < 0)
 		return (-1);
@@ -91,7 +90,8 @@ int	process_dollar_token(t_general *ctx, int i, t_token **tokens, int *skipped,
 }
 
 /* Function to process regular words */
-int	process_word_token(t_general *ctx, int i, t_token **tokens, t_token **last_added)
+int	process_word_token(t_general *ctx, int i, t_token **tokens,
+		t_token **last_added)
 {
 	char	*token_value;
 	t_token	*new;
