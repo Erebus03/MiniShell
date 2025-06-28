@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 21:41:16 by araji             #+#    #+#             */
-/*   Updated: 2025/06/27 23:46:19 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/28 04:02:11 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ t_token	*split_token_value(char *value)
 	t_token		*new_tokens;
 
 	init_general_struct(&tmp, value);
+	tmp.inside_env_var = 1; //for tmp wont effect org struct
 	new_tokens = tokenize_input(&tmp);
 	// // ill create a general, put the value as original inpt
 	// tokenize normally how i would tokenize the normal input

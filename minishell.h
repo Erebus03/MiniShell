@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:58 by araji             #+#    #+#             */
-/*   Updated: 2025/06/27 23:45:59 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/28 04:00:47 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ typedef struct s_general
     char			*error_msg;			// detailed error message
     int				exit_status;		// last command exit status
     int				no_expand_heredoc;	// last command exit status
+    int				inside_env_var;		// should treat redir inside env vars
 }	t_general;
 
 t_token			*new_token(char *value, t_token_type type, bool expanded);

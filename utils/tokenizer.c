@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 15:46:34 by araji             #+#    #+#             */
-/*   Updated: 2025/06/27 23:49:05 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/28 04:44:18 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	process_single_token(t_general *ctx, int i, t_token **tokens,
 {
 	if (ctx->input[i] == '"' || ctx->input[i] == '\'')
 		return (process_quoted_token(ctx, i, tokens, last_added));
-	else if (is_operator(ctx->input[i]))
+	else if (is_operator(ctx->input[i]) && ctx->inside_env_var == 0)
 		return (process_operator_token(ctx, i, tokens, last_added));
 	else if (ctx->input[i] == '$')
 		return (process_dollar_token(ctx, i, tokens, skipped, last_added));

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:53 by araji             #+#    #+#             */
-/*   Updated: 2025/06/26 23:14:55 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/28 04:01:22 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	init_general_struct(t_general *context, char *value)
 	context->error_msg = NULL;
 	context->exit_status = 0;
 	context->no_expand_heredoc = 0;
+	context->inside_env_var = 0;
 }
 
 void	run(void)

@@ -44,7 +44,7 @@ void	print_redirections(t_redir *redirs)
 	current = redirs;
 	while (current)
 	{
-		printf("  Redirection: type=%s, file=%s\n",
+		printf("  Redir: type=%s, file=%s\n",
 			type_str[current->type],
 			current->file);
 		current = current->next;
@@ -70,7 +70,7 @@ void	print_commands(t_command *commands)
 		printf("\n");
 		if (current->redirs)
 		{
-			printf("  Redirections:\n");
+			printf(" Redirections:\n");
 			print_redirections(current->redirs);
 		}
 		printf("\nOriginal Tokens:\n");
