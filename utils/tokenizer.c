@@ -6,55 +6,53 @@
 /*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 15:46:34 by araji             #+#    #+#             */
-/*   Updated: 2025/06/28 14:22:44 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/29 03:36:46 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-/*  REDIRECTION ARE NOT REDIRS IF INSIDE A ENV VARIABLE, FIX THIS	*/
-/* Helper function to skip whitespace and track if any was skipped */
-int	skip_whitespace_and_track(t_general *ctx, int *i, int *skipped)
+// Helper function to initialize tokenizer state
+static void	init_tokenizer_state(int *indx, t_token **tokens, t_general *ctx)
 {
-	int	start_pos;
-
-	start_pos = *i;
-	while (ctx->input[*i] && is_whitespace(ctx->input[*i]))
-		(*i)++;
-	if (*i > start_pos)
-		*skipped = 1;
-	return (*i > start_pos);
+	ft_bzero(indx, sizeof(int) * 4);
+	*tokens = NULL;
+	indx[1] = ft_strlen(ctx->input);
 }
 
-/* Function to handle token joining logic */
-void	handle_token_joining(t_token *tokens, t_token *new, int skipped)
+// heredoc expansion state
+static void	update_heredoc_state(t_general *ctx, t_token *tokens)
 {
-	if (new && new->value && tokens_size(tokens) > 1)
-	{
-		if (new->type == TWORD && skipped == 0 && new->prev
-			&& (new->prev)->type == TWORD)
-		{
-			join_tokens(tokens, new);
-		}
-	}
+	if (tokens && (last_token(tokens))->type == THEREDOC)
+		ctx->no_expand_heredoc = 1;
 }
 
-/* Helper to process a single token based on current character */
-int	process_single_token(t_general *ctx, int i, t_token **tokens,
-		int *skipped, t_token **last_added)
+// process and add a single token
+static int	process_and_add_token(t_general *ctx, int *indx,
+		t_token **tokens, t_token **last_added)
 {
-	if (ctx->input[i] == '"' || ctx->input[i] == '\'')
-		return (process_quoted_token(ctx, i, tokens, last_added));
-	else if (is_operator(ctx->input[i]) && ctx->inside_env_var == 0)
-		return (process_operator_token(ctx, i, tokens, last_added));
-	else if (ctx->input[i] == '$')
-		return (process_dollar_token(ctx, i, tokens, skipped, last_added));
-	else
-		return (process_word_token(ctx, i, tokens, last_added));
+	int	token_len;
+
+	token_len = process_single_token(ctx, indx[0], tokens, &(indx[2]), last_added); //5
+	if (token_len < 0)
+		return (-1);
+	if (*last_added)
+		handle_token_joining(*tokens, *last_added, indx[2]);
+	return (token_len);
 }
 
-/* Main tokenization function - refactored */
-/* int (i), (inputlen), (skipped), (len);
+/* update position and state after token processing */
+static void	update_position_and_state(t_general *ctx, int *indx,
+		t_token *last_added)
+{
+	indx[0] += indx[3];
+	if (last_added && last_added->value)
+		indx[2] = 0;
+	if (is_whitespace(ctx->input[indx[0]]) || ctx->input[indx[0]] == '\0')
+		ctx->no_expand_heredoc = 0;
+}
+
+/*
    i = indx[0]
    inputlen = indx[1]
    skipped = indx[2]
@@ -62,49 +60,21 @@ int	process_single_token(t_general *ctx, int i, t_token **tokens,
 */
 t_token	*tokenize_input(t_general *ctx)
 {
-	int	indx[4];
-	t_token *(tokens), *(last_added);
-	tokens = NULL;
-	// ft_bzero(&indx, sizeof(indx));
-	indx[0] = 0;
-	indx[2] = 0;
-	indx[1] = ft_strlen(ctx->input);
+	int		indx[4];
+	t_token	*tokens;
+	t_token	*last_added;
+	t_token *tkn_ptrs[2];
+	init_tokenizer_state(indx, &tokens, ctx);
 	while (indx[0] < indx[1] && ctx->input[indx[0]])
 	{
 		skip_whitespace_and_track(ctx, &(indx[0]), &(indx[2]));
 		if (!ctx->input[indx[0]])
 			break ;
-		if (tokens && (last_token(tokens))->type == THEREDOC)
-			ctx->no_expand_heredoc = 1;
-		indx[3] = process_single_token(ctx, indx[0], &tokens, &(indx[2]), &last_added);
+		update_heredoc_state(ctx, tokens);
+		indx[3] = process_and_add_token(ctx, indx, &tokens, &last_added);
 		if (indx[3] < 0)
 			return (NULL);
-		if (last_added)
-			handle_token_joining(tokens, last_added, indx[2]);
-		indx[0] += indx[3];
-		if (last_added && last_added->value)
-			indx[2] = 0;
-		if (is_whitespace(ctx->input[indx[0]]) || ctx->input[indx[0]] == '\0')
-			ctx->no_expand_heredoc = 0;
+		update_position_and_state(ctx, indx, last_added);
 	}
 	return (tokens);
-}
-
-void	join_tokens(t_token *tokens, t_token *new)
-{
-	t_token *(next_node);
-	char *(str);
-	str = NULL;
-	while (tokens != new->prev)
-		tokens = tokens->next;
-	printf("\njoining [%s]-[%s]\n\n", tokens->value, (tokens->next)->value);
-	str = ft_strjoin(tokens->value, (tokens->next)->value);
-	free(tokens->value);
-	tokens->value = str;
-	next_node = new->next;
-	free(new->value);
-	free(new);
-	tokens->next = next_node;
-	if (next_node)
-		next_node->prev = tokens;
 }

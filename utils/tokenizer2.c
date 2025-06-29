@@ -6,7 +6,7 @@
 /*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 23:33:19 by araji             #+#    #+#             */
-/*   Updated: 2025/06/28 13:20:30 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/29 02:23:07 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,4 +106,18 @@ int	process_word_token(t_general *ctx, int i, t_token **tokens,
 	add_token(tokens, new);
 	*last_added = new;
 	return (len);
+}
+
+/* Helper to process a single token based on current character */
+int	process_single_token(t_general *ctx, int i, t_token **tokens,
+		int *skipped, t_token **last_added)
+{
+	if (ctx->input[i] == '"' || ctx->input[i] == '\'')
+		return (process_quoted_token(ctx, i, tokens, last_added));
+	else if (is_operator(ctx->input[i]) && ctx->inside_env_var == 0)
+		return (process_operator_token(ctx, i, tokens, last_added));
+	else if (ctx->input[i] == '$')
+		return (process_dollar_token(ctx, i, tokens, skipped, last_added));
+	else
+		return (process_word_token(ctx, i, tokens, last_added));
 }
