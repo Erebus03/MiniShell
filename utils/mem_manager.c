@@ -70,6 +70,7 @@ void	cleanup(t_general *ctx)
 		free(tmp);
 		tmp = NULL;
 	}
+	free(ctx->heap);
 	ctx->heap = NULL;
 }
 
@@ -78,9 +79,9 @@ void	clean_exit(t_general *ctx, char *errmsg, int errcode)
 	(void)errmsg;
 	// printf("%s\n", errmsg);
 	write(1, "print failnt\n", 13);
-	// cleanup(ctx);
+	cleanup(ctx);
 	write(1, "cleaned uppp\n", 13);
 	free_envp(ctx, 'b');
-	write(1, "fred envm'b'\n", 13);
+	write(1, "freed envm'b'\n", 14);
 	exit(errcode);
 }

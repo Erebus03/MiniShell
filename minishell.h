@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:58 by araji             #+#    #+#             */
-/*   Updated: 2025/06/30 11:30:39 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/30 11:42:40 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ void			cleanup(t_general *ctx);
 void			clean_exit(t_general *ctx, char *errmsg, int errcode);
 
 /* ======================== ENVIRONMENT FUNCTIONS ========================== */
-void			list_env_vars(t_env_var **envlst, char **envp);
+void			list_env_vars(t_general *ctx, char **envp);
 void			copy_envp(t_general *ctx);
 char			*get_env_value(char *var_name, t_env_var *lst);
 

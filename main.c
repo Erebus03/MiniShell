@@ -6,7 +6,7 @@
 /*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:53 by araji             #+#    #+#             */
-/*   Updated: 2025/06/28 04:01:22 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/30 12:01:22 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	main(int ac, char **av, char **envp)
 		printf("$> ./Your Program\n");
 		exit(1);
 	}
-	list_env_vars(&context.envlst, envp);
+	list_env_vars(&context, envp);
 	while (37)
 	{
 		context.input = readline("\001\033[32m\002minihell $> \001\033[0m\002");
@@ -55,6 +55,7 @@ int	main(int ac, char **av, char **envp)
 		run();
 		print_commands(cmds);
 		free_commands(&cmds);
+		// cleanup();
 	}
 	return (0);
 }

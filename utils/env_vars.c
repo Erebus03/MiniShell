@@ -6,7 +6,7 @@
 /*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:58:07 by araji             #+#    #+#             */
-/*   Updated: 2025/06/28 14:10:56 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/30 17:01:44 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*join_key_value(const char *key, const char *value)
 
 	int (keylen), (len);
 	keylen = ft_strlen(key);
-	len = keylen + ft_strlen(value) + 1;// +1 for '='
+	len = keylen + ft_strlen(value) + 1;
 	result = malloc(len + 1);
 	if (!result)
 		return (NULL);
@@ -86,7 +86,7 @@ void	add_variable(t_env_var **lst, t_env_var *new_var)
 	tmp->next = new_var;
 }
 
-void	list_env_vars(t_env_var **envlst, char **envp)
+void	list_env_vars(t_general *ctx, char **envp)
 {
 	int	indx[3]; // i => indx[0] j => indx[1] val_len => indx[2]
 	t_env_var *(variable);
@@ -108,9 +108,9 @@ void	list_env_vars(t_env_var **envlst, char **envp)
 			return ;
 		ft_memcpy(value, envp[indx[0]] + indx[1], indx[2]);
 		value[indx[2]] = '\0';
-		variable = new_var(key, value);
+		variable = new_var(ctx, key, value);
 		if (!variable)
 			return ;
-		add_variable(envlst, variable);
+		add_variable(&ctx->envlst, variable);
 	}
 }
