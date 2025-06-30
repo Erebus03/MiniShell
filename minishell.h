@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
+/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:58 by araji             #+#    #+#             */
-/*   Updated: 2025/06/29 02:32:54 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/30 03:07:59 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,10 +137,11 @@ int				handle_quotes(t_general *ctx, int i, char **value);
 int				handle_word(t_general *ctx, int i, char **value);
 int				handle_operator(t_general *ctx, int i, t_token_type *type, char **value);
 int				handle_dollar(t_general *ctx, int i, char **value);
-int				process_single_token(t_general *ctx, int i, t_token **tokens, int *skipped, t_token **last_added);
+int				process_single_token(t_general *ctx, int i, void **tkn_ptrs, int *skipped);
+// int				process_single_token(t_general *ctx, int i, t_token **tokens, int *skipped, t_token **last_added);
 int				process_quoted_token(t_general *ctx, int i, t_token **tokens, t_token **last_added);
 int				process_operator_token(t_general *ctx, int i, t_token **tokens, t_token **last_added);
-int				process_dollar_token(t_general *ctx, int i, t_token **tokens, int *skipped, t_token **last_added);
+int				process_dollar_token(t_general *ctx, int i, void **tkn_ptrs, int *skipped);
 int				process_word_token(t_general *ctx, int i, t_token **tokens, t_token **last_added);
 void			handle_token_joining(t_token *tokens, t_token *new, int skipped);
 int				skip_whitespace_and_track(t_general *ctx, int *i, int *skipped);

@@ -3,41 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
+/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 15:46:34 by araji             #+#    #+#             */
-/*   Updated: 2025/06/29 03:36:46 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/30 03:11:26 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 // Helper function to initialize tokenizer state
-static void	init_tokenizer_state(int *indx, t_token **tokens, t_general *ctx)
+static void	init_tokenizer_state(int *indx, void **ptrs, t_general *ctx)
 {
 	ft_bzero(indx, sizeof(int) * 4);
-	*tokens = NULL;
+	ft_bzero(ptrs, sizeof(ptrs));
 	indx[1] = ft_strlen(ctx->input);
 }
 
-// heredoc expansion state
-static void	update_heredoc_state(t_general *ctx, t_token *tokens)
-{
-	if (tokens && (last_token(tokens))->type == THEREDOC)
-		ctx->no_expand_heredoc = 1;
-}
-
 // process and add a single token
-static int	process_and_add_token(t_general *ctx, int *indx,
-		t_token **tokens, t_token **last_added)
+static int	process_and_add_token(t_general *ctx, int *indx, void **tkn_ptrs)
 {
 	int	token_len;
 
-	token_len = process_single_token(ctx, indx[0], tokens, &(indx[2]), last_added); //5
+	token_len = process_single_token(ctx, indx[0], tkn_ptrs, &(indx[2])); //5
 	if (token_len < 0)
 		return (-1);
-	if (*last_added)
-		handle_token_joining(*tokens, *last_added, indx[2]);
+	if (tkn_ptrs[1])
+		handle_token_joining(tkn_ptrs[0], tkn_ptrs[1], indx[2]);
 	return (token_len);
 }
 
@@ -57,24 +49,28 @@ static void	update_position_and_state(t_general *ctx, int *indx,
    inputlen = indx[1]
    skipped = indx[2]
    len = indx[3]
+
+	tkn_ptrs[0]	= tokens;
+	tkn_ptrs[1]	= last token added;
+	(more like first token of the batch added)
 */
 t_token	*tokenize_input(t_general *ctx)
 {
 	int		indx[4];
-	t_token	*tokens;
-	t_token	*last_added;
-	t_token *tkn_ptrs[2];
-	init_tokenizer_state(indx, &tokens, ctx);
+	void	*tkn_ptrs[2]; // can this replace the previous two lines
+	ft_memset(tkn_ptrs, 0, sizeof(tkn_ptrs));
+	init_tokenizer_state(indx, tkn_ptrs, ctx);
 	while (indx[0] < indx[1] && ctx->input[indx[0]])
 	{
 		skip_whitespace_and_track(ctx, &(indx[0]), &(indx[2]));
 		if (!ctx->input[indx[0]])
 			break ;
-		update_heredoc_state(ctx, tokens);
-		indx[3] = process_and_add_token(ctx, indx, &tokens, &last_added);
+		if (tkn_ptrs[0] && (last_token(tkn_ptrs[0]))->type == THEREDOC)
+			ctx->no_expand_heredoc = 1;
+		indx[3] = process_and_add_token(ctx, indx, tkn_ptrs);
 		if (indx[3] < 0)
 			return (NULL);
-		update_position_and_state(ctx, indx, last_added);
+		update_position_and_state(ctx, indx, tkn_ptrs[1]);
 	}
-	return (tokens);
+	return (tkn_ptrs[0]);
 }

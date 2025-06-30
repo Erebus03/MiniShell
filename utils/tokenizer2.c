@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
+/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 23:33:19 by araji             #+#    #+#             */
-/*   Updated: 2025/06/29 02:23:07 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/30 03:10:09 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,7 @@ int	process_operator_token(t_general *ctx, int i, t_token **tokens,
 }
 
 /* Function to process dollar expansions */
-int	process_dollar_token(t_general *ctx, int i, t_token **tokens, int *skipped,
-		t_token **last_added)
+int	process_dollar_token(t_general *ctx, int i, void **tkn_ptrs, int *skipped)
 {
 	char *(token_value);
 	t_token *(new);
@@ -81,11 +80,11 @@ int	process_dollar_token(t_general *ctx, int i, t_token **tokens, int *skipped,
 			new = new_token(token_value, TWORD, true);
 		if (!new)
 			return (-1);
-		*last_added = new;
-		add_token(tokens, new);
+		tkn_ptrs[1] = new;
+		add_token((t_token **)&tkn_ptrs[0], new);
 	}
 	else
-		*last_added = NULL;
+		tkn_ptrs[1] = NULL;
 	return (len);
 }
 
@@ -109,15 +108,25 @@ int	process_word_token(t_general *ctx, int i, t_token **tokens,
 }
 
 /* Helper to process a single token based on current character */
-int	process_single_token(t_general *ctx, int i, t_token **tokens,
-		int *skipped, t_token **last_added)
+int	process_single_token(t_general *ctx, int i, void **tkn_ptrs, int *skipped)
 {
 	if (ctx->input[i] == '"' || ctx->input[i] == '\'')
-		return (process_quoted_token(ctx, i, tokens, last_added));
+		return (process_quoted_token(ctx, i, (t_token **)&tkn_ptrs[0],
+				(t_token **)&tkn_ptrs[1]));
 	else if (is_operator(ctx->input[i]) && ctx->inside_env_var == 0)
-		return (process_operator_token(ctx, i, tokens, last_added));
+		return (process_operator_token(ctx, i, (t_token **)&tkn_ptrs[0],
+				(t_token **)&tkn_ptrs[1]));
 	else if (ctx->input[i] == '$')
-		return (process_dollar_token(ctx, i, tokens, skipped, last_added));
+		return (process_dollar_token(ctx, i, tkn_ptrs, skipped));
 	else
-		return (process_word_token(ctx, i, tokens, last_added));
+		return (process_word_token(ctx, i, (t_token **)&tkn_ptrs[0],
+				(t_token **)&tkn_ptrs[1]));
+	// if (ctx->input[i] == '"' || ctx->input[i] == '\'')
+	// 	return (process_quoted_token(ctx, i, tokens, last_added));
+	// else if (is_operator(ctx->input[i]) && ctx->inside_env_var == 0)
+	// 	return (process_operator_token(ctx, i, tokens, last_added));
+	// else if (ctx->input[i] == '$')
+	// 	return (process_dollar_token(ctx, i, tokens, skipped, last_added));
+	// else
+	// 	return (process_word_token(ctx, i, tokens, last_added));
 }
