@@ -6,7 +6,7 @@
 /*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 23:33:19 by araji             #+#    #+#             */
-/*   Updated: 2025/06/30 03:10:09 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/30 11:32:57 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	process_quoted_token(t_general *ctx, int i, t_token **tokens,
 		return (-1);
 	if (token_value)
 	{
-		new = new_token(token_value, TWORD, false);
+		new = new_token(ctx, token_value, TWORD, false);
 		if (!new)
 			return (-1);
 		if (ctx->no_expand_heredoc == 1)
@@ -50,7 +50,7 @@ int	process_operator_token(t_general *ctx, int i, t_token **tokens,
 	len = handle_operator(ctx, i, &token_type, &token_value);
 	if (len < 0)
 		return (-1);
-	new = new_token(token_value, token_type, false);
+	new = new_token(ctx, token_value, token_type, false);
 	if (!new)
 		return (-1);
 	add_token(tokens, new);
@@ -77,7 +77,7 @@ int	process_dollar_token(t_general *ctx, int i, void **tkn_ptrs, int *skipped)
 				*skipped = 1;
 		}
 		else
-			new = new_token(token_value, TWORD, true);
+			new = new_token(ctx, token_value, TWORD, true);
 		if (!new)
 			return (-1);
 		tkn_ptrs[1] = new;
@@ -99,7 +99,7 @@ int	process_word_token(t_general *ctx, int i, t_token **tokens,
 	len = handle_word(ctx, i, &token_value);
 	if (len < 0)
 		return (-1);
-	new = new_token(token_value, TWORD, false);
+	new = new_token(ctx, token_value, TWORD, false);
 	if (!new)
 		return (-1);
 	add_token(tokens, new);
@@ -121,6 +121,7 @@ int	process_single_token(t_general *ctx, int i, void **tkn_ptrs, int *skipped)
 	else
 		return (process_word_token(ctx, i, (t_token **)&tkn_ptrs[0],
 				(t_token **)&tkn_ptrs[1]));
+}
 	// if (ctx->input[i] == '"' || ctx->input[i] == '\'')
 	// 	return (process_quoted_token(ctx, i, tokens, last_added));
 	// else if (is_operator(ctx->input[i]) && ctx->inside_env_var == 0)
@@ -129,4 +130,4 @@ int	process_single_token(t_general *ctx, int i, void **tkn_ptrs, int *skipped)
 	// 	return (process_dollar_token(ctx, i, tokens, skipped, last_added));
 	// else
 	// 	return (process_word_token(ctx, i, tokens, last_added));
-}
+// }

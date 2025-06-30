@@ -6,7 +6,7 @@
 /*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 15:46:34 by araji             #+#    #+#             */
-/*   Updated: 2025/06/30 03:11:26 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/30 11:20:25 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	process_and_add_token(t_general *ctx, int *indx, void **tkn_ptrs)
 {
 	int	token_len;
 
-	token_len = process_single_token(ctx, indx[0], tkn_ptrs, &(indx[2])); //5
+	token_len = process_single_token(ctx, indx[0], tkn_ptrs, &(indx[2]));
 	if (token_len < 0)
 		return (-1);
 	if (tkn_ptrs[1])

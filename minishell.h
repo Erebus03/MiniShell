@@ -6,7 +6,7 @@
 /*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:58 by araji             #+#    #+#             */
-/*   Updated: 2025/06/30 03:07:59 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/30 11:30:39 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,10 +99,10 @@ typedef struct s_general
 }	t_general;
 
 /* ========================= CONSTRUCTOR FUNCTIONS ========================= */
-t_token			*new_token(char *value, t_token_type type, bool expanded);
-t_command		*new_command(void);
-t_env_var		*new_var(char *key, char *value);
-t_redir			*new_redir(t_token_type type, char *file);
+t_token			*new_token(t_general *ctx, char *value, t_token_type type, bool expanded);
+t_command		*new_command(t_general *ctx);
+t_env_var		*new_var(t_general *ctx, char *key, char *value);
+t_redir			*new_redir(t_general *ctx, t_token_type type, char *file);
 
 /* =========================== LIST FUNCTIONS ============================= */
 void			add_token(t_token **tokens, t_token *new_token);
@@ -128,7 +128,7 @@ char			*get_env_value(char *var_name, t_env_var *lst);
 /* ========================== PARSING FUNCTIONS ============================ */
 t_command		*parse_command(t_general *ctx);
 t_token			*tokenize_input(t_general *ctx);
-int				process_tokens(t_command *cmd);
+int				process_tokens(t_general *ctx, t_command *cmd);
 int				validate_quotes(t_general *ctx);
 int				check_syntax(t_general *ctx, t_token* tokens);
 
@@ -138,7 +138,6 @@ int				handle_word(t_general *ctx, int i, char **value);
 int				handle_operator(t_general *ctx, int i, t_token_type *type, char **value);
 int				handle_dollar(t_general *ctx, int i, char **value);
 int				process_single_token(t_general *ctx, int i, void **tkn_ptrs, int *skipped);
-// int				process_single_token(t_general *ctx, int i, t_token **tokens, int *skipped, t_token **last_added);
 int				process_quoted_token(t_general *ctx, int i, t_token **tokens, t_token **last_added);
 int				process_operator_token(t_general *ctx, int i, t_token **tokens, t_token **last_added);
 int				process_dollar_token(t_general *ctx, int i, void **tkn_ptrs, int *skipped);
@@ -156,12 +155,17 @@ t_token			*split_token_value(char *value);
 bool			is_whitespace(char c);
 bool			is_operator(char c);
 bool			is_quote(char c);
-void			set_error(t_general *ctx, int code, char *msg);
+// void			set_error(t_general *ctx, int code, char *msg);
 void			init_general_struct(t_general *context, char *value);
 int				ft_strcmp(const char *s1, const char *s2);
 char			*ft_strcpy(char *dest, const char *src);
 char			*ft_strncpy(char *dest, const char *src, size_t n);
 void			increment_val(int *value1, int *value2, int *value3, int *value4);
+
+/* ========================== MEMORY FUNCTIONS ============================== */
+void			*allocate(t_general *ctx, size_t size);
+t_memory		*new_addr(void *ptr);
+void			add_addr(t_general *ctx, t_memory *new_addr);
 
 /* ========================== DEBUG FUNCTIONS ============================== */
 void			print_tokens(t_token *tokens);

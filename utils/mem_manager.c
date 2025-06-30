@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../minishell.h"
-/*
+
 void	add_addr(t_general *ctx, t_memory *new_addr)
 {
 	t_memory	*tmp;
@@ -56,7 +56,6 @@ void	*allocate(t_general *ctx, size_t size)
 	add_addr(ctx, new_addr(mem));
 	return mem;
 }
-*/
 
 void	cleanup(t_general *ctx)
 {

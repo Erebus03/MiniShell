@@ -12,11 +12,11 @@
 
 #include "../minishell.h"
 
-t_token	*new_token(char *value, t_token_type type, bool expanded)
+t_token	*new_token(t_general *ctx, char *value, t_token_type type, bool expanded)
 {
 	t_token	*token;
 
-	token = (t_token *)malloc(sizeof(t_token));
+	token = (t_token *)allocate(ctx, sizeof(t_token));
 	if (!token)
 		return (NULL);
 	token->value = value;
@@ -28,11 +28,11 @@ t_token	*new_token(char *value, t_token_type type, bool expanded)
 	return (token);
 }
 
-t_command	*new_command(void)
+t_command	*new_command(t_general *ctx)
 {
 	t_command	*cmd;
 
-	cmd = (t_command *)malloc(sizeof(t_command));
+	cmd = (t_command *)allocate(ctx, sizeof(t_command));
 	if (!cmd)
 		return (NULL);
 	cmd->cmd = NULL;
@@ -42,11 +42,11 @@ t_command	*new_command(void)
 	return (cmd);
 }
 
-t_redir	*new_redir(t_token_type type, char *file)
+t_redir	*new_redir(t_general *ctx, t_token_type type, char *file)
 {
 	t_redir	*redir;
 
-	redir = (t_redir *)malloc(sizeof(t_redir));
+	redir = (t_redir *)allocate(ctx, sizeof(t_redir));
 	if (!redir)
 		return (NULL);
 	redir->type = type;
@@ -57,11 +57,11 @@ t_redir	*new_redir(t_token_type type, char *file)
 	return (redir);
 }
 
-t_env_var	*new_var(char *key, char *value)
+t_env_var	*new_var(t_general *ctx, char *key, char *value)
 {
 	t_env_var	*env;
 
-	env = malloc(sizeof(t_env_var));
+	env = allocate(ctx, sizeof(t_env_var));
 	if (!env)
 		return (NULL);
 	env->key = key;
