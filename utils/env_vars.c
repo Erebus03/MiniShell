@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_vars.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
+/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:58:07 by araji             #+#    #+#             */
-/*   Updated: 2025/06/30 17:01:44 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/30 19:08:18 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,28 +69,29 @@ void	copy_envp(t_general *ctx)
 	ctx->envarr[i] = NULL;
 }
 
-void	add_variable(t_env_var **lst, t_env_var *new_var)
+static int	make_add_variable(t_general *ctx, t_env_var **envlst,
+		char *key, char *val)
 {
-	t_env_var	*tmp;
+	t_env_var	*variable;
 
-	if (!lst || !new_var)
-		return ;
-	if (*lst == NULL)
-	{
-		*lst = new_var;
-		return ;
-	}
-	tmp = *lst;
-	while (tmp->next)
-		tmp = tmp->next;
-	tmp->next = new_var;
+	variable = new_var(ctx, key, val);
+	if (!variable)
+		return (0);
+	add_variable(envlst, variable);
+	return (1);
 }
 
-void	list_env_vars(t_general *ctx, char **envp)
+/*
+	   i  	=> indx[0]
+	   j	=> indx[1]
+	val_len => indx[2]
+*/
+void	list_env_vars(t_general *ctx, t_env_var **envlst, char **envp)
 {
-	int	indx[3]; // i => indx[0] j => indx[1] val_len => indx[2]
-	t_env_var *(variable);
-	char *(key), *(value);
+	int			indx[3];
+	char		*key;
+	char		*value;
+
 	indx[0] = -1;
 	while (envp[++(indx[0])] != NULL)
 	{
@@ -108,9 +109,12 @@ void	list_env_vars(t_general *ctx, char **envp)
 			return ;
 		ft_memcpy(value, envp[indx[0]] + indx[1], indx[2]);
 		value[indx[2]] = '\0';
-		variable = new_var(ctx, key, value);
-		if (!variable)
+		if (!make_add_variable(ctx, envlst, key, value))
 			return ;
-		add_variable(&ctx->envlst, variable);
 	}
 }
+
+		// variable = new_var(ctx, key, value);
+		// if (!variable)
+		// 	return ;
+		// add_variable(envlst, variable);

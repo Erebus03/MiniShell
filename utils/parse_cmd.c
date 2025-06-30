@@ -20,7 +20,8 @@
 /*
 	* Split tokens into commands based on pipe operators
 */
-static t_command	*create_and_process_command(t_general *ctx, t_token *cmd_start)
+static t_command	*create_and_process_command(t_general *ctx,
+		t_token *cmd_start)
 {
 	t_command	*new_cmd;
 
@@ -56,12 +57,12 @@ static int	handle_pipe_token(t_general *ctx, t_command **commands, void **ptrs)
 	ptrs[1] = current
 	ptrs[2] = prev
 */
-static t_command	*process_cmd_tokens(t_general *ctx ,
+static t_command	*process_cmd_tokens(t_general *ctx,
 		t_token *all_tokens, t_token **last_start)
 {
-	// t_token *(cmd_start), *(current), *(prev);
 	void		*ptrs[3];
 	t_command	*commands;
+
 	commands = NULL;
 	ptrs[0] = all_tokens;
 	ptrs[1] = all_tokens;
@@ -70,7 +71,7 @@ static t_command	*process_cmd_tokens(t_general *ctx ,
 	{
 		if (((t_token *)ptrs[1])->type == TPIPE)
 		{
-			if (handle_pipe_token(ctx, &commands, ptrs) != 1)// &cmd_start, &current, prev) != 1)
+			if (handle_pipe_token(ctx, &commands, ptrs) != 1)
 				return (NULL);
 			ptrs[2] = NULL;
 		}

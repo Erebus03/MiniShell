@@ -12,7 +12,8 @@
 
 #include "../minishell.h"
 
-t_token	*new_token(t_general *ctx, char *value, t_token_type type, bool expanded)
+t_token	*new_token(t_general *ctx, char *value, t_token_type type,
+		bool expanded)
 {
 	t_token	*token;
 

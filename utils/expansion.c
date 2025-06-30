@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
+/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 21:41:16 by araji             #+#    #+#             */
-/*   Updated: 2025/06/28 04:02:11 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/30 18:55:21 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	calculate_expansion_size(t_general *ctx, int i, char stop_char)
 			&& ctx->no_expand_heredoc == 0)
 		{
 			processed = handle_dollar(ctx, i, &temp_value);
-			if (processed <= 0) // error handling
+			if (processed <= 0)
 				return (-1);
 			if (temp_value)
 			{
@@ -57,7 +57,7 @@ void	fill_result_str(char *res, char *tmp_val, int *j)
 {
 	printf("\n\n\nin ftstrcpy\nres= %s | tmp = %s | j=%d\n\n\n",
 		res, tmp_val, *j);
-	ft_strcpy(res + *j, tmp_val); // build func
+	ft_strcpy(res + *j, tmp_val);
 	*j += ft_strlen(tmp_val);
 	free(tmp_val);
 }

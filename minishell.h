@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
+/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:58 by araji             #+#    #+#             */
-/*   Updated: 2025/06/30 11:42:40 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/30 19:04:43 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ t_redir			*new_redir(t_general *ctx, t_token_type type, char *file);
 void			add_token(t_token **tokens, t_token *new_token);
 void			add_redir(t_redir **redirs, t_redir *new_redir);
 void			add_command(t_command **commands, t_command *new_cmd);
+void			add_variable(t_env_var **lst, t_env_var *new_var);
 void			join_tokens(t_token *tokens, t_token *new);
 int				tokens_size(t_token *lst);
 t_token			*last_token(t_token *lst);
@@ -121,7 +122,7 @@ void			cleanup(t_general *ctx);
 void			clean_exit(t_general *ctx, char *errmsg, int errcode);
 
 /* ======================== ENVIRONMENT FUNCTIONS ========================== */
-void			list_env_vars(t_general *ctx, char **envp);
+void			list_env_vars(t_general *ctx, t_env_var **envlst, char **envp);
 void			copy_envp(t_general *ctx);
 char			*get_env_value(char *var_name, t_env_var *lst);
 
@@ -165,7 +166,7 @@ void			increment_val(int *value1, int *value2, int *value3, int *value4);
 /* ========================== MEMORY FUNCTIONS ============================== */
 void			*allocate(t_general *ctx, size_t size);
 t_memory		*new_addr(void *ptr);
-void			add_addr(t_general *ctx, t_memory *new_addr);
+int				add_addr(t_general *ctx, t_memory *new_addr);
 
 /* ========================== DEBUG FUNCTIONS ============================== */
 void			print_tokens(t_token *tokens);

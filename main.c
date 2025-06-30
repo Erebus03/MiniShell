@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
+/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:53 by araji             #+#    #+#             */
-/*   Updated: 2025/06/30 12:01:22 by araji            ###   ########.fr       */
+/*   Updated: 2025/06/30 18:31:00 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ int	main(int ac, char **av, char **envp)
 		printf("$> ./Your Program\n");
 		exit(1);
 	}
-	list_env_vars(&context, envp);
+	list_env_vars(&context, &context.envlst, envp);
+	printf("envlst %p\n", context.envlst);
 	while (37)
 	{
 		context.input = readline("\001\033[32m\002minihell $> \001\033[0m\002");
@@ -55,7 +56,6 @@ int	main(int ac, char **av, char **envp)
 		run();
 		print_commands(cmds);
 		free_commands(&cmds);
-		// cleanup();
 	}
 	return (0);
 }

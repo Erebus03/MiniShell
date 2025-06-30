@@ -12,21 +12,25 @@
 
 #include "../minishell.h"
 
-void	add_addr(t_general *ctx, t_memory *new_addr)
+int	add_addr(t_general *ctx, t_memory *new_addr)
 {
 	t_memory	*tmp;
 
 	if (!new_addr)
-		return ;
+	{
+		cleanup(ctx);
+		return (0);
+	}
 	if (!ctx->heap)
 	{
 		ctx->heap = new_addr;
-		return ;
+		return (1);
 	}
 	tmp = ctx->heap;
 	while (tmp->next)
 		tmp = tmp->next;
 	tmp->next = new_addr;
+	return (1);
 }
 
 t_memory	*new_addr(void *ptr)
@@ -35,10 +39,7 @@ t_memory	*new_addr(void *ptr)
 
 	node = malloc(sizeof(t_memory));
 	if (!node)
-	{
-		// cleanup (ctx);
-		return NULL;
-	}
+		return (NULL);
 	node->ptr = ptr;
 	node->next = NULL;
 	return (node);
@@ -46,15 +47,25 @@ t_memory	*new_addr(void *ptr)
 
 void	*allocate(t_general *ctx, size_t size)
 {
-	void *mem = malloc(size);
+	t_memory	*new_address;
+	void		*mem;
 
+	mem = malloc(size);
 	if (!mem)
 	{
 		cleanup(ctx);
-		return NULL;
+		return (NULL);
 	}
-	add_addr(ctx, new_addr(mem));
-	return mem;
+	new_address = new_addr(mem);
+	if (!new_address)
+	{
+		return (NULL);
+	}
+	if (!add_addr(ctx, new_address))
+	{
+		return (NULL);
+	}
+	return (mem);
 }
 
 void	cleanup(t_general *ctx)
@@ -70,7 +81,6 @@ void	cleanup(t_general *ctx)
 		free(tmp);
 		tmp = NULL;
 	}
-	free(ctx->heap);
 	ctx->heap = NULL;
 }
 

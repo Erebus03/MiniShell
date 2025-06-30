@@ -60,16 +60,19 @@ void	add_redir(t_redir **redirs, t_redir *new_redir)
 	current->next = new_redir;
 }
 
-// void	add_addr(t_general *ctx, t_memory *new_addr)
-// {
-// 	t_memory	*tmp;
-// 	if (!ctx->mem_manager)
-// 	{
-// 		ctx->mem_manager = new_addr;
-// 		return ;
-// 	}
-// 	tmp = ctx->mem_manager;
-// 	while (tmp->next)
-// 		tmp = tmp->next;
-// 	tmp->next = new_addr;
-// }
+void	add_variable(t_env_var **lst, t_env_var *new_var)
+{
+	t_env_var	*tmp;
+
+	if (!lst || !new_var)
+		return ;
+	if (*lst == NULL)
+	{
+		*lst = new_var;
+		return ;
+	}
+	tmp = *lst;
+	while (tmp->next)
+		tmp = tmp->next;
+	tmp->next = new_var;
+}
