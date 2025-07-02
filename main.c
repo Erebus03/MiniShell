@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:53 by araji             #+#    #+#             */
-/*   Updated: 2025/07/02 20:36:42 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/02 21:07:24 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	init_general_struct(t_general *context, char *value)
 	context->exit_status = 0;
 	context->no_expand_heredoc = 0;
 	context->inside_env_var = 0;
+	context->pwd = NULL;
 }
 
 int	main(int ac, char **av, char **envp)

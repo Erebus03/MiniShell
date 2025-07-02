@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 17:32:27 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/01 17:39:33 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/02 21:42:12 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ int tokeappend(t_redir *cout,t_general *data)
 		else
 			exit(generale.exit_status);
 	}
-
 	fd = open(cout->file, O_CREAT | O_WRONLY | O_APPEND, 0644);
 	if (fd < 0)
 	{

@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:23:54 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/02 19:55:56 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/02 21:15:59 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,15 @@ void execute_pwd(t_general *data)
 	// if (p == NULL)
 	// {
 	// 	dprintf(2,"AAPWD======%s==========\n",p);
+	
 		char *d = getcwd(NULL, 0);
+		if (d != NULL)
+				data->pwd = ft_strdup(d);
 		if (d == NULL)
 		{
 			// dprintf(2, "%s\n", pwddd);
-			perror("Erooor pwd");
+			dprintf(2,"%s\n",data->pwd);
+			// perror("Erooor pwd");
 			generale.exit_status = 1;
 			return ;
 		}

@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:23:07 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/02 19:55:44 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/02 21:18:55 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void  handel_cdhome(t_general *data)
 void execute_cd(t_general *data)
 {
 	char *path;
-	char *p=NULL;
+	// char *p=NULL;
 	char *jon ;
 	// t_env_var * temp = data->envlst ;
 		
@@ -59,8 +59,8 @@ void execute_cd(t_general *data)
 	if (!path)
 	{	
 		perror("cd: error retrieving current directory");
-		p = getpath(&data->envlst);
-		jon =ft_strjoin(p,"/..");
+		// p = getpath(&data->envlst);
+		jon =ft_strjoin(data->pwd,"/..");
 		edit_env(data->envlst,jon);
 	}
 	if (path != NULL)

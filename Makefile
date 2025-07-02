@@ -1,6 +1,6 @@
 NAME = shell
 CC = cc
-CFLAGS = -Wall -Wextra -Werror  -fsanitize=address -g3
+CFLAGS = -Wall -Wextra -Werror  #-fsanitize=address -g3
 
 SRC = main.c utils/env_vars.c utils/parse_cmd.c utils/add_nodes.c utils/free_nodes.c utils/handler.c \
 		utils/mini_funcs.c utils/mini_funcs2.c utils/mini_funcs3.c utils/new_nodes.c utils/process_tokens.c \

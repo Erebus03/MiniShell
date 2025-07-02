@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:58 by araji             #+#    #+#             */
-/*   Updated: 2025/07/02 20:38:29 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/02 21:03:14 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ typedef struct s_general
     int				exit_status;
     int				no_expand_heredoc;
     int				inside_env_var;
+    char *pwd;
 }	t_general;
 
 extern t_general generale;
