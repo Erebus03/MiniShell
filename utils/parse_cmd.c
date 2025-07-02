@@ -109,13 +109,13 @@ t_command	*parse_command(t_general *ctx)
 	all_tokens = tokenize_input(ctx);
 	if (!all_tokens)
 		return (NULL);
-	print_tokens(all_tokens);
+	// print_tokens(all_tokens);
 	if (!check_syntax(ctx, all_tokens))
 	{
-		printf("minishell syntax error : exited with %d\n", ctx->exit_status);
+		printf("minishell syntax error : exited with %d\n", generale.exit_status);
 		return (NULL);
 	}
-	ctx->exit_status = 0;
+	generale.exit_status = 0;
 	commands = process_cmd_tokens(ctx, all_tokens, &last_cmd_start);
 	return (finalize_last_command(ctx, commands, last_cmd_start));
 }

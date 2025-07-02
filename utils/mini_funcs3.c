@@ -37,8 +37,8 @@ void	join_tokens(t_token *tokens, t_token *new)
 	free(tokens->value);
 	tokens->value = str;
 	next_node = new->next;
-	free(new->value);
-	free(new);
+	// free(new->value);
+	//free(new);
 	tokens->next = next_node;
 	if (next_node)
 		next_node->prev = tokens;

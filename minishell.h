@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:58 by araji             #+#    #+#             */
-/*   Updated: 2025/06/30 19:04:43 by araji            ###   ########.fr       */
+/*   Updated: 2025/07/02 20:38:29 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,20 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
+#include <readline/readline.h>
+#include <readline/history.h>
+#include<unistd.h>
+#include <sys/wait.h>
+#include <fcntl.h>
+#include <limits.h>
+#define MAX_TOKENS 1024
+#include <sys/stat.h>
+#include <signal.h>
 /* ================================ ENUMS =================================== */
 typedef enum e_error_code
 {
@@ -65,9 +79,10 @@ typedef struct s_env_var
 typedef struct s_redir
 {
     t_token_type    type;
+     char            *index; 
     char            *file;
     int             fd;
-	int				expand_in_heredec;
+	int				expand_in_heredec; //
     struct s_redir  *next;
 }	t_redir;
 
@@ -92,11 +107,14 @@ typedef struct s_general
     char			**envarr;
     int				error;
 	t_memory		*heap;
+    t_command        *cmnd ;
     char			*error_msg;
     int				exit_status;
     int				no_expand_heredoc;
     int				inside_env_var;
 }	t_general;
+
+extern t_general generale;
 
 /* ========================= CONSTRUCTOR FUNCTIONS ========================= */
 t_token			*new_token(t_general *ctx, char *value, t_token_type type, bool expanded);
@@ -171,6 +189,89 @@ int				add_addr(t_general *ctx, t_memory *new_addr);
 /* ========================== DEBUG FUNCTIONS ============================== */
 void			print_tokens(t_token *tokens);
 void			print_commands(t_command *commands);
+
+
+
+size_t ftt_strlen(const char **s);
+void eroor_msg(char * str, int flag);
+void eroor_export(char *str);
+void eroor_exit(char *str);
+void eroor_cd(char *str);
+int tokencomnd(t_redir *cout, t_general *data);
+int handel_tokeredir(t_redir *cout,t_general *data,int flag);
+int tokeredir(t_redir *cout,t_general *data);
+int tokeappend(t_redir *cout,t_general *data);
+int size_list(t_command *var);
+void heredoc_sigint_handler();
+char *namefile();
+void child_herdoc(t_redir *var);
+int parent_herdoc(int pid,t_redir *var,char * name);
+int herdocc(t_redir *var, int index);
+int token_out(t_redir *temp);
+char *getenvp(char **p);
+char **reserve_space(t_command *var);
+void exucutecmd(char **env, char *path,t_command *var);
+char *cherche_path(t_env_var **env);
+int  chek_eroorsplit(t_general *data);
+void eroor_exucutecmn(char *strjoncmd);
+void split_pathexucutecmd(char *path,t_general *data);
+void split_chek(t_general *data);
+int ft_herdoc(t_command *commands);
+int ft_tokin_redir(t_redir *com,t_general *data);
+int ft_redir_append(t_redir *com,t_general *data);
+int ft_redir_in(t_redir *com,t_general *data);
+int  ft_redir_herdoc(t_redir *com);
+int  chek_type(t_redir * cc,t_general * data);
+void	handle_child_process(t_general *data, int *fd_sa, int *fd);
+ void	handle_parent_process(int *fd_sa, int *fd, t_general *data);
+void	wait_all_processes(int *pids, int count);
+void	exit_error(char *msg);
+int	*alloc_pids(t_general *data);
+void	ft_exucutepipe(t_general *data);
+int  chek_bultin(t_command * var);
+void edit_env(t_env_var *var,char *newpath);
+void  handel_cdhome(t_general *data);
+void execute_cd(t_general *data);
+// void	*ft_memcpy(void *dest, const void *src, size_t n);
+int chek_newline(char * var);
+void process_echo(t_general *data,int i);
+void execute_echo(t_general *data);
+char *getpath(t_env_var **pp);
+void execute_pwd(t_general *data);
+// int	ft_isalpha(int c);
+int chek_number(char *s);
+void singel_exit();
+void three_exit();
+void exit_num_normal(int n);
+void exit_num(int n);
+void execute_exit(t_command * var);
+void execute_env(t_env_var **env);
+int chek_export(char *var);
+int  chek_exp(t_env_var **var,char *key);
+void afficher_exp(t_env_var *env);
+char *extract_key(char *cmd_arg, int j);
+int variable_exists(t_env_var *env_list, char *key);
+char *extract_value(char *cmd_arg, int start_pos);
+void update_existing_variable(t_env_var *env_list, char *key, char *value);
+int handle_value_var(t_general *data, char *key, char *value);
+int handle_no_value_export(t_general *data, char *key);
+ int handle_with_value_export(t_general *data, char *arg, int j);
+ int process_single_export_arg(t_general *data, char *arg);
+ void process_all_export_args(t_general *data);
+void execute_export(t_general *data);
+void	free_env_var(t_env_var *env_var);
+void	remove_env_var(t_general *data, char *var_name);
+void	execute_unset(t_general *data);
+void aplementation_bultin(t_general *data);
+void sighandler();
+void ft_control();
+
+
+
+
+
+
+
 
 #endif
 

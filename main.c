@@ -3,14 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:53 by araji             #+#    #+#             */
-/*   Updated: 2025/06/30 18:31:00 by araji            ###   ########.fr       */
+/*   Updated: 2025/07/02 20:36:42 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+t_general generale;
+
+
 
 void	init_general_struct(t_general *context, char *value)
 {
@@ -25,37 +29,56 @@ void	init_general_struct(t_general *context, char *value)
 	context->inside_env_var = 0;
 }
 
-void	run(void)
-{
-	return ;
-}
-
 int	main(int ac, char **av, char **envp)
 {
-	t_general (context);
-	t_command *(cmds);
+	t_general generale ;
+	generale.exit_status = 0;
+	
+	t_general data ;
+	data.envlst=NULL;
+	
+	t_command	*cmds;
 	(void)av;
-	init_general_struct(&context, NULL);
+	
+	init_general_struct(&data, NULL);
 	if (ac != 1)
 	{
 		printf("$> ./Your Program\n");
-		exit(1);
+		return 0 ;
 	}
-	list_env_vars(&context, &context.envlst, envp);
-	printf("envlst %p\n", context.envlst);
-	while (37)
+	list_env_vars(&data,&data.envlst,envp);
+	signal(SIGINT, sighandler);
+	signal(SIGQUIT, SIG_IGN);
+	while (1)
 	{
-		context.input = readline("\001\033[32m\002minihell $> \001\033[0m\002");
-		if (ft_strcmp(context.input, "exit") == 0)
-		{
-			write(1, "calling exit\n", 13);
-			clean_exit(&context, NULL, 0);
+		data.input = readline("\001\033[32m\002minihell $> \001\033[0m\002");
+		add_history(data.input);
+		if (!data.input)
+			ft_control();
+		if(*data.input == '\0')
+			continue;
+		cmds = parse_command(&data);
+		t_command *var = cmds;//
+		data.cmnd = cmds;
+		if (ft_herdoc(var) == -1)
+			continue;
+		
+		if (size_list(var) == 1 && chek_bultin(var) == 1)
+		{	int j= 0;
+			int fd = dup(STDIN_FILENO);
+			int k = dup(STDOUT_FILENO);
+			j = chek_type(var->redirs,&data);
+			if (j != -1 )
+				aplementation_bultin(&data);
+			dup2(fd,STDIN_FILENO);
+			dup2(k,STDOUT_FILENO);
 		}
-		add_history(context.input);
-		cmds = parse_command(&context);
-		run();
-		print_commands(cmds);
+		else
+			ft_exucutepipe(&data);
+
 		free_commands(&cmds);
 	}
 	return (0);
 }
+
+
