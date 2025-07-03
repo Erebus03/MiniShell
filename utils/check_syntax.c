@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_syntax.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 16:15:40 by araji             #+#    #+#             */
-/*   Updated: 2025/07/02 14:33:37 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/03 10:09:06 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,25 @@ int	validate_quotes(t_general *ctx)
 	}
 	return (1);
 }
+static int	valid_heredoc_count(t_token *tkns)
+{
+	t_token	*tmp;
+	int		count;
 
+	tmp = tkns;
+	count = 0;
+	while (tmp)
+	{
+		if (tmp->type == THEREDOC)
+			count++;
+		tmp = tmp->next;
+	}
+	if (count > 16)
+		return (0);
+	return (1);
+}
 /* helper for norm */
-int	s_exitcode_nd_ret(t_general *ctx, int ret_value, int exit_stat)
+static int	s_exitcode_nd_ret(t_general *ctx, int ret_value, int exit_stat)
 {
 	(void)ctx;
 	generale.exit_status = exit_stat;
@@ -52,6 +68,8 @@ int	check_syntax(t_general *ctx, t_token *all_tokens)
 		return (0);
 	}
 	token = all_tokens;
+	if (!valid_heredoc_count(all_tokens))
+		return (s_exitcode_nd_ret(ctx, 0, 2));
 	while (token)
 	{
 		if (token->type == TPIPE)
@@ -62,9 +80,7 @@ int	check_syntax(t_general *ctx, t_token *all_tokens)
 		}
 		if ((token->type != TWORD && token->type != TPIPE)
 			&& (!token->next || (token->next && token->next->type != TWORD)))
-		{
 			return (s_exitcode_nd_ret(ctx, 0, 2));
-		}
 		token = token->next;
 	}
 	return (1);
