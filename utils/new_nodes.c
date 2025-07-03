@@ -58,11 +58,12 @@ t_redir	*new_redir(t_general *ctx, t_token_type type, char *file)
 	return (redir);
 }
 
-t_env_var	*new_var(t_general *ctx, char *key, char *value)
+/* envlst is not included in mem manager */
+t_env_var	*new_var(char *key, char *value)
 {
 	t_env_var	*env;
 
-	env = allocate(ctx, sizeof(t_env_var));
+	env = malloc(sizeof(t_env_var));
 	if (!env)
 		return (NULL);
 	env->key = key;

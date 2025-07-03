@@ -3,18 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:53 by araji             #+#    #+#             */
-/*   Updated: 2025/07/02 21:07:24 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/03 11:36:44 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 t_general generale;
-
-
 
 void	init_general_struct(t_general *context, char *value)
 {
@@ -32,12 +30,7 @@ void	init_general_struct(t_general *context, char *value)
 
 int	main(int ac, char **av, char **envp)
 {
-	t_general generale ;
-	generale.exit_status = 0;
-	
 	t_general data ;
-	data.envlst=NULL;
-	
 	t_command	*cmds;
 	(void)av;
 	
@@ -47,7 +40,9 @@ int	main(int ac, char **av, char **envp)
 		printf("$> ./Your Program\n");
 		return 0 ;
 	}
-	list_env_vars(&data,&data.envlst,envp);
+	list_env_vars(&data.envlst, envp);
+
+	cleanup(&data);
 	signal(SIGINT, sighandler);
 	signal(SIGQUIT, SIG_IGN);
 	while (1)

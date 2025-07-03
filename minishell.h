@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:58 by araji             #+#    #+#             */
-/*   Updated: 2025/07/02 21:03:14 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/03 11:26:43 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,13 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
 #include <readline/readline.h>
 #include <readline/history.h>
-#include<unistd.h>
+#include <unistd.h>
 #include <sys/wait.h>
 #include <fcntl.h>
 #include <limits.h>
@@ -120,7 +119,7 @@ extern t_general generale;
 /* ========================= CONSTRUCTOR FUNCTIONS ========================= */
 t_token			*new_token(t_general *ctx, char *value, t_token_type type, bool expanded);
 t_command		*new_command(t_general *ctx);
-t_env_var		*new_var(t_general *ctx, char *key, char *value);
+t_env_var		*new_var(char *key, char *value);
 t_redir			*new_redir(t_general *ctx, t_token_type type, char *file);
 
 /* =========================== LIST FUNCTIONS ============================= */
@@ -141,7 +140,7 @@ void			cleanup(t_general *ctx);
 void			clean_exit(t_general *ctx, char *errmsg, int errcode);
 
 /* ======================== ENVIRONMENT FUNCTIONS ========================== */
-void			list_env_vars(t_general *ctx, t_env_var **envlst, char **envp);
+void			list_env_vars(t_env_var **envlst, char **envp);
 void			copy_envp(t_general *ctx);
 char			*get_env_value(char *var_name, t_env_var *lst);
 

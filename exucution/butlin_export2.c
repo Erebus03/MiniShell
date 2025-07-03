@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   butlin_export2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:36:27 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/01 18:40:10 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/03 11:27:03 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int handle_value_var(t_general *data, char *key, char *value)
     t_env_var *variable;
     
    
-        variable = new_var(data,key, value);
+        variable = new_var(key, value);
         if (!variable)
         {
             generale.exit_status = 1;

@@ -6,7 +6,7 @@
 /*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:58:07 by araji             #+#    #+#             */
-/*   Updated: 2025/06/30 19:08:18 by araji            ###   ########.fr       */
+/*   Updated: 2025/07/03 11:26:31 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,12 @@ void	copy_envp(t_general *ctx)
 	ctx->envarr[i] = NULL;
 }
 
-static int	make_add_variable(t_general *ctx, t_env_var **envlst,
+static int	make_add_variable(t_env_var **envlst,
 		char *key, char *val)
 {
 	t_env_var	*variable;
 
-	variable = new_var(ctx, key, val);
+	variable = new_var(key, val);
 	if (!variable)
 		return (0);
 	add_variable(envlst, variable);
@@ -86,7 +86,7 @@ static int	make_add_variable(t_general *ctx, t_env_var **envlst,
 	   j	=> indx[1]
 	val_len => indx[2]
 */
-void	list_env_vars(t_general *ctx, t_env_var **envlst, char **envp)
+void	list_env_vars(t_env_var **envlst, char **envp)
 {
 	int			indx[3];
 	char		*key;
@@ -109,7 +109,7 @@ void	list_env_vars(t_general *ctx, t_env_var **envlst, char **envp)
 			return ;
 		ft_memcpy(value, envp[indx[0]] + indx[1], indx[2]);
 		value[indx[2]] = '\0';
-		if (!make_add_variable(ctx, envlst, key, value))
+		if (!make_add_variable(envlst, key, value))
 			return ;
 	}
 }
