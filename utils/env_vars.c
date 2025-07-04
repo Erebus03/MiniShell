@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_vars.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:58:07 by araji             #+#    #+#             */
-/*   Updated: 2025/07/03 15:35:55 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/04 16:33:52 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,8 +117,3 @@ void	list_env_vars(t_env_var **envlst, char **envp)
 			return ;
 	}
 }
-
-		// variable = new_var(ctx, key, value);
-		// if (!variable)
-		// 	return ;
-		// add_variable(envlst, variable);
