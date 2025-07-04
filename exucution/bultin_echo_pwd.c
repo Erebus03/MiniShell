@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:23:54 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/04 16:00:57 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/04 21:07:02 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int chek_newline(char * var)
 void process_echo(t_general *data,int i)
 {
 	t_command *var;
+
 	var = data->cmnd ;
 	while(var && var->cmd[i] && var->cmd[i][0])
 	{

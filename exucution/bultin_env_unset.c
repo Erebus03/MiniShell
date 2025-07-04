@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:27:41 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/01 18:53:59 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/04 23:19:04 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,21 @@ void	execute_unset(t_general *data)
 }
 
 
-void execute_env(t_env_var **env)
+void execute_env(t_general *env)
 {
-	t_env_var  *var = *env ;
-		while(var !=  NULL)
+	t_env_var  *var = env->envlst;
+	if(var == NULL)
+	{
+		char *path ;
+
+		path = getcwd(NULL,0);
+		printf("PWD=%s\n",path);
+		printf("SHLVL=1\n");
+		printf("_=./minishell\n");
+		if(env->oldpwd != NULL)
+			printf("OLDPWD=%s\n",env->oldpwd);
+	}
+	while(var !=  NULL)
 	{
 		
 		if(var->key != NULL && var->value != NULL)

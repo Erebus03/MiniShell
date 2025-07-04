@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:14:44 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/04 16:30:20 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/04 21:13:01 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void exucutecmd(char **env, char *path,t_command *var)
 	
  	if (stat(path, &info) == 0 && S_ISDIR(info.st_mode)) 
 	{
-	eroor_msg(path,1);
+	print_error(path, ": Is a directory\n");
 	generale.exit_status = 126;
 	exit(generale.exit_status);
 	}
@@ -60,7 +60,7 @@ int  chek_eroorsplit(t_general *data)
 {
 	if (data->cmnd->cmd && data->cmnd->cmd[0] && data->cmnd->cmd[0][0] == '\0') 
 	{
-			eroor_msg(data->cmnd->cmd[0],4);
+			print_error(data->cmnd->cmd[0], ": command not found\n");
 			generale.exit_status = 127;
 			return -1;
 	}
@@ -68,13 +68,13 @@ int  chek_eroorsplit(t_general *data)
 	{
 		if (access(data->cmnd->cmd[0], F_OK) != 0)
 		{
-			eroor_msg(data->cmnd->cmd[0],3);
+			print_error(data->cmnd->cmd[0], ": No such file or directory\n");
 			generale.exit_status = 127;
 			return -1 ;
 		}
 		if (access(data->cmnd->cmd[0], X_OK) != 0)
 		{
-			eroor_msg(data->cmnd->cmd[0],2);
+			print_error(data->cmnd->cmd[0], ": Permission denied\n");
 			generale.exit_status = 126;
 			return -1 ;
 		}
@@ -129,12 +129,12 @@ void split_chek(t_general *data)
 	path = cherche_path(&data->envlst);
 	if (!path)
 	{
-		eroor_msg(data->cmnd->cmd[0],4);
+		print_error(data->cmnd->cmd[0], ": command not found\n");
 		generale.exit_status = 127;
 		return;
 	}
 	split_pathexucutecmd(path,data);
-	eroor_msg(data->cmnd->cmd[0],4);	
+	print_error(data->cmnd->cmd[0], ": command not found\n");	
 	generale.exit_status= 127;
 	return ;
 		

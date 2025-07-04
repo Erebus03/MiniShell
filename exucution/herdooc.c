@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 17:34:22 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/02 14:53:29 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/04 17:36:45 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,11 @@ char *namefile()
 void child_herdoc(t_redir *var)
 {
 	char *pop;		 
-	signal(SIGINT, heredoc_sigint_handler); 
-	signal(SIGQUIT, SIG_IGN);             
+           
 	while (1)
 	{
+        signal(SIGINT, heredoc_sigint_handler); 
+	    signal(SIGQUIT, SIG_IGN);  
 		pop = readline("> ");
 		if (!pop || ft_strcmp(pop, var->file) == 0)  
 		{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:53 by araji             #+#    #+#             */
-/*   Updated: 2025/07/03 11:36:44 by araji            ###   ########.fr       */
+/*   Updated: 2025/07/04 23:02:52 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	init_general_struct(t_general *context, char *value)
 	context->no_expand_heredoc = 0;
 	context->inside_env_var = 0;
 	context->pwd = NULL;
+	context->oldpwd=NULL;
 }
 
 int	main(int ac, char **av, char **envp)
@@ -54,8 +55,10 @@ int	main(int ac, char **av, char **envp)
 		if(*data.input == '\0')
 			continue;
 		cmds = parse_command(&data);
-		t_command *var = cmds;//
+		t_command *var = cmds;
 		data.cmnd = cmds;
+		if (var->redirs)
+			dprintf(2, "after the parsing |%s|\n", var->redirs->file);
 		if (ft_herdoc(var) == -1)
 			continue;
 		

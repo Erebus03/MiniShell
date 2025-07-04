@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:20:32 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/03 21:06:58 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/04 21:37:33 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ void	ft_exucutepipe(t_general *data)
 	fd_sa[0] = -1;
 	fd_sa[1] = -1;
 	i = 0;
+
 	pids = alloc_pids(data);
 	while (data->cmnd)
 	{

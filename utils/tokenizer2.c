@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 23:33:19 by araji             #+#    #+#             */
-/*   Updated: 2025/06/30 18:53:27 by araji            ###   ########.fr       */
+/*   Updated: 2025/07/04 19:30:55 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,10 @@ int	process_dollar_token(t_general *ctx, int i, void **tkn_ptrs, int *skipped)
 		return (-1);
 	if (token_value)
 	{
-		if (to_be_split(token_value))
+		dprintf(2 ,"====>|%s|====", token_value);
+		if (to_be_split(*tkn_ptrs, token_value))
 		{
+			dprintf(2 ,"2====>|%s|====", token_value);
 			new = split_token_value(token_value);
 			if (is_whitespace(token_value[0])
 				|| is_operator(token_value[0]))

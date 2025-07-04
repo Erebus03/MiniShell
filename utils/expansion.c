@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 21:41:16 by araji             #+#    #+#             */
-/*   Updated: 2025/06/30 18:55:21 by araji            ###   ########.fr       */
+/*   Updated: 2025/07/04 19:41:25 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ int	calculate_expansion_size(t_general *ctx, int i, char stop_char)
 
 void	fill_result_str(char *res, char *tmp_val, int *j)
 {
-	printf("\n\n\nin ftstrcpy\nres= %s | tmp = %s | j=%d\n\n\n",
-		res, tmp_val, *j);
+	// printf("\n\n\nin ftstrcpy\nres= %s | tmp = %s | j=%d\n\n\n",
+		// res, tmp_val, *j);
 	ft_strcpy(res + *j, tmp_val);
 	*j += ft_strlen(tmp_val);
 	free(tmp_val);
