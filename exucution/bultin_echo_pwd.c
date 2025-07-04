@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:23:54 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/02 21:15:59 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/04 16:00:57 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void execute_echo(t_general *data)
 	i = 1;	
 	while(var && var->cmd[i]&& var->cmd[i][0])
 	{
-			if(var->cmd[i][0] == '-')
+			if(var->cmd[i][0] == '-' && var->cmd[i][1] != '\0')
 				{
 					res = chek_newline(var->cmd[i]);
 					if(res == 1)

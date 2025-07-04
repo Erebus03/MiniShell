@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:14:44 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/01 18:18:17 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/04 16:30:20 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ void split_pathexucutecmd(char *path,t_general *data)
 		i++;
 	}
 }
+
 void split_chek(t_general *data)
 {
 	char *path;
@@ -136,4 +137,5 @@ void split_chek(t_general *data)
 	eroor_msg(data->cmnd->cmd[0],4);	
 	generale.exit_status= 127;
 	return ;
+		
 }
