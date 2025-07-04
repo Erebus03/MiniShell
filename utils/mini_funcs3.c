@@ -49,9 +49,6 @@ void	handle_token_joining(t_token *tokens, t_token *new, int skipped)
 {
 	if (new && new->value && tokens_size(tokens) > 1)
 	{
-		printf("newval[%s]\n\n", new->value);
-		printf("new [%p]\nvalue [%s]\ntword?[%d]\nskipped[%d]\nnewprev[%p]\nnewprevtword?[%d]\n", new
-		, new->value, (new->type == TWORD), skipped, new->prev, ((new->prev)->type) == TWORD);
 		if (new->type == TWORD && skipped == 0 && new->prev
 			&& (new->prev)->type == TWORD)
 		{

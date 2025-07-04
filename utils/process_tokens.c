@@ -36,9 +36,6 @@ static int	process_token_word(t_command *cmds,
 	cmds->cmd[*arg_count] = ft_strdup(current->value);
 	if (!cmds->cmd[*arg_count])
 		return (0);
-
-	// printf("added (%p)[%s]to heap\n", cmds->cmd[*arg_count], cmds->cmd[*arg_count]);
-	// add_addr(ctx, new_addr((void *)(cmds->cmd[*arg_count])));
 	(*arg_count)++;
 	return (1);
 }

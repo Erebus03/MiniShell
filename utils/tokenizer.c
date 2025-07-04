@@ -6,7 +6,7 @@
 /*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 15:46:34 by araji             #+#    #+#             */
-/*   Updated: 2025/07/04 17:16:29 by araji            ###   ########.fr       */
+/*   Updated: 2025/07/04 20:13:30 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,6 @@ static void	update_position_and_state(t_general *ctx, int *indx,
 		t_token *new)
 {
 	indx[0] += indx[3];
-	if (new && last_token(new))
-		printf("\nlast_tkn no_join [%d]\n", (last_token(new))->no_join_after);
 	if (new && new->value && ((last_token(new))->no_join_after == 0))
 		indx[2] = 0;
 	if (is_whitespace(ctx->input[indx[0]]) || ctx->input[indx[0]] == '\0')
