@@ -29,7 +29,7 @@ static t_command	*create_and_process_command(t_general *ctx,
 	if (!new_cmd)
 		return (NULL);
 	new_cmd->tokens = cmd_start;
-	if (process_tokens(ctx, new_cmd) != 1)
+	if (process_tokens(new_cmd) != 1)
 		return (NULL);
 	return (new_cmd);
 }
@@ -109,7 +109,9 @@ t_command	*parse_command(t_general *ctx)
 	all_tokens = tokenize_input(ctx);
 	if (!all_tokens)
 		return (NULL);
-	// print_tokens(all_tokens);
+	printf("\n\n");
+	print_tokens(all_tokens);
+	printf("\n\n");
 	if (!check_syntax(ctx, all_tokens))
 	{
 		printf("minishell syntax error : exited with %d\n", generale.exit_status);

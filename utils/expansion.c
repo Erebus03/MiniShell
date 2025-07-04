@@ -6,7 +6,7 @@
 /*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 21:41:16 by araji             #+#    #+#             */
-/*   Updated: 2025/06/30 18:55:21 by araji            ###   ########.fr       */
+/*   Updated: 2025/07/04 15:01:08 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ int	calculate_expansion_size(t_general *ctx, int i, char stop_char)
 
 void	fill_result_str(char *res, char *tmp_val, int *j)
 {
-	printf("\n\n\nin ftstrcpy\nres= %s | tmp = %s | j=%d\n\n\n",
-		res, tmp_val, *j);
+	// printf("\n\n\nin ftstrcpy\nres= %s | tmp = %s | j=%d\n\n\n",
+		// res, tmp_val, *j);
 	ft_strcpy(res + *j, tmp_val);
 	*j += ft_strlen(tmp_val);
 	free(tmp_val);
@@ -97,6 +97,10 @@ t_token	*split_token_value(char *value)
 	init_general_struct(&tmp, value);
 	tmp.inside_env_var = 1; //for tmp wont effect org struct
 	new_tokens = tokenize_input(&tmp);
+	// printf("in\n");
+	// print_tokens(new_tokens);
+	// printf("out\n");
+
 	// // ill create a general, put the value as original inpt
 	// tokenize normally how i would tokenize the normal input
 	// free it, link it

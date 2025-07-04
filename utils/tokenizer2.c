@@ -6,7 +6,7 @@
 /*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 23:33:19 by araji             #+#    #+#             */
-/*   Updated: 2025/06/30 18:53:27 by araji            ###   ########.fr       */
+/*   Updated: 2025/07/04 14:29:51 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	process_quoted_token(t_general *ctx, int i, t_token **tokens,
 		return (-1);
 	if (token_value)
 	{
-		new = new_token(ctx, token_value, TWORD, false);
+		new = new_token(token_value, TWORD, false);
 		if (!new)
 			return (-1);
 		if (ctx->no_expand_heredoc == 1)
@@ -50,7 +50,7 @@ int	process_operator_token(t_general *ctx, int i, t_token **tokens,
 	len = handle_operator(ctx, i, &token_type, &token_value);
 	if (len < 0)
 		return (-1);
-	new = new_token(ctx, token_value, token_type, false);
+	new = new_token(token_value, token_type, false);
 	if (!new)
 		return (-1);
 	add_token(tokens, new);
@@ -71,13 +71,15 @@ int	process_dollar_token(t_general *ctx, int i, void **tkn_ptrs, int *skipped)
 	{
 		if (to_be_split(token_value))
 		{
+			printf("token value [%s]\n", token_value);
 			new = split_token_value(token_value);
-			if (is_whitespace(token_value[0])
-				|| is_operator(token_value[0]))
+			if (is_whitespace(token_value[0])) // || is_whitespace(token_value[ft_strlen(token_value) - 1]))
 				*skipped = 1;
+			if (is_whitespace(token_value[ft_strlen(token_value) - 1]))
+				(last_token(new))->no_join_after = 1;
 		}
 		else
-			new = new_token(ctx, token_value, TWORD, true);
+			new = new_token(token_value, TWORD, true);
 		if (!new)
 			return (-1);
 		tkn_ptrs[1] = new;
@@ -99,7 +101,7 @@ int	process_word_token(t_general *ctx, int i, t_token **tokens,
 	len = handle_word(ctx, i, &token_value);
 	if (len < 0)
 		return (-1);
-	new = new_token(ctx, token_value, TWORD, false);
+	new = new_token(token_value, TWORD, false);
 	if (!new)
 		return (-1);
 	add_token(tokens, new);
@@ -110,7 +112,7 @@ int	process_word_token(t_general *ctx, int i, t_token **tokens,
 /* Helper to process a single token based on current character */
 int	process_single_token(t_general *ctx, int i, void **tkn_ptrs, int *skipped)
 {
-	if (ctx->input[i] == '"' || ctx->input[i] == '\'')
+	if (ctx->input[i] == '"' || (ctx->input[i] == '\'' && ctx->inside_env_var == 0))
 		return (process_quoted_token(ctx, i, (t_token **)&tkn_ptrs[0],
 				(t_token **)&tkn_ptrs[1]));
 	else if (is_operator(ctx->input[i]) && ctx->inside_env_var == 0)

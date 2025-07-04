@@ -13,6 +13,11 @@
 #include "../minishell.h"
 
 /* normal words with no whitespace or operators */
+/*
+	fixed "'ls ls'" => 'ls ls'
+	fixed echo$v (|ls|) => echo|ls|
+	problem in echo -
+*/
 int	handle_word(t_general *ctx, int i, char **value)
 {
 	char *(result);
@@ -21,7 +26,8 @@ int	handle_word(t_general *ctx, int i, char **value)
 	word_end = i;
 	while (ctx->input[word_end] && !is_whitespace(ctx->input[word_end])
 		&& (!is_operator(ctx->input[word_end]) || ctx->inside_env_var == 1)
-		&& !is_quote(ctx->input[word_end]) && ctx->input[word_end] != '$')
+		&& (!is_quote(ctx->input[word_end]) || ctx->inside_env_var == 1)
+		&& ctx->input[word_end] != '$')
 		word_end++; // inside_env_var flag shuts off (kinda) operator check 
 	result_size = calculate_expansion_size(ctx, start, ctx->input[word_end]);
 	if (result_size < 0)
@@ -79,48 +85,6 @@ int	handle_operator(t_general *ctx, int i, t_token_type *type, char **value)
 	*value = result;
 	return (len);
 }
-
-/*
-int	handle_operator(t_general *ctx, int i, t_token_type *type, char **value)
-{
-	bool (has_next);
-	char *(result);
-	int (len);
-	len = 1;
-	has_next = (ctx->input[i + 1] != '\0');
-	if (ctx->input[i] == '|')
-	{
-		*type = TPIPE;
-	}
-	else if (ctx->input[i] == '<')
-	{
-		if (has_next && ctx->input[i + 1] == '<')
-		{
-			*type = THEREDOC;
-			len = 2;
-		}
-		else
-			*type = TREDIR_IN;
-	}
-	else if (ctx->input[i] == '>')
-	{
-		if (has_next && ctx->input[i + 1] == '>')
-		{
-			*type = TREDIR_APPEND;
-			len = 2;
-		}
-		else
-			*type = TREDIR_OUT;
-	}
-	result = malloc(len + 1);
-	if (!result)
-		return (-1);
-	ft_strncpy(result, ctx->input + i, len);
-	result[len] = '\0';
-	*value = result;
-	return (len);
-}
-*/
 
 /*	Handel quoted  strs
 	real commands should splitted when passed to env vars (e.i. ls    -l -a) */

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   herdooc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 17:34:22 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/02 14:53:29 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/03 11:42:15 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,10 +106,8 @@ int ft_herdoc(t_command *commands)
     while (temp != NULL)
     {
         t_redir *redir = temp->redirs;
-        
         while(redir != NULL)
         {
-		
             if (redir->type == THEREDOC)
                 if (herdocc(redir,index) == 130)
 					return (-1);

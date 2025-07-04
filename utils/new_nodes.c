@@ -12,28 +12,28 @@
 
 #include "../minishell.h"
 
-t_token	*new_token(t_general *ctx, char *value, t_token_type type,
-		bool expanded)
+t_token	*new_token(char *value, t_token_type type, int expanded)
 {
 	t_token	*token;
 
-	token = (t_token *)allocate(ctx, sizeof(t_token));
+	token = (t_token *)malloc(sizeof(t_token));
 	if (!token)
 		return (NULL);
 	token->value = value;
 	token->type = type;
 	token->expanded = expanded;
+	token->no_join_after = 0;
 	token->next = NULL;
 	token->prev = NULL;
 	token->quoted_delim = 0;
 	return (token);
 }
 
-t_command	*new_command(t_general *ctx)
+t_command	*new_command()
 {
 	t_command	*cmd;
 
-	cmd = (t_command *)allocate(ctx, sizeof(t_command));
+	cmd = (t_command *)malloc(sizeof(t_command));
 	if (!cmd)
 		return (NULL);
 	cmd->cmd = NULL;
@@ -43,11 +43,11 @@ t_command	*new_command(t_general *ctx)
 	return (cmd);
 }
 
-t_redir	*new_redir(t_general *ctx, t_token_type type, char *file)
+t_redir	*new_redir(t_token_type type, char *file)
 {
 	t_redir	*redir;
 
-	redir = (t_redir *)allocate(ctx, sizeof(t_redir));
+	redir = (t_redir *)malloc(sizeof(t_redir));
 	if (!redir)
 		return (NULL);
 	redir->type = type;
