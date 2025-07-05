@@ -6,7 +6,7 @@
 /*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 15:46:34 by araji             #+#    #+#             */
-/*   Updated: 2025/07/04 20:13:30 by araji            ###   ########.fr       */
+/*   Updated: 2025/07/05 15:50:28 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,14 @@ static int	process_and_add_token(t_general *ctx, int *indx, void **tkn_ptrs)
 static void	update_position_and_state(t_general *ctx, int *indx,
 		t_token *new)
 {
-	indx[0] += indx[3];
+	if ((indx[0] + indx[3]) <= indx[1])
+		indx[0] += indx[3];
+	else
+	{
+		printf("inputlen done been exeeded\n");
+		indx[0] = indx[1];
+		return ;
+	}
 	if (new && new->value && ((last_token(new))->no_join_after == 0))
 		indx[2] = 0;
 	if (is_whitespace(ctx->input[indx[0]]) || ctx->input[indx[0]] == '\0')
@@ -71,7 +78,16 @@ t_token	*tokenize_input(t_general *ctx)
 		indx[3] = process_and_add_token(ctx, indx, tkn_ptrs);
 		if (indx[3] < 0)
 			return (NULL);
+
+		/*******/
+		for (int i = 0; i < 4; i++) { printf("index[%d]=[%d]\n", i, indx[i]);}
+		for (int i = 0; i < 2; i++) { printf("ptr[%d]=[%p]\n", i, tkn_ptrs[i]);}
+		/*******/
 		update_position_and_state(ctx, indx, tkn_ptrs[1]);
+		/*******/
+		for (int i = 0; i < 4; i++) { printf("index[%d]=[%d]\n", i, indx[i]);}
+		for (int i = 0; i < 2; i++) { printf("ptr[%d]=[%p]\n", i, tkn_ptrs[i]);}
+		/*******/
 	}
 	return (tkn_ptrs[0]);
 }
