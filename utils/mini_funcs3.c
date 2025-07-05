@@ -32,7 +32,7 @@ void	join_tokens(t_token *tokens, t_token *new)
 	str = NULL;
 	while (tokens != new->prev)
 		tokens = tokens->next;
-	printf("\njoining [%s]-[%s]\n\n", tokens->value, (tokens->next)->value);
+	// printf("\njoining [%s]-[%s]\n\n", tokens->value, (tokens->next)->value);
 	str = ft_strjoin(tokens->value, (tokens->next)->value);
 	free(tokens->value);
 	tokens->value = str;

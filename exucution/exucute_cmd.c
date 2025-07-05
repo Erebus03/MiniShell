@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:14:44 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/04 21:13:01 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/05 18:46:43 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ int  chek_eroorsplit(t_general *data)
 	return 0;
 }
 
-
 void split_pathexucutecmd(char *path,t_general *data)
 {
 	int		i;
@@ -114,6 +113,23 @@ void split_pathexucutecmd(char *path,t_general *data)
 	}
 }
 
+void ft_chekl(t_general *data)
+{
+	if (access(data->cmnd->cmd[0], F_OK) != 0)
+	{
+		print_error(data->cmnd->cmd[0], ": No such file or directory\n");
+		generale.exit_status = 127;
+		return  ;
+	}
+	if (access(data->cmnd->cmd[0], X_OK) != 0)
+	{
+		print_error(data->cmnd->cmd[0], ": Permission denied\n");
+		generale.exit_status = 126;
+		return ;
+	}
+	exucutecmd(data->envarr, data->cmnd->cmd[0], data->cmnd);
+}
+
 void split_chek(t_general *data)
 {
 	char *path;
@@ -124,6 +140,7 @@ void split_chek(t_general *data)
 		return ;
 	}
 	copy_envp(data);
+	// ft_chekl(data); ??
 	if (chek_eroorsplit(data) == -1 )
 		return ;
 	path = cherche_path(&data->envlst);
@@ -134,6 +151,7 @@ void split_chek(t_general *data)
 		return;
 	}
 	split_pathexucutecmd(path,data);
+	
 	print_error(data->cmnd->cmd[0], ": command not found\n");	
 	generale.exit_status= 127;
 	return ;

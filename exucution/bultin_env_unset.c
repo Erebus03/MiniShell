@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:27:41 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/05 17:44:59 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/05 18:20:56 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,15 +81,13 @@ char **initialse_data(t_general *data)
 	return p;
 }
 
-
 void execute_env(t_general *env)
 {
 	t_env_var  *var = env->envlst;
 	if(var == NULL)
 	{
 		char ** res = initialse_data(env);
-		list_env_vars(&env->envlst,res);
-		
+		list_env_vars(&env->envlst,res);	
 	}
 	var = env->envlst;
 	while(var !=  NULL)

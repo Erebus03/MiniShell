@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 21:41:16 by araji             #+#    #+#             */
-/*   Updated: 2025/07/05 17:56:27 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/05 18:10:57 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	build_exp_str(t_general *ctx, int start, char stop_char, char *result)
 			result[j++] = ctx->input[i++];
 	}
 	result[j] = '\0';
-	printf("result from built_exp_str[%s]\n", result);
+	// printf("result from built_exp_str[%s]\n", result);
 	return (i);
 }
 

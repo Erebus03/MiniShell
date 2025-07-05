@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 15:46:34 by araji             #+#    #+#             */
-/*   Updated: 2025/07/05 15:50:28 by araji            ###   ########.fr       */
+/*   Updated: 2025/07/05 18:18:05 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	update_position_and_state(t_general *ctx, int *indx,
 		indx[0] += indx[3];
 	else
 	{
-		printf("inputlen done been exeeded\n");
+		// printf("inputlen done been exeeded\n");
 		indx[0] = indx[1];
 		return ;
 	}
@@ -80,13 +80,13 @@ t_token	*tokenize_input(t_general *ctx)
 			return (NULL);
 
 		/*******/
-		for (int i = 0; i < 4; i++) { printf("index[%d]=[%d]\n", i, indx[i]);}
-		for (int i = 0; i < 2; i++) { printf("ptr[%d]=[%p]\n", i, tkn_ptrs[i]);}
+		// for (int i = 0; i < 4; i++) { printf("index[%d]=[%d]\n", i, indx[i]);}
+		// for (int i = 0; i < 2; i++) { printf("ptr[%d]=[%p]\n", i, tkn_ptrs[i]);}
 		/*******/
 		update_position_and_state(ctx, indx, tkn_ptrs[1]);
 		/*******/
-		for (int i = 0; i < 4; i++) { printf("index[%d]=[%d]\n", i, indx[i]);}
-		for (int i = 0; i < 2; i++) { printf("ptr[%d]=[%p]\n", i, tkn_ptrs[i]);}
+		// for (int i = 0; i < 4; i++) { printf("index[%d]=[%d]\n", i, indx[i]);}
+		// for (int i = 0; i < 2; i++) { printf("ptr[%d]=[%p]\n", i, tkn_ptrs[i]);}
 		/*******/
 	}
 	return (tkn_ptrs[0]);

@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 17:34:22 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/05 17:56:18 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/05 18:26:19 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void child_herdoc(t_redir *var)
 	{
         signal(SIGINT, heredoc_sigint_handler); 
 	    signal(SIGQUIT, SIG_IGN);  
+        signal(SIGINT, SIG_DFL);
 		pop = readline("> ");
 		if (!pop || ft_strcmp(pop, var->file) == 0)  
 		{

@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:58 by araji             #+#    #+#             */
-/*   Updated: 2025/07/05 17:54:40 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/05 18:41:14 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -269,6 +269,7 @@ void oldedit_env(t_env_var *var,char *newpath);
 void sighandler();
 void ft_control();
 void print_error(char * str, char *error_message);
+char **initialse_data(t_general *data);
 
 
 

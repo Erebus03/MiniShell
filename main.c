@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:53 by araji             #+#    #+#             */
-/*   Updated: 2025/07/05 17:54:27 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/05 18:24:51 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,11 @@ int	main(int ac, char **av, char **envp)
 	list_env_vars(&data.envlst, envp);
 
 	cleanup(&data);
-	signal(SIGINT, sighandler);
-	signal(SIGQUIT, SIG_IGN);
+	
 	while (1)
 	{
+		signal(SIGINT, sighandler);
+		signal(SIGQUIT, SIG_IGN);
 		data.input = readline("\001\033[32m\002minihell $> \001\033[0m\002");
 		add_history(data.input);
 		if (!data.input)
@@ -59,7 +60,6 @@ int	main(int ac, char **av, char **envp)
 		data.cmnd = cmds;
 		if (ft_herdoc(var) == -1)
 			continue;
-
 		if (size_list(var) == 1 && chek_bultin(var) == 1)
 		{	int j= 0;
 			int fd = dup(STDIN_FILENO);
