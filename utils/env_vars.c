@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:58:07 by araji             #+#    #+#             */
-/*   Updated: 2025/07/05 17:06:14 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/05 17:55:51 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,8 +116,3 @@ void	list_env_vars(t_env_var **envlst, char **envp)
 			return ;
 	}
 }
-
-		// variable = new_var(ctx, key, value);
-		// if (!variable)
-		// 	return ;
-		// add_variable(envlst, variable);

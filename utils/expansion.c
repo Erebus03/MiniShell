@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 21:41:16 by araji             #+#    #+#             */
-/*   Updated: 2025/07/04 19:41:25 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/05 17:56:27 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ int	build_exp_str(t_general *ctx, int start, char stop_char, char *result)
 			result[j++] = ctx->input[i++];
 	}
 	result[j] = '\0';
+	printf("result from built_exp_str[%s]\n", result);
 	return (i);
 }
 
@@ -95,8 +96,9 @@ t_token	*split_token_value(char *value)
 	t_token		*new_tokens;
 
 	init_general_struct(&tmp, value);
-	tmp.inside_env_var = 1; //for tmp wont effect org struct
+	tmp.inside_env_var = 1;
 	new_tokens = tokenize_input(&tmp);
+
 	// // ill create a general, put the value as original inpt
 	// tokenize normally how i would tokenize the normal input
 	// free it, link it

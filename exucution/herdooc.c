@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 17:34:22 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/04 17:36:45 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/05 17:56:18 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,10 +107,8 @@ int ft_herdoc(t_command *commands)
     while (temp != NULL)
     {
         t_redir *redir = temp->redirs;
-        
         while(redir != NULL)
         {
-		
             if (redir->type == THEREDOC)
                 if (herdocc(redir,index) == 130)
 					return (-1);

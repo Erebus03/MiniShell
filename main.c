@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:53 by araji             #+#    #+#             */
-/*   Updated: 2025/07/04 23:36:03 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/05 17:54:27 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	main(int ac, char **av, char **envp)
 		data.cmnd = cmds;
 		if (ft_herdoc(var) == -1)
 			continue;
-		
+
 		if (size_list(var) == 1 && chek_bultin(var) == 1)
 		{	int j= 0;
 			int fd = dup(STDIN_FILENO);

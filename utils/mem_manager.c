@@ -45,28 +45,28 @@ t_memory	*new_addr(void *ptr)
 	return (node);
 }
 
-void	*allocate(t_general *ctx, size_t size)
-{
-	t_memory	*new_address;
-	void		*mem;
+// void	*allocate(t_general *ctx, size_t size)
+// {
+// 	t_memory	*new_address;
+// 	void		*mem;
 
-	mem = malloc(size);
-	if (!mem)
-	{
-		cleanup(ctx);
-		return (NULL);
-	}
-	new_address = new_addr(mem);
-	if (!new_address)
-	{
-		return (NULL);
-	}
-	if (!add_addr(ctx, new_address))
-	{
-		return (NULL);
-	}
-	return (mem);
-}
+// 	mem = malloc(size);
+// 	if (!mem)
+// 	{
+// 		cleanup(ctx);
+// 		return (NULL);
+// 	}
+// 	new_address = new_addr(mem);
+// 	if (!new_address)
+// 	{
+// 		return (NULL);
+// 	}
+// 	if (!add_addr(ctx, new_address))
+// 	{
+// 		return (NULL);
+// 	}
+// 	return (mem);
+// }
 
 void	cleanup(t_general *ctx)
 {
