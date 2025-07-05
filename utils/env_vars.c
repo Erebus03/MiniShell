@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:58:07 by araji             #+#    #+#             */
-/*   Updated: 2025/07/03 15:35:55 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/05 17:06:14 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ static int	make_add_variable(t_env_var **envlst,
 		char *key, char *val)
 {
 	t_env_var	*variable;
-
 	variable = new_var(key, val);
 	if (!variable)
 		return (0);

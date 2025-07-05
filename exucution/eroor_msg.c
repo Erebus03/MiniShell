@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 17:29:07 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/04 21:33:44 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/05 15:17:33 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ void print_error(char * str, char *error_message)
 {
 	write(2, "bash: ", 6);
 	write(2, str, strlen(str));
-	write(2, error_message, ft_strlen(error_message));	
+	write(2, error_message, ft_strlen(error_message));
+	return ;
 }
 
 int eroor_msg(t_general *data, int flag)

@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:53 by araji             #+#    #+#             */
-/*   Updated: 2025/07/04 23:02:52 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/04 23:36:03 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,6 @@ int	main(int ac, char **av, char **envp)
 		cmds = parse_command(&data);
 		t_command *var = cmds;
 		data.cmnd = cmds;
-		if (var->redirs)
-			dprintf(2, "after the parsing |%s|\n", var->redirs->file);
 		if (ft_herdoc(var) == -1)
 			continue;
 		

@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:23:54 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/04 21:07:02 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/05 15:28:14 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,31 +84,17 @@ char *getpath(t_env_var **pp)
 void execute_pwd(t_general *data)
 {
 	(void)data;
-	// char pwddd[10] = "/anahna";
-	// char *p = getpath(&data->envlst);
-	// if (p == NULL)
-	// {
-	// 	dprintf(2,"AAPWD======%s==========\n",p);
-	
+
 		char *d = getcwd(NULL, 0);
 		if (d != NULL)
 				data->pwd = ft_strdup(d);
 		if (d == NULL)
 		{
-			// dprintf(2, "%s\n", pwddd);
-			dprintf(2,"%s\n",data->pwd);
-			// perror("Erooor pwd");
 			generale.exit_status = 1;
 			return ;
 		}
 		printf("%s\n", d);
 		free(d);
 		generale.exit_status = 0;
-	// }
-	// else
-	// {
-	// 	printf("%s\n",p);
-	// 	generale.exit_status = 0;
-	// }
 	return ;
 }
