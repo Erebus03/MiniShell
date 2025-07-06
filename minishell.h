@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:58 by araji             #+#    #+#             */
-/*   Updated: 2025/07/05 18:41:14 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/05 21:46:16 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,8 +211,8 @@ int parent_herdoc(int pid,t_redir *var,char * name);
 int herdocc(t_redir *var, int index);
 int token_out(t_redir *temp);
 char *getenvp(char **p);
-char **reserve_space(t_command *var);
-void exucutecmd(char **env, char *path,t_command *var);
+char **reserve_space(t_general *var);
+void exucutecmd(char **env, char *path,t_general *var);
 char *cherche_path(t_env_var **env);
 int  chek_eroorsplit(t_general *data);
 void eroor_exucutecmn(char *strjoncmd);

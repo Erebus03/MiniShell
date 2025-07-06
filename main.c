@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:53 by araji             #+#    #+#             */
-/*   Updated: 2025/07/05 18:24:51 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/05 22:21:31 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,9 @@ int	main(int ac, char **av, char **envp)
 		}
 		else
 			ft_exucutepipe(&data);
-
+		free(data.input);
 		free_commands(&cmds);
+		cleanup(&data);
 	}
 	return (0);
 }

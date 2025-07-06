@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:27:41 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/05 18:20:56 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/06 21:35:37 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ char **initialse_data(t_general *data)
 	p[0]=ft_strjoin("PWD=",pwd);
 	p[1]=ft_strjoin("SHLVL=","1");
 	p[2]=ft_strjoin("_=","/minishell");
-	p[3]=ft_strjoinnn("OLDPWD=",data->oldpwd);
-	p[4]= NULL;
+	// p[3]=ft_strjoinnn("OLDPWD=",data->oldpwd);
+	p[3]= NULL;
 
 	return p;
 }
@@ -88,6 +88,11 @@ void execute_env(t_general *env)
 	{
 		char ** res = initialse_data(env);
 		list_env_vars(&env->envlst,res);	
+	}
+	if (env->oldpwd != NULL)
+	{
+		char * p = ft_strjoinnn("OLDPWD=",env->oldpwd);	
+		list_env_vars(&env->envlst,&p);
 	}
 	var = env->envlst;
 	while(var !=  NULL)

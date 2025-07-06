@@ -6,41 +6,47 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:14:44 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/05 18:46:43 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/05 22:23:13 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "../minishell.h"
-char **reserve_space(t_command *var)
+char **reserve_space(t_general *data)
 {
+	t_command *var = data->cmnd ;
 	int tail;
 	char		**argv;
 	tail = ftt_strlen((const char **)var->cmd);
 	argv = malloc(sizeof(char *) * (tail + 1));
-		if(!argv)
-		{
-			generale.exit_status=1;
-			exit(generale.exit_status);	
-		}
+	
+	if(!argv)
+	{
+		generale.exit_status=1;
+		exit(generale.exit_status);	
+	}
 	return argv ;
 }
 
-void exucutecmd(char **env, char *path,t_command *var)
+void exucutecmd(char **env, char *path,t_general *data)
 {
+	t_command *var  = data->cmnd;
+	
 	struct stat info;
 	char		**argv;
 	int i;
 	
  	if (stat(path, &info) == 0 && S_ISDIR(info.st_mode)) 
 	{
-	print_error(path, ": Is a directory\n");
-	generale.exit_status = 126;
-	exit(generale.exit_status);
+		print_error(path, ": Is a directory\n");
+		generale.exit_status = 126;
+		exit(generale.exit_status);
 	}
 	else
 	{
-		argv = reserve_space(var);
+		argv = reserve_space(data);
+		data->heap = new_addr(argv);
+		add_addr(data,data->heap);
 		i = 0;
 		while (var->cmd[i])
 		{
@@ -62,6 +68,7 @@ int  chek_eroorsplit(t_general *data)
 	{
 			print_error(data->cmnd->cmd[0], ": command not found\n");
 			generale.exit_status = 127;
+			// cleanup(data);
 			return -1;
 	}
 	if	(data->cmnd->cmd && data->cmnd->cmd[0] && (data->cmnd->cmd[0][0] =='/' || data->cmnd->cmd[0][0] == '.' ))
@@ -70,20 +77,33 @@ int  chek_eroorsplit(t_general *data)
 		{
 			print_error(data->cmnd->cmd[0], ": No such file or directory\n");
 			generale.exit_status = 127;
+			// cleanup(data);
 			return -1 ;
 		}
 		if (access(data->cmnd->cmd[0], X_OK) != 0)
 		{
 			print_error(data->cmnd->cmd[0], ": Permission denied\n");
 			generale.exit_status = 126;
+			// cleanup(data);
 			return -1 ;
 		}
-		exucutecmd(data->envarr, data->cmnd->cmd[0], data->cmnd);
+		exucutecmd(data->envarr, data->cmnd->cmd[0], data);
 		return -1 ;
 	}
 	return 0;
 }
+void	ft_free(char **p)
+{
+	int	i;
 
+	i = 0;
+	while (p && p[i])
+	{
+		free(p[i]);
+		i++;
+	}
+	free(p);
+}
 void split_pathexucutecmd(char *path,t_general *data)
 {
 	int		i;
@@ -101,7 +121,7 @@ void split_pathexucutecmd(char *path,t_general *data)
 		{
 			if (access(strjoncmd, X_OK) == 0)
 			{
-				exucutecmd(data->envarr, strjoncmd, data->cmnd);
+				exucutecmd(data->envarr, strjoncmd, data);
 				free(strjoncmd);
 				return ;
 			}
@@ -111,24 +131,25 @@ void split_pathexucutecmd(char *path,t_general *data)
 		free(strjoncmd);
 		i++;
 	}
+	ft_free(split_env);
 }
 
-void ft_chekl(t_general *data)
-{
-	if (access(data->cmnd->cmd[0], F_OK) != 0)
-	{
-		print_error(data->cmnd->cmd[0], ": No such file or directory\n");
-		generale.exit_status = 127;
-		return  ;
-	}
-	if (access(data->cmnd->cmd[0], X_OK) != 0)
-	{
-		print_error(data->cmnd->cmd[0], ": Permission denied\n");
-		generale.exit_status = 126;
-		return ;
-	}
-	exucutecmd(data->envarr, data->cmnd->cmd[0], data->cmnd);
-}
+// void ft_chekl(t_general *data)
+// {
+// 	if (access(data->cmnd->cmd[0], F_OK) != 0)
+// 	{
+// 		print_error(data->cmnd->cmd[0], ": No such file or directory\n");
+// 		generale.exit_status = 127;
+// 		return  ;
+// 	}
+// 	if (access(data->cmnd->cmd[0], X_OK) != 0)
+// 	{
+// 		print_error(data->cmnd->cmd[0], ": Permission denied\n");
+// 		generale.exit_status = 126;
+// 		return ;
+// 	}
+// 	exucutecmd(data->envarr, data->cmnd->cmd[0], data);
+// }
 
 void split_chek(t_general *data)
 {
