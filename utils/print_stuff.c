@@ -24,10 +24,12 @@ void	print_tokens(t_token *tokens)
 	current = tokens;
 	while (current)
 	{
-		printf("Token: [%s] (%s) (%d)\n",
+		printf("Token: [%s] (%s) (QutedDelim?[%d]) (IsExport[%d]) (IsIdentif[%d])\n",
 			current->value,
 			type_str[current->type],
-			current->quoted_delim);
+			current->quoted_delim,
+			current->is_export,
+			current->is_identif);
 		current = current->next;
 	}
 }

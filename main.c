@@ -6,7 +6,7 @@
 /*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:53 by araji             #+#    #+#             */
-/*   Updated: 2025/07/03 11:42:29 by araji            ###   ########.fr       */
+/*   Updated: 2025/07/06 16:17:31 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	init_general_struct(t_general *context, char *value)
 	context->envarr = NULL;
 	context->error = SUCCESS;
 	context->heap = NULL;
+	context->cmnd = NULL;
 	context->error_msg = NULL;
 	context->exit_status = 0;
 	context->no_expand_heredoc = 0;

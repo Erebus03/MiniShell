@@ -22,10 +22,12 @@ t_token	*new_token(char *value, t_token_type type, int expanded)
 	token->value = value;
 	token->type = type;
 	token->expanded = expanded;
+	token->quoted_delim = 0;
 	token->no_join_after = 0;
+	token->is_export = 0;
+	token->is_identif = 0;
 	token->next = NULL;
 	token->prev = NULL;
-	token->quoted_delim = 0;
 	return (token);
 }
 

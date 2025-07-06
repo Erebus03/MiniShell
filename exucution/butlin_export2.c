@@ -6,7 +6,7 @@
 /*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:36:27 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/03 11:27:03 by araji            ###   ########.fr       */
+/*   Updated: 2025/07/05 16:11:16 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ char *extract_key(char *cmd_arg, int j)
 {
     char *key = malloc(j + 1);
     if (!key)
-        {
-         generale.exit_status =1;   
-         return NULL;
-        }
+	{
+		generale.exit_status =1;   
+		return NULL;
+	}
     ft_memcpy(key, cmd_arg, j);
     key[j] = '\0';
     return key;
