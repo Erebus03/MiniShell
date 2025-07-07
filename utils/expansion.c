@@ -6,7 +6,7 @@
 /*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 21:41:16 by araji             #+#    #+#             */
-/*   Updated: 2025/07/05 15:59:36 by araji            ###   ########.fr       */
+/*   Updated: 2025/07/07 14:15:23 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ int	calculate_expansion_size(t_general *ctx, int i, char stop_char)
 
 void	fill_result_str(char *res, char *tmp_val, int *j)
 {
+	// printf("\n\n\nin ftstrcpy\nres= %s | tmp = %s | j=%d\n\n\n",
+		// res, tmp_val, *j);
 	ft_strcpy(res + *j, tmp_val);
 	*j += ft_strlen(tmp_val);
 	free(tmp_val);
@@ -84,6 +86,7 @@ int	build_exp_str(t_general *ctx, int start, char stop_char, char *result)
 			result[j++] = ctx->input[i++];
 	}
 	result[j] = '\0';
+	// printf("result from built_exp_str[%s]\n", result);
 	return (i);
 }
 

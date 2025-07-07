@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:20:32 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/03 21:06:58 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/05 21:55:56 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,14 @@ int	*alloc_pids(t_general *data)
 void	ft_exucutepipe(t_general *data)
 {
 	int (pid), (i), (*pids), (fd_sa[2]), (fd[2]);
+	t_memory *hep=NULL ;
 	fd_sa[0] = -1;
 	fd_sa[1] = -1;
 	i = 0;
+
 	pids = alloc_pids(data);
+	hep =new_addr(pids);
+	add_addr(data,hep);
 	while (data->cmnd)
 	{
 		if (data->cmnd->next)

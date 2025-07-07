@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:58:17 by araji             #+#    #+#             */
-/*   Updated: 2025/07/01 19:23:23 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/04 19:34:08 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,13 @@ t_token	*last_token(t_token *lst)
 	return (lst);
 }
 
-int	to_be_split(char *value)
+int	to_be_split(t_token *tokens, char *value)
 {
 	int (i);
 	i = 0;
+	t_token *prev_token = last_token(tokens);
+	if (prev_token->type == TREDIR_IN || prev_token->type == TREDIR_OUT || prev_token->type == TREDIR_APPEND)
+		return (0);
 	while (value[i])
 	{
 		if (is_whitespace(value[i]) || is_operator(value[i]))

@@ -6,7 +6,7 @@
 /*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 23:33:19 by araji             #+#    #+#             */
-/*   Updated: 2025/07/06 21:41:48 by araji            ###   ########.fr       */
+/*   Updated: 2025/07/07 14:22:03 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	process_dollar_token(t_general *ctx, int i, void **tkn_ptrs, int *skipped)
 		return (-1);
 	if (token_value)
 	{
-		if (to_be_split(token_value) && (last_token(tkn_ptrs[0]))->is_identif == 0)
+		if (to_be_split(tkn_ptrs[0], token_value) && (last_token(tkn_ptrs[0]))->is_identif == 0)
 		{
 			new = split_token_value(token_value);
 			if (is_whitespace(token_value[0])) // || is_whitespace(token_value[ft_strlen(token_value) - 1]))

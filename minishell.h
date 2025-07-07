@@ -6,7 +6,7 @@
 /*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:58 by araji             #+#    #+#             */
-/*   Updated: 2025/07/06 20:55:12 by araji            ###   ########.fr       */
+/*   Updated: 2025/07/07 14:14:26 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ typedef struct s_general
     int				no_expand_heredoc;
     int				inside_env_var;
     char			*pwd;
+    char			*oldpwd ;
 }	t_general;
 
 extern t_general generale;
@@ -170,7 +171,7 @@ int				skip_whitespace_and_track(t_general *ctx, int *i, int *skipped);
 /* ========================= EXPANSION FUNCTIONS =========================== */
 int				calculate_expansion_size(t_general *ctx, int start, char stop_char);
 int				build_exp_str(t_general *ctx, int start, char stop_char, char *result);
-int				to_be_split(char *value);
+int				to_be_split(t_token *tokens, char *value);
 t_token			*split_token_value(char *value);
 
 /* ========================== UTILITY FUNCTIONS ============================ */
@@ -196,7 +197,7 @@ void			print_commands(t_command *commands);
 
 
 size_t ftt_strlen(const char **s);
-void eroor_msg(char * str, int flag);
+int eroor_msg(t_general *data, int flag);
 void eroor_export(char *str);
 void eroor_exit(char *str);
 void eroor_cd(char *str);
@@ -212,8 +213,8 @@ int parent_herdoc(int pid,t_redir *var,char * name);
 int herdocc(t_redir *var, int index);
 int token_out(t_redir *temp);
 char *getenvp(char **p);
-char **reserve_space(t_command *var);
-void exucutecmd(char **env, char *path,t_command *var);
+char **reserve_space(t_general *var);
+void exucutecmd(char **env, char *path,t_general *var);
 char *cherche_path(t_env_var **env);
 int  chek_eroorsplit(t_general *data);
 void eroor_exucutecmn(char *strjoncmd);
@@ -248,7 +249,7 @@ void three_exit();
 void exit_num_normal(int n);
 void exit_num(int n);
 void execute_exit(t_command * var);
-void execute_env(t_env_var **env);
+void execute_env(t_general *env);
 int chek_export(char *var);
 int  chek_exp(t_env_var **var,char *key);
 void afficher_exp(t_env_var *env);
@@ -266,8 +267,11 @@ void	free_env_var(t_env_var *env_var);
 void	remove_env_var(t_general *data, char *var_name);
 void	execute_unset(t_general *data);
 void aplementation_bultin(t_general *data);
+void oldedit_env(t_env_var *var,char *newpath);
 void sighandler();
 void ft_control();
+void print_error(char * str, char *error_message);
+char **initialse_data(t_general *data);
 
 
 

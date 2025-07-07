@@ -99,10 +99,13 @@ int	handle_quotes(t_general *ctx, int i, char **value)
 	result_size = calculate_expansion_size(ctx, i, quote_char);
 	if (result_size < 0)
 		return (-1);
+	// printf("started at                        [%d]\n", start);
+	// printf("calculate_expansion_size returned [%d]\n", result_size);
 	result = (char *)malloc(result_size + 1);
 	if (!result)
 		return (-1);
 	final_pos = build_exp_str(ctx, i, quote_char, result);
+	// printf("build_exp_str returned            [%d]\n", final_pos);
 	if (final_pos < 0)
 	{
 		free(result);

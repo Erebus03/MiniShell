@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:27:41 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/01 18:53:59 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/06 21:35:37 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,19 +65,44 @@ void	execute_unset(t_general *data)
 	return ;
 }
 
-
-void execute_env(t_env_var **env)
+char **initialse_data(t_general *data)
 {
-	t_env_var  *var = *env ;
-		while(var !=  NULL)
+	data->oldpwd = NULL;
+	char *pwd = getcwd(NULL,0);
+	char **p = malloc(sizeof(char *) * 5);
+	if(!p)
+		return NULL;
+	p[0]=ft_strjoin("PWD=",pwd);
+	p[1]=ft_strjoin("SHLVL=","1");
+	p[2]=ft_strjoin("_=","/minishell");
+	// p[3]=ft_strjoinnn("OLDPWD=",data->oldpwd);
+	p[3]= NULL;
+
+	return p;
+}
+
+void execute_env(t_general *env)
+{
+	t_env_var  *var = env->envlst;
+	if(var == NULL)
 	{
-		
+		char ** res = initialse_data(env);
+		list_env_vars(&env->envlst,res);	
+	}
+	if (env->oldpwd != NULL)
+	{
+		char * p = ft_strjoinnn("OLDPWD=",env->oldpwd);	
+		list_env_vars(&env->envlst,&p);
+	}
+	var = env->envlst;
+	while(var !=  NULL)
+	{
 		if(var->key != NULL && var->value != NULL)
 		{
-		printf("%s",var->key);
-		if(var->value != NULL)
+			printf("%s",var->key);
+			if(var->value != NULL)
 				printf("=%s",var->value);
-		printf("\n");
+			printf("\n");
 		}
 		var = var->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:53 by araji             #+#    #+#             */
-/*   Updated: 2025/07/06 16:17:31 by araji            ###   ########.fr       */
+/*   Updated: 2025/07/07 14:13:41 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	init_general_struct(t_general *context, char *value)
 	context->no_expand_heredoc = 0;
 	context->inside_env_var = 0;
 	context->pwd = NULL;
+	context->oldpwd=NULL;
 }
 
 int	main(int ac, char **av, char **envp)
@@ -44,10 +45,11 @@ int	main(int ac, char **av, char **envp)
 	list_env_vars(&data.envlst, envp);
 
 	cleanup(&data);
-	signal(SIGINT, sighandler);
-	signal(SIGQUIT, SIG_IGN);
+	
 	while (1)
 	{
+		signal(SIGINT, sighandler);
+		signal(SIGQUIT, SIG_IGN);
 		data.input = readline("\001\033[32m\002minihell $> \001\033[0m\002");
 		add_history(data.input);
 		if (!data.input)
@@ -59,7 +61,6 @@ int	main(int ac, char **av, char **envp)
 		data.cmnd = cmds;
 		if (ft_herdoc(var) == -1)
 			continue;
-
 		if (size_list(var) == 1 && chek_bultin(var) == 1)
 		{	int j= 0;
 			int fd = dup(STDIN_FILENO);
@@ -72,8 +73,9 @@ int	main(int ac, char **av, char **envp)
 		}
 		else
 			ft_exucutepipe(&data);
-
+		free(data.input);
 		free_commands(&cmds);
+		cleanup(&data);
 	}
 	return (0);
 }
