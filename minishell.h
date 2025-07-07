@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:58 by araji             #+#    #+#             */
-/*   Updated: 2025/07/07 14:14:26 by araji            ###   ########.fr       */
+/*   Updated: 2025/07/07 21:27:21 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,7 +171,7 @@ int				skip_whitespace_and_track(t_general *ctx, int *i, int *skipped);
 /* ========================= EXPANSION FUNCTIONS =========================== */
 int				calculate_expansion_size(t_general *ctx, int start, char stop_char);
 int				build_exp_str(t_general *ctx, int start, char stop_char, char *result);
-int				to_be_split(t_token *tokens, char *value);
+int				to_be_split(char *value);
 t_token			*split_token_value(char *value);
 
 /* ========================== UTILITY FUNCTIONS ============================ */
