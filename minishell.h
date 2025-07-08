@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:58 by araji             #+#    #+#             */
-/*   Updated: 2025/07/08 16:07:08 by araji            ###   ########.fr       */
+/*   Updated: 2025/07/08 17:20:43 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,10 +182,11 @@ bool			is_quote(char c);
 bool			is_token_op(t_token *token);
 // void			set_error(t_general *ctx, int code, char *msg);
 void			init_general_struct(t_general *context, char *value);
-int				ft_strcmp(const char *s1, const char *s2);
+int				ft_strcmp( char *s1, char *s2);
 char			*ft_strcpy(char *dest, const char *src);
 char			*ft_strncpy(char *dest, const char *src, size_t n);
 void			increment_val(int *value1, int *value2, int *value3, int *value4);
+bool	is_token_op(t_token *token);
 
 /* ========================== MEMORY FUNCTIONS ============================== */
 void			*allocate(t_general *ctx, size_t size);
@@ -212,7 +213,7 @@ void heredoc_sigint_handler();
 char *namefile();
 void child_herdoc(t_redir *var);
 int parent_herdoc(int pid,t_redir *var,char * name);
-int herdocc(t_redir *var, int index);
+int herdocc(t_redir *var, int index,t_general *data);
 int token_out(t_redir *temp);
 char *getenvp(char **p);
 char **reserve_space(t_general *var);
@@ -222,7 +223,7 @@ int  chek_eroorsplit(t_general *data);
 void eroor_exucutecmn(char *strjoncmd);
 void split_pathexucutecmd(char *path,t_general *data);
 void split_chek(t_general *data);
-int ft_herdoc(t_command *commands);
+int ft_herdoc(t_general *data);
 int ft_tokin_redir(t_redir *com,t_general *data);
 int ft_redir_append(t_redir *com,t_general *data);
 int ft_redir_in(t_redir *com,t_general *data);
@@ -255,9 +256,9 @@ void execute_env(t_general *env);
 int chek_export(char *var);
 int  chek_exp(t_env_var **var,char *key);
 void afficher_exp(t_env_var *env);
-char *extract_key(char *cmd_arg, int j);
+char *extract_key(char *cmd_arg, int j,t_general *data);
 int variable_exists(t_env_var *env_list, char *key);
-char *extract_value(char *cmd_arg, int start_pos);
+char *extract_value(char *cmd_arg, int start_pos,t_general*data);
 void update_existing_variable(t_env_var *env_list, char *key, char *value);
 int handle_value_var(t_general *data, char *key, char *value);
 int handle_no_value_export(t_general *data, char *key);
@@ -271,7 +272,7 @@ void	execute_unset(t_general *data);
 void aplementation_bultin(t_general *data);
 void oldedit_env(t_env_var *var,char *newpath);
 void sighandler();
-void ft_control();
+void ft_control(t_general *data);
 void print_error(char * str, char *error_message);
 char **initialse_data(t_general *data);
 

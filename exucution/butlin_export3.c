@@ -6,16 +6,17 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:38:48 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/01 18:39:57 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/08 15:30:50 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char *extract_value(char *cmd_arg, int start_pos)
+char *extract_value(char *cmd_arg, int start_pos,t_general *data)
 {
     int value_len = ft_strlen(cmd_arg) - start_pos;
     char *value = malloc(value_len + 1);
+    add_addr(data,new_addr(value));
     if (!value)
         return NULL;
     ft_memcpy(value, cmd_arg + start_pos, value_len);

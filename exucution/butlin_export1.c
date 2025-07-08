@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:33:19 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/01 18:35:20 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/08 15:37:47 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int chek_export(char *var)
 		j++;
 	if(arg[j] == '\0')
 	{
-		key = extract_key(arg, j);
+		key = extract_key(arg, j,data);
 		if (!key)
 			return 0;
 		return handle_no_value_export(data, key);

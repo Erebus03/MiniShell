@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:53 by araji             #+#    #+#             */
-/*   Updated: 2025/07/07 14:13:41 by araji            ###   ########.fr       */
+/*   Updated: 2025/07/08 17:16:17 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ int	main(int ac, char **av, char **envp)
 		return 0 ;
 	}
 	list_env_vars(&data.envlst, envp);
-
 	cleanup(&data);
 	
 	while (1)
@@ -53,14 +52,19 @@ int	main(int ac, char **av, char **envp)
 		data.input = readline("\001\033[32m\002minihell $> \001\033[0m\002");
 		add_history(data.input);
 		if (!data.input)
-			ft_control();
-		if(*data.input == '\0')
+			ft_control(&data);
+		if(data.input[0] == '\0')
 			continue;
 		cmds = parse_command(&data);
 		t_command *var = cmds;
 		data.cmnd = cmds;
-		if (ft_herdoc(var) == -1)
-			continue;
+		if (ft_herdoc(&data) == -1)
+		{
+		free(data.input);
+		free_commands(&cmds);
+		cleanup(&data);
+		continue;
+		}
 		if (size_list(var) == 1 && chek_bultin(var) == 1)
 		{	int j= 0;
 			int fd = dup(STDIN_FILENO);
@@ -75,7 +79,7 @@ int	main(int ac, char **av, char **envp)
 			ft_exucutepipe(&data);
 		free(data.input);
 		free_commands(&cmds);
-		cleanup(&data);
+		// cleanup(&data);
 	}
 	return (0);
 }

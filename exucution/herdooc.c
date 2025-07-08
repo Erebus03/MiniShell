@@ -6,21 +6,20 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 17:34:22 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/05 18:26:19 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/08 16:31:21 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-
-
-char *namefile()
+char *namefile(t_general *data)
 {
 	char *r;
 	char *name ;
 	name = ttyname(STDIN_FILENO);
 	r ="/tmp/herdoc_";
 	char *res = ft_strjoin(r,name+9);
+     add_addr(data,new_addr(res));
 	return res ;
 }
 
@@ -72,15 +71,17 @@ int parent_herdoc(int pid,t_redir *var,char * name)
         return generale.exit_status;
 }
 
-int herdocc(t_redir *var, int index)
+int herdocc(t_redir *var, int index,t_general *data)
 {
     int pid;
 	char *name;
 	char *s;
 
-    name = namefile();
+    name = namefile(data);
 	s = ft_itoa(index);
 	var->index = ft_strjoin(name,s);
+    add_addr(data,new_addr(var->index));
+    add_addr(data,new_addr(s));
     var->fd = open(var->index, O_RDWR | O_CREAT | O_TRUNC, 0644);
     if (var->fd < 0)
     {
@@ -101,17 +102,18 @@ int herdocc(t_redir *var, int index)
     return generale.exit_status;
 }
 
-int ft_herdoc(t_command *commands)
+int ft_herdoc(t_general *data)
 {
-    t_command *temp = commands;
+    t_command *temp  = data->cmnd ;
+    t_redir *redir ;
 	int index = 0;
     while (temp != NULL)
     {
-        t_redir *redir = temp->redirs;
+        redir = temp->redirs;
         while(redir != NULL)
         {
             if (redir->type == THEREDOC)
-                if (herdocc(redir,index) == 130)
+                if (herdocc(redir,index,data) == 130)
 					return (-1);
             redir = redir->next;
         }
@@ -120,3 +122,4 @@ int ft_herdoc(t_command *commands)
     }
 	return (0) ;
 }
+

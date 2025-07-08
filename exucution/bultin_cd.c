@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:23:07 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/04 23:03:41 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/08 16:55:35 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,15 @@ void  handel_cdhome(t_general *data)
 {
 	t_env_var *temp ; 
 	temp = data->envlst;
-	
 	while (temp)
 	{
 		if(ft_strcmp(temp->key,"HOME") == 0)
 		{
 			if(chdir(temp->value) !=0)
 			{
+				free_envp(data, 'a');
+				free_commands(&data->cmnd);
+				cleanup(data);
 				eroor_cd(temp->value);
 				generale.exit_status = 1 ;
 			}
@@ -45,18 +47,20 @@ void execute_cd(t_general *data)
 	char *jon ;
 
 	data->oldpwd = getcwd(NULL,0);
+	add_addr(data, new_addr(data->oldpwd));
 	if (data->cmnd->cmd[0] && data->cmnd->cmd[1] == NULL)
 		handel_cdhome(data);
 	else if(chdir(data->cmnd->cmd[1])!= 0)
 		eroor_cd(data->cmnd->cmd[1]);
-
 	generale.exit_status = 0;
 	path = getcwd(NULL,0);
+	add_addr(data, new_addr(path));
 	if (!path)
 	{	
 		perror("cd: error retrieving current directory");
 		generale.exit_status = 1;
-		jon =ft_strjoin(data->pwd,"/..");
+		jon = ft_strjoin(data->pwd,"/..");
+		add_addr(data, new_addr(jon));
 		edit_env(data->envlst,jon);
 	}
 	if (path != NULL)

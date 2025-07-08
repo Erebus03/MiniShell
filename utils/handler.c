@@ -122,7 +122,7 @@ int	handle_dollar(t_general *ctx, int i, char **value)
 	start = i++;
 	if (ctx->input[i] == '?')
 	{
-		*value = ft_itoa(ctx->exit_status);
+		*value = ft_itoa(generale.exit_status);
 		return (2);
 	}
 	while (ctx->input[i] && (ft_isalnum(ctx->input[i]) || ctx->input[i] == '_'))

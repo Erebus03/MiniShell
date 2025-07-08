@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:14:44 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/05 22:23:13 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/08 15:43:41 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,24 @@
 char **reserve_space(t_general *data)
 {
 	t_command *var = data->cmnd ;
+	int i ;
 	int tail;
 	char		**argv;
 	tail = ftt_strlen((const char **)var->cmd);
 	argv = malloc(sizeof(char *) * (tail + 1));
-	
+	argv[tail] = NULL ;
 	if(!argv)
 	{
 		generale.exit_status=1;
 		exit(generale.exit_status);	
 	}
+	i=0;
+	while(argv && argv[i])
+	{
+		add_addr(data,new_addr(argv[i]));
+		i++;
+	}
+	add_addr(data,new_addr(argv));
 	return argv ;
 }
 
@@ -53,7 +61,7 @@ void exucutecmd(char **env, char *path,t_general *data)
 			argv[i] = ft_strdup(var->cmd[i]);
 			i++;
 		}
-		argv[i] = NULL;
+		// argv[i] = NULL;
 		execve(path, argv,env);
 		perror("Erooorrrr execve\n");
 		generale.exit_status=127;
@@ -68,7 +76,7 @@ int  chek_eroorsplit(t_general *data)
 	{
 			print_error(data->cmnd->cmd[0], ": command not found\n");
 			generale.exit_status = 127;
-			// cleanup(data);
+			cleanup(data);
 			return -1;
 	}
 	if	(data->cmnd->cmd && data->cmnd->cmd[0] && (data->cmnd->cmd[0][0] =='/' || data->cmnd->cmd[0][0] == '.' ))
@@ -77,14 +85,14 @@ int  chek_eroorsplit(t_general *data)
 		{
 			print_error(data->cmnd->cmd[0], ": No such file or directory\n");
 			generale.exit_status = 127;
-			// cleanup(data);
+			cleanup(data);
 			return -1 ;
 		}
 		if (access(data->cmnd->cmd[0], X_OK) != 0)
 		{
 			print_error(data->cmnd->cmd[0], ": Permission denied\n");
 			generale.exit_status = 126;
-			// cleanup(data);
+			cleanup(data);
 			return -1 ;
 		}
 		exucutecmd(data->envarr, data->cmnd->cmd[0], data);
