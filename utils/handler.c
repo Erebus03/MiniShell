@@ -18,6 +18,7 @@
 	fixed echo$v (|ls|) => echo|ls|
 	problem in echo -
 */
+// inside_env_var flag shuts off (kinda) operator check 
 int	handle_word(t_general *ctx, int i, char **value)
 {
 	char *(result);
@@ -28,7 +29,7 @@ int	handle_word(t_general *ctx, int i, char **value)
 		&& (!is_operator(ctx->input[word_end]) || ctx->inside_env_var == 1)
 		&& (!is_quote(ctx->input[word_end]) || ctx->inside_env_var == 1)
 		&& ctx->input[word_end] != '$')
-		word_end++; // inside_env_var flag shuts off (kinda) operator check 
+		word_end++;
 	result_size = calculate_expansion_size(ctx, start, ctx->input[word_end]);
 	if (result_size < 0)
 		return (-1);
@@ -99,13 +100,10 @@ int	handle_quotes(t_general *ctx, int i, char **value)
 	result_size = calculate_expansion_size(ctx, i, quote_char);
 	if (result_size < 0)
 		return (-1);
-	// printf("started at                        [%d]\n", start);
-	// printf("calculate_expansion_size returned [%d]\n", result_size);
 	result = (char *)malloc(result_size + 1);
 	if (!result)
 		return (-1);
 	final_pos = build_exp_str(ctx, i, quote_char, result);
-	// printf("build_exp_str returned            [%d]\n", final_pos);
 	if (final_pos < 0)
 	{
 		free(result);
@@ -124,7 +122,7 @@ int	handle_dollar(t_general *ctx, int i, char **value)
 	start = i++;
 	if (ctx->input[i] == '?')
 	{
-		*value = ft_itoa(generale.exit_status);
+		*value = ft_itoa(ctx->exit_status);
 		return (2);
 	}
 	while (ctx->input[i] && (ft_isalnum(ctx->input[i]) || ctx->input[i] == '_'))

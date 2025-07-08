@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_funcs2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:58:17 by araji             #+#    #+#             */
-/*   Updated: 2025/07/07 21:27:02 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/08 16:32:12 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,17 @@
 
 t_token	*last_token(t_token *lst)
 {
+	if (!lst)
+		return (NULL);
 	while (lst->next)
 		lst = lst->next;
 	return (lst);
 }
 
-int	to_be_split( char *value)
+int	to_be_split(char *value)
 {
-	int (i);
+	int	i;
+
 	i = 0;
 	while (value[i])
 	{
@@ -34,14 +37,15 @@ int	to_be_split( char *value)
 
 int	ft_strcmp(const char *s1, const char *s2)
 {
-	int i;
-	if(!s1 || !s2 )
-		return (-1); 
+	int	i;
+
+	if (!s1 || !s2)
+		return (-1);
 	i = 0;
 	while (s1[i] && s2[i] && s1[i] == s2[i] && s1[i] != '\0' && s2[i] != '\0')
 		i++;
 	return (s1[i] - s2[i]);
-}		
+}
 
 char	*ft_strcpy(char *dest, const char *src)
 {

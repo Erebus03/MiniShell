@@ -31,7 +31,7 @@ t_token	*new_token(char *value, t_token_type type, int expanded)
 	return (token);
 }
 
-t_command	*new_command()
+t_command	*new_command(void)
 {
 	t_command	*cmd;
 

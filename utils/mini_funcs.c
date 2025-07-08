@@ -12,13 +12,12 @@
 
 #include "../minishell.h"
 
-// void	set_error(t_general *ctx, int code, char *msg)
-// {
-// 	ctx->error = code;
-// 	if (ctx->error_msg)
-// 		free(ctx->error_msg);
-// 	ctx->error_msg = ft_strdup(msg);
-// }
+bool	is_token_op(t_token *token)
+{
+	return (token->type == TREDIR_APPEND
+		|| token->type == TREDIR_IN
+		|| token->type == TREDIR_OUT);
+}
 
 bool	is_whitespace(char c)
 {

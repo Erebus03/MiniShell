@@ -45,29 +45,6 @@ t_memory	*new_addr(void *ptr)
 	return (node);
 }
 
-// void	*allocate(t_general *ctx, size_t size)
-// {
-// 	t_memory	*new_address;
-// 	void		*mem;
-
-// 	mem = malloc(size);
-// 	if (!mem)
-// 	{
-// 		cleanup(ctx);
-// 		return (NULL);
-// 	}
-// 	new_address = new_addr(mem);
-// 	if (!new_address)
-// 	{
-// 		return (NULL);
-// 	}
-// 	if (!add_addr(ctx, new_address))
-// 	{
-// 		return (NULL);
-// 	}
-// 	return (mem);
-// }
-
 void	cleanup(t_general *ctx)
 {
 	t_memory	*tmp;
@@ -90,5 +67,6 @@ void	clean_exit(t_general *ctx, char *errmsg, int errcode)
 		printf("%s\n", errmsg);
 	cleanup(ctx);
 	free_envp(ctx, 'b');
-	exit(errcode);
+	free_commands(&ctx->cmnd);
+	generale.exit_status = errcode;
 }

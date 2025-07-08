@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 23:33:19 by araji             #+#    #+#             */
-/*   Updated: 2025/07/07 21:27:11 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/08 17:14:33 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,19 +63,17 @@ int	process_dollar_token(t_general *ctx, int i, void **tkn_ptrs, int *skipped)
 {
 	char *(token_value);
 	t_token *(new);
+	t_token *(last_tkn);
 	int (len);
 	len = handle_dollar(ctx, i, &token_value);
 	if (len < 0)
 		return (-1);
 	if (token_value)
 	{
-		if (to_be_split(token_value) && (last_token(tkn_ptrs[0]))->is_identif == 0)
+		last_tkn = last_token(tkn_ptrs[0]);
+		if (to_be_split(token_value) && (last_tkn && last_tkn->is_identif == 0 && !is_token_op(last_tkn)))
 		{
-			new = split_token_value(token_value);
-			if (is_whitespace(token_value[0])) // || is_whitespace(token_value[ft_strlen(token_value) - 1]))
-				*skipped = 1;
-			if (is_whitespace(token_value[ft_strlen(token_value) - 1]))
-				(last_token(new))->no_join_after = 1;
+			new = split_update_tknvalue(token_value, skipped);
 		}
 		else
 			new = new_token(token_value, TWORD, true);
@@ -113,7 +111,8 @@ int	process_word_token(t_general *ctx, int i, t_token **tokens,
 /* Helper to process a single token based on current character */
 int	process_single_token(t_general *ctx, int i, void **tkn_ptrs, int *skipped)
 {
-	if (ctx->input[i] == '"' || (ctx->input[i] == '\'' && ctx->inside_env_var == 0))
+	if (ctx->input[i] == '"' || (ctx->input[i] == '\''
+			&& ctx->inside_env_var == 0))
 		return (process_quoted_token(ctx, i, (t_token **)&tkn_ptrs[0],
 				(t_token **)&tkn_ptrs[1]));
 	else if (is_operator(ctx->input[i]) && ctx->inside_env_var == 0)
@@ -125,12 +124,3 @@ int	process_single_token(t_general *ctx, int i, void **tkn_ptrs, int *skipped)
 		return (process_word_token(ctx, i, (t_token **)&tkn_ptrs[0],
 				(t_token **)&tkn_ptrs[1]));
 }
-	// if (ctx->input[i] == '"' || ctx->input[i] == '\'')
-	// 	return (process_quoted_token(ctx, i, tokens, last_added));
-	// else if (is_operator(ctx->input[i]) && ctx->inside_env_var == 0)
-	// 	return (process_operator_token(ctx, i, tokens, last_added));
-	// else if (ctx->input[i] == '$')
-	// 	return (process_dollar_token(ctx, i, tokens, skipped, last_added));
-	// else
-	// 	return (process_word_token(ctx, i, tokens, last_added));
-// }

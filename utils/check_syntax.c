@@ -6,7 +6,7 @@
 /*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 16:15:40 by araji             #+#    #+#             */
-/*   Updated: 2025/07/03 10:09:06 by araji            ###   ########.fr       */
+/*   Updated: 2025/07/07 14:45:43 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	validate_quotes(t_general *ctx)
 	}
 	return (1);
 }
+
 static int	valid_heredoc_count(t_token *tkns)
 {
 	t_token	*tmp;
@@ -51,6 +52,7 @@ static int	valid_heredoc_count(t_token *tkns)
 		return (0);
 	return (1);
 }
+
 /* helper for norm */
 static int	s_exitcode_nd_ret(t_general *ctx, int ret_value, int exit_stat)
 {

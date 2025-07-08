@@ -32,15 +32,12 @@ void	join_tokens(t_token *tokens, t_token *new)
 	str = NULL;
 	while (tokens != new->prev)
 		tokens = tokens->next;
-	printf("\njoining [%s]-[%s]\n", tokens->value, (tokens->next)->value);
-	printf("\njoining [%d]-[%d]\n", tokens->is_identif, (tokens->next)->is_identif);
-
+	// printf("\njoining [%s]-[%s]\n", tokens->value, (tokens->next)->value);
 	str = ft_strjoin(tokens->value, (tokens->next)->value);
 	free(tokens->value);
 	tokens->value = str;
 	next_node = new->next;
-	// free(new->value);
-	//free(new);
+	// free(new->value); free(new);
 	tokens->next = next_node;
 	if (next_node)
 		next_node->prev = tokens;
@@ -57,4 +54,18 @@ void	handle_token_joining(t_token *tokens, t_token *new, int skipped)
 			join_tokens(tokens, new);
 		}
 	}
+}
+
+/* used in tokenizer2.c to split values inside env variables if they should be
+*/
+t_token	*split_update_tknvalue(char *token_value, int *skipped)
+{
+	t_token	*new;
+
+	new = split_token_value(token_value);
+	if (is_whitespace(token_value[0]))
+		*skipped = 1;
+	if (is_whitespace(token_value[ft_strlen(token_value) - 1]))
+		(last_token(new))->no_join_after = 1;
+	return (new);
 }

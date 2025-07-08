@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_vars.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:58:07 by araji             #+#    #+#             */
-/*   Updated: 2025/07/05 17:55:51 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/07 14:49:02 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ char	*get_env_value(char *var_name, t_env_var *lst)
 	{
 		if (ft_strcmp(tmp->key, var_name) == 0)
 		{
-			if(tmp->value == NULL)
-				return NULL ;
+			if (tmp->value == NULL)
+				return (NULL);
 			return (ft_strdup(tmp->value));
 		}
 		tmp = tmp->next;
 	}
-	return (NULL); // change later
+	return (NULL);
 }
 
 char	*join_key_value(const char *key, const char *value)
@@ -77,6 +77,7 @@ static int	make_add_variable(t_env_var **envlst,
 		char *key, char *val)
 {
 	t_env_var	*variable;
+
 	variable = new_var(key, val);
 	if (!variable)
 		return (0);

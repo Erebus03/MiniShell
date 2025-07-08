@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:58 by araji             #+#    #+#             */
-/*   Updated: 2025/07/07 21:27:21 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/08 16:07:08 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,6 +167,7 @@ int				process_dollar_token(t_general *ctx, int i, void **tkn_ptrs, int *skipped
 int				process_word_token(t_general *ctx, int i, t_token **tokens, t_token **last_added);
 void			handle_token_joining(t_token *tokens, t_token *new, int skipped);
 int				skip_whitespace_and_track(t_general *ctx, int *i, int *skipped);
+t_token			*split_update_tknvalue(char *token_value, int *skipped);
 
 /* ========================= EXPANSION FUNCTIONS =========================== */
 int				calculate_expansion_size(t_general *ctx, int start, char stop_char);
@@ -178,6 +179,7 @@ t_token			*split_token_value(char *value);
 bool			is_whitespace(char c);
 bool			is_operator(char c);
 bool			is_quote(char c);
+bool			is_token_op(t_token *token);
 // void			set_error(t_general *ctx, int code, char *msg);
 void			init_general_struct(t_general *context, char *value);
 int				ft_strcmp(const char *s1, const char *s2);

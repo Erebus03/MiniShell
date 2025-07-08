@@ -6,7 +6,7 @@
 /*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 15:46:34 by araji             #+#    #+#             */
-/*   Updated: 2025/07/07 14:17:21 by araji            ###   ########.fr       */
+/*   Updated: 2025/07/07 15:14:30 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ static void	check_export_ident(t_token *ident_tkn)
 	{
 		if (ident_tkn->value[ft_strlen(ident_tkn->value) - 1] == '=')
 		{
-			// printf("IdentToken has = in index %ld\n", ft_strlen(ident_tkn->value));
 			ident_tkn->is_identif = 1;
 		}
 	}
@@ -35,22 +34,19 @@ static void	check_export_ident(t_token *ident_tkn)
 // process and add a single token
 static int	process_and_add_token(t_general *ctx, int *indx, void **tkn_ptrs)
 {
-	t_token	*last_tkn;
+	t_token	*lasttkn;
 	int		token_len;
 
 	token_len = process_single_token(ctx, indx[0], tkn_ptrs, &(indx[2]));
 	if (token_len < 0)
 		return (-1);
-	/* handling $identifier=$v ($v has spilt values) */
-// /*
-	last_tkn = last_token(tkn_ptrs[0]);
-	if (!last_tkn)
+	lasttkn = last_token(tkn_ptrs[0]);
+	if (!lasttkn)
 		return (-1);
-	if (last_tkn->type == TWORD && last_tkn->prev && (last_tkn->prev)->is_export)
-		check_export_ident(last_tkn);
-	if (last_tkn->type == TWORD && last_tkn->prev && (last_tkn->prev)->is_identif)
-		last_tkn->is_identif = 1;
-// */ 
+	if (lasttkn->type == TWORD && lasttkn->prev && (lasttkn->prev)->is_export)
+		check_export_ident(lasttkn);
+	if (lasttkn->type == TWORD && lasttkn->prev && (lasttkn->prev)->is_identif)
+		lasttkn->is_identif = 1;
 	if (tkn_ptrs[1])
 		handle_token_joining(tkn_ptrs[0], tkn_ptrs[1], indx[2]);
 	return (token_len);
