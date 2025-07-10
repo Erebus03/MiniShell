@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:58 by araji             #+#    #+#             */
-/*   Updated: 2025/07/08 17:20:43 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/10 21:15:54 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 #include <sys/wait.h>
 #include <fcntl.h>
 #include <limits.h>
-#define MAX_TOKENS 1024
+#define	MAX_TOKENS 1024
 #include <sys/stat.h>
 #include <signal.h>
 /* ================================ ENUMS =================================== */
@@ -152,7 +152,7 @@ char			*get_env_value(char *var_name, t_env_var *lst);
 t_command		*parse_command(t_general *ctx);
 t_token			*tokenize_input(t_general *ctx);
 int				process_tokens(t_command *cmd);
-int				validate_quotes(t_general *ctx);
+int				validate_quotes(char *input);
 int				check_syntax(t_general *ctx, t_token* tokens);
 
 /* ========================= TOKENIZING FUNCTIONS ========================== */

@@ -105,7 +105,11 @@ t_command	*parse_command(t_general *ctx)
 	t_token		*all_tokens;
 	t_token		*last_cmd_start;
 	t_command	*commands;
-
+	if (validate_quotes(ctx->input) == 0)
+	{
+		generale.exit_status = 2;
+		return (0);
+	}
 	all_tokens = tokenize_input(ctx);
 	if (!all_tokens)
 		return (NULL);

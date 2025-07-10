@@ -6,29 +6,29 @@
 /*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 16:15:40 by araji             #+#    #+#             */
-/*   Updated: 2025/07/07 14:45:43 by araji            ###   ########.fr       */
+/*   Updated: 2025/07/10 21:15:27 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	validate_quotes(t_general *ctx)
+int	validate_quotes(char *input)
 {
 	int		i;
 	char	quote_char;
 
 	i = 0;
-	while (ctx->input[i])
+	while (input[i])
 	{
-		if (ctx->input[i] != '"' && ctx->input[i] != '\'')
+		if (input[i] != '"' && input[i] != '\'')
 		{
 			i++;
 			continue ;
 		}
-		quote_char = ctx->input[i++];
-		while (ctx->input[i] && ctx->input[i] != quote_char)
+		quote_char = input[i++];
+		while (input[i] && input[i] != quote_char)
 			i++;
-		if (!ctx->input[i])
+		if (!input[i])
 			return (0);
 		i++;
 	}
@@ -64,11 +64,6 @@ static int	s_exitcode_nd_ret(t_general *ctx, int ret_value, int exit_stat)
 int	check_syntax(t_general *ctx, t_token *all_tokens)
 {
 	t_token *(token);
-	if (validate_quotes(ctx) == 0)
-	{
-		generale.exit_status = 2;
-		return (0);
-	}
 	token = all_tokens;
 	if (!valid_heredoc_count(all_tokens))
 		return (s_exitcode_nd_ret(ctx, 0, 2));

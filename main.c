@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:53 by araji             #+#    #+#             */
-/*   Updated: 2025/07/08 17:16:17 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/10 21:19:13 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	init_general_struct(t_general *context, char *value)
 
 int	main(int ac, char **av, char **envp)
 {
-	t_general data ;
+	t_general	data;
 	t_command	*cmds;
 	(void)av;
 	
@@ -54,19 +54,23 @@ int	main(int ac, char **av, char **envp)
 		if (!data.input)
 			ft_control(&data);
 		if(data.input[0] == '\0')
+		{
+			free(data.input);
 			continue;
+		}
 		cmds = parse_command(&data);
 		t_command *var = cmds;
 		data.cmnd = cmds;
 		if (ft_herdoc(&data) == -1)
 		{
-		free(data.input);
-		free_commands(&cmds);
-		cleanup(&data);
-		continue;
+			free(data.input);
+			free_commands(&cmds);
+			cleanup(&data);
+			continue;
 		}
 		if (size_list(var) == 1 && chek_bultin(var) == 1)
-		{	int j= 0;
+		{
+			int j= 0;
 			int fd = dup(STDIN_FILENO);
 			int k = dup(STDOUT_FILENO);
 			j = chek_type(var->redirs,&data);
@@ -77,8 +81,8 @@ int	main(int ac, char **av, char **envp)
 		}
 		else
 			ft_exucutepipe(&data);
-		free(data.input);
-		free_commands(&cmds);
+		free(data.input); // HADA ZIDO 3LA LHEAP
+		free_commands(&cmds); // CALL clean_space(char *errmsg, int errcode); fiha kolchi
 		// cleanup(&data);
 	}
 	return (0);
