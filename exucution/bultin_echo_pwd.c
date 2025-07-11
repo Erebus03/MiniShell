@@ -3,101 +3,107 @@
 /*                                                        :::      ::::::::   */
 /*   bultin_echo_pwd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:23:54 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/09 16:10:11 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/11 15:24:10 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int chek_newline(char * var)
+int	chek_newline(char *var)
 {
-	int i ;
-	i = 1 ;
+	int	i;
+
+	i = 1;
 	while (var && var[i])
 	{
-		if(var[i] == 'n')
+		if (var[i] == 'n')
 			i++;
-		else	
-			return (0);	
+		else
+			return (0);
 	}
-	return 1;
+	return (1);
 }
 
-void process_echo(t_general *data,int i)
+void	process_echo(t_general *data, int i)
 {
-	t_command *var;
+	t_command	*var;
 
-	var = data->cmnd ;
-	while(var && var->cmd[i] && var->cmd[i][0])
+	var = data->cmnd;
+	while (var && var->cmd[i] && var->cmd[i][0])
 	{
-		write(1,var->cmd[i],ft_strlen(var->cmd[i]));
+		write (1, var->cmd[i], ft_strlen(var->cmd[i]));
 		i++;
-		if(var->cmd[i] != NULL)
-			write(1," ",1);
+		if (var->cmd[i] != NULL)
+			write(1, " ", 1);
 	}
 	return ;
 }
 
-void execute_echo(t_general *data)
+void	execute_echo(t_general *data)
 {
-	t_command * var = data->cmnd ;
-	int i; 
-	int res = -1;
-	i = 1;	
-	while(var && var->cmd[i]&& var->cmd[i][0])
+	t_command	*var;
+	int			i;
+	int			res;
+
+	i = 1;
+	var = data->cmnd;
+	res = -1;
+	while (var && var->cmd[i] && var->cmd[i][0])
 	{
-			if(var->cmd[i][0] == '-' && var->cmd[i][1] != '\0')
-				{
-					res = chek_newline(var->cmd[i]);
-					if(res == 1)
-						i++;
-					else
-						break;
-				}
+		if (var->cmd[i][0] == '-' && var->cmd[i][1] != '\0')
+		{
+			res = chek_newline(var->cmd[i]);
+			if (res == 1)
+				i++;
 			else
-						break;	
+				break ;
+		}
+		else
+			break ;
 	}
-	process_echo(data,i);
-	if(res != 1)
-		write(1,"\n",1);
-	generale.exit_status = 0 ;
+	process_echo(data, i);
+	if (res != 1)
+		write (1, "\n", 1);
+	generale.exit_status = 0;
 }
 
-
-char *getpath(t_env_var **pp)
+char	*getpath(t_env_var **pp)
 {
-	t_env_var *p = *pp;
+	t_env_var	*p;
 
+	p = *pp;
 	while (p)
 	{
 		if (strncmp("PWD", p->key, 3) == 0)
-			return p->value;
+			return (p->value);
 		p = p->next;
 	}
 	return (NULL);
 }
 
-void execute_pwd(t_general *data)
+void	execute_pwd(t_general *data)
 {
+	char	*d;
 
-		char *d = getcwd(NULL, 0);
-		if (d != NULL)
-		{	if(data->pwd != NULL)
-				free(data->pwd);
-			data->pwd = ft_strdup(d);
-		}
-		if (d == NULL)
-		{
-			if(data->pwd)
-				printf("%s\n",data->pwd);
-			generale.exit_status = 0;
-			return ;
-		}
-		printf("%s\n", d);
-		free(d);
+	d = getcwd(NULL, 0);
+	if (d != NULL)
+	{
+		if (data->pwd != NULL)
+			free(data->pwd);
+		data->pwd = ft_strdup(d);
+	}
+	if (d == NULL)
+	{
+		if (data->pwd)
+			printf("%s\n", data->pwd);
 		generale.exit_status = 0;
+		return ;
+	}
+	printf("%s\n", d);
+	free(d);
+	generale.exit_status = 0;
 	return ;
 }

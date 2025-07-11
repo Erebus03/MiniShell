@@ -108,16 +108,16 @@ t_command	*parse_command(t_general *ctx)
 	if (validate_quotes(ctx->input) == 0)
 	{
 		generale.exit_status = 2;
-		return (0);
+		write(2, "bash: syntax error\n", 19);
+		return (NULL);
 	}
 	all_tokens = tokenize_input(ctx);
 	if (!all_tokens)
 		return (NULL);
-	// print_tokens(all_tokens);
+	print_tokens(all_tokens);
 	if (!check_syntax(ctx, all_tokens))
 	{
-		// free_tokens(&all_tokens);
-		printf("minishell syntax error : exited with %d\n", ctx->exit_status);
+		write(2, "bash: syntax error\n", 19);
 		return (NULL);
 	}
 	generale.exit_status = 0;

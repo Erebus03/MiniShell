@@ -1,0 +1,71 @@
+{
+   readline_leak_1
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   ...
+   fun:readline
+}
+
+{
+   readline_leak_2
+   Memcheck:Leak
+   match-leak-kinds: definite,indirect
+   fun:malloc
+   ...
+   obj:*/libreadline.so*
+}
+
+{
+   readline_leak_3
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:*alloc*
+   ...
+   fun:rl_*
+}
+
+{
+   add_history_leak_1
+   Memcheck:Leak
+   match-leak-kinds: reachable,definite,indirect
+   fun:malloc
+   ...
+   fun:add_history
+}
+
+{
+   add_history_leak_2
+   Memcheck:Leak
+   match-leak-kinds: reachable,definite,indirect
+   fun:*alloc*
+   ...
+   fun:add_history
+}
+
+{
+   history_leak_1
+   Memcheck:Leak
+   match-leak-kinds: reachable,definite,indirect
+   fun:malloc
+   ...
+   fun:history_*
+}
+
+{
+   history_leak_2
+   Memcheck:Leak
+   match-leak-kinds: reachable,definite,indirect
+   fun:*alloc*
+   ...
+   obj:*/libhistory.so*
+}
+
+{
+   readline_history_general
+   Memcheck:Leak
+   match-leak-kinds: reachable,definite,indirect
+   fun:*alloc*
+   ...
+   fun:*history*
+}
