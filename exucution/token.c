@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:18:06 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/01 18:18:40 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/10 23:29:07 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ int  chek_type(t_redir * cc,t_general * data)
 	int k ;
 
 	k = 6 ;
+    cc = data->cmnd->redirs; 
 	while (cc)
 	{
 	if(cc->type == TREDIR_OUT)
@@ -118,3 +119,4 @@ int  chek_type(t_redir * cc,t_general * data)
 	}
 	return (k);
 }
+

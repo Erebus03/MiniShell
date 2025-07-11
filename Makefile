@@ -11,6 +11,7 @@ SRC = main.c utils/env_vars.c utils/parse_cmd.c utils/add_nodes.c utils/free_nod
 
 OBJ = $(SRC:.c=.o)
 
+
 LIBFT = libft/libft.a
 
 all: $(LIBFT) $(NAME)

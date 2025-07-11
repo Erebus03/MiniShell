@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:53 by araji             #+#    #+#             */
-/*   Updated: 2025/07/10 21:19:13 by araji            ###   ########.fr       */
+/*   Updated: 2025/07/11 04:45:06 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 t_general generale;
 
 void	init_general_struct(t_general *context, char *value)
@@ -32,60 +31,54 @@ void	init_general_struct(t_general *context, char *value)
 
 int	main(int ac, char **av, char **envp)
 {
-	t_general	data;
+	// t_general data ;
 	t_command	*cmds;
 	(void)av;
 	
-	init_general_struct(&data, NULL);
+	init_general_struct(&generale, NULL);
 	if (ac != 1)
 	{
 		printf("$> ./Your Program\n");
 		return 0 ;
 	}
-	list_env_vars(&data.envlst, envp);
-	cleanup(&data);
-	
+	list_env_vars(&generale.envlst, envp);
+
 	while (1)
 	{
 		signal(SIGINT, sighandler);
 		signal(SIGQUIT, SIG_IGN);
-		data.input = readline("\001\033[32m\002minihell $> \001\033[0m\002");
-		add_history(data.input);
-		if (!data.input)
-			ft_control(&data);
-		if(data.input[0] == '\0')
-		{
-			free(data.input);
+		generale.input = readline("\001\033[32m\002minihell $> \001\033[0m\002");
+		add_history(generale.input);
+		if (!generale.input)
+			ft_control(&generale);
+		if(generale.input[0] == '\0')
 			continue;
-		}
-		cmds = parse_command(&data);
-		t_command *var = cmds;
-		data.cmnd = cmds;
-		if (ft_herdoc(&data) == -1)
+		cmds = parse_command(&generale);
+		generale.cmnd = cmds;
+		generale.cmnddd = cmds;
+		if (ft_herdoc(&generale) == -1)
 		{
-			free(data.input);
-			free_commands(&cmds);
-			cleanup(&data);
-			continue;
+		free(generale.input);
+		free_commands(&cmds);
+		cleanup(&generale);
+		continue;
 		}
-		if (size_list(var) == 1 && chek_bultin(var) == 1)
-		{
-			int j= 0;
+		if (size_list(generale.cmnd) == 1 && chek_bultin(generale.cmnd) == 1)
+		{	int j= 0;
 			int fd = dup(STDIN_FILENO);
 			int k = dup(STDOUT_FILENO);
-			j = chek_type(var->redirs,&data);
+			j = chek_type(generale.cmnd->redirs,&generale);
 			if (j != -1 )
-				aplementation_bultin(&data);
+				aplementation_bultin(&generale);
 			dup2(fd,STDIN_FILENO);
 			dup2(k,STDOUT_FILENO);
 		}
 		else
-			ft_exucutepipe(&data);
-		free(data.input); // HADA ZIDO 3LA LHEAP
-		free_commands(&cmds); // CALL clean_space(char *errmsg, int errcode); fiha kolchi
-		// cleanup(&data);
+			ft_exucutepipe(&generale);
+		
+		free(generale.input);
+		free_commands(&cmds);
+		cleanup(&generale);
 	}
 	return (0);
 }
-
-

@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 17:29:07 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/05 15:17:33 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/11 03:48:05 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,10 @@ int eroor_msg(t_general *data, int flag)
 	else
 		exit(generale.exit_status);
 }
-void eroor_export(char *str)
+void eroor_export(char *str,t_general*data)
 {
+	free_commands(&data->cmnd);
+	cleanup(data);
 	write(2, "bash: export: ", 14);
 	write(2, str, strlen(str));
 	write(2, ": not a valid identifier\n", 26);
@@ -63,9 +65,18 @@ void eroor_exit(char *str)
 
 void eroor_cd(char *str)
 {
+	int fd ;
+	fd = open(str,O_RDONLY);
+	if (fd > 0)
 	write(2, "bash: cd: ", 10);
 	write(2, str, strlen(str));
-	write(2, ": No such file or directory\n", 28);
+	if(fd > 0)
+	{
+		write(2," Is not a directory\n",20);
+		close(fd);
+	}
+	else
+		write(2, ": No such file or directory\n", 28);
 	generale.exit_status = 1 ;
 	return ;
 }

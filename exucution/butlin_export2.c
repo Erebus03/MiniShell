@@ -6,16 +6,16 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:36:27 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/08 15:30:39 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/08 18:36:31 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char *extract_key(char *cmd_arg, int j,t_general *data)
+char *extract_key(char *cmd_arg, int j)
 {
     char *key = malloc(j + 1);
-	add_addr(data,new_addr(key));
+	// add_addr(data,new_addr(key));
     if (!key)
 	{
 		generale.exit_status =1;   
@@ -42,7 +42,7 @@ int variable_exists(t_env_var *env_list, char *key)
         if (ft_strcmp(key, env_list->key) == 0)
             {
 				return 1;
-				}
+			}
         env_list = env_list->next;
     }
     return 0;
@@ -63,17 +63,16 @@ int handle_value_var(t_general *data, char *key, char *value)
     return 1;
 }
 
-
  int handle_with_value_export(t_general *data, char *arg, int j)
 {
 	t_env_var *variable = data->envlst;
 	char *key, *value;
 
-	key = extract_key(arg, j,data);
+	key = extract_key(arg, j);
 	if (!key)
 		return 0;
 	j++;
-	value = extract_value(arg, j,data);
+	value = extract_value(arg, j);
 	if (!value)
 		return 0;
 	if(chek_exp(&data->envlst, key) == 1)

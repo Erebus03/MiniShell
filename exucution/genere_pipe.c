@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:20:32 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/08 15:42:42 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/09 21:46:15 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	handle_child_process(t_general *data, int *fd_sa, int *fd)
 		fd_sa[0] = fd[0];
 		fd_sa[1] = fd[1];
 	}
+
 }
 
  
@@ -74,12 +75,12 @@ int	*alloc_pids(t_general *data)
 	int	*pids;
 
 	pids = malloc(sizeof(int) * size_list(data->cmnd));
-	add_addr(data,new_addr(pids));
 	if (!pids)
 	{
 		generale.exit_status = 1;
 		exit(generale.exit_status);
 	}
+	add_addr(data,new_addr(pids));
 	return (pids);
 }
 
@@ -98,8 +99,9 @@ void	ft_exucutepipe(t_general *data)
 		pid = fork();
 		if (pid < 0)
 			exit_error("fork");
-		else if (pid == 0)
+		else if (pid == 0) {
 			handle_child_process(data, fd_sa, fd);
+		}
 		else if (pid > 0)
 		{
 			pids[i++] = pid;

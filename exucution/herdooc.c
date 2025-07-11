@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 17:34:22 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/08 16:31:21 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/11 04:05:25 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void child_herdoc(t_redir *var)
 	return ;
 }
 
-int parent_herdoc(int pid,t_redir *var,char * name)
+int parent_herdoc(int pid,t_redir *var)
 {
 	  int status;
 
@@ -63,7 +63,7 @@ int parent_herdoc(int pid,t_redir *var,char * name)
             generale.exit_status = 128 + WTERMSIG(status); 
             if (WTERMSIG(status) == SIGINT)
             {
-                unlink(name);
+                unlink(var->index);
 				generale.exit_status = 130;
                 return (generale.exit_status);      
             }
@@ -74,25 +74,22 @@ int parent_herdoc(int pid,t_redir *var,char * name)
 int herdocc(t_redir *var, int index,t_general *data)
 {
     int pid;
-	char *name;
-	char *s;
-
+	char (*name),(*s);
+	// char *s;
+    // var->index =NULL ;
     name = namefile(data);
 	s = ft_itoa(index);
 	var->index = ft_strjoin(name,s);
-    add_addr(data,new_addr(var->index));
     add_addr(data,new_addr(s));
+    add_addr(data,new_addr(var->index));
     var->fd = open(var->index, O_RDWR | O_CREAT | O_TRUNC, 0644);
     if (var->fd < 0)
-    {
-        perror("open");
-        return -1;  
-    }
+        return (perror("open"),-1);
     pid = fork();
     if (pid == 0)
 		child_herdoc(var);
     else if (pid > 0)
-		return (parent_herdoc(pid,var,var->index));
+		return (parent_herdoc(pid,var));
     else
     {
         perror("fork");

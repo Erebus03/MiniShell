@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:27:41 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/08 17:06:29 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/11 01:46:35 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,39 +68,39 @@ void	execute_unset(t_general *data)
 char **initialse_data(t_general *data)
 {
 	int i;
-	data->oldpwd = NULL;
+
 	char *pwd = getcwd(NULL,0);
+	data->oldpwd = getcwd(NULL,0);
 	char **p = malloc(sizeof(char *) * 5);
-	i=0;
 	if(!p)
 		return NULL;
+	i=0;
+	p[0]=ft_strjoin("PWD=",pwd);
+	p[1]=ft_strjoin("SHLVL=","1");
+	p[2]=ft_strjoin("_=","/minishell");
+	p[3]=ft_strjoin("OLDPWD=",data->oldpwd);
+	p[4]= NULL;
 	while(p && p[i])
 	{
 		add_addr(data,new_addr(p[i]));
 		i++;
 	}
 	add_addr(data,new_addr(p));
-	p[0]=ft_strjoin("PWD=",pwd);
-	p[1]=ft_strjoin("SHLVL=","1");
-	p[2]=ft_strjoin("_=","/minishell");
-	p[3]= NULL;
 	free(pwd);
+	free(data->oldpwd);
 	return p;
 }
 
+
 void execute_env(t_general *env)
 {
-	t_env_var  *var = env->envlst;
+	t_env_var  *var ;
+	var = env->envlst;
 	if(var == NULL)
 	{
-		char ** res = initialse_data(env);
-		list_env_vars(&env->envlst,res);	
+		afficher_envv(env);	
+		return ;
 	}
-	// if (env->oldpwd != NULL)
-	// {
-	// 	char * p = ft_strjoinnn("OLDPWD=",env->oldpwd);	
-	// 	list_env_vars(&env->envlst,&p);
-	// }
 	var = env->envlst;
 	while(var !=  NULL)
 	{
@@ -112,6 +112,30 @@ void execute_env(t_general *env)
 			printf("\n");
 		}
 		var = var->next;
+	}
+	generale.exit_status = 0;
+	return ;
+}
+
+void afficher_envv(t_general *envv)
+{
+	t_env_var  *var ;
+	char ** res ;
+
+	res = initialse_data(envv);
+	list_env_vars(&envv->envlst,res);
+	var = envv->envlst;
+	while(var !=  NULL)
+	{
+		if(ft_strcmp(var->key,"OLDPWD")== 0)
+			var = var->next;
+		else
+		{
+			printf("%s",var->key);
+			printf("=%s",var->value);
+			printf("\n");
+			var = var->next;		
+		}
 	}
 	generale.exit_status = 0;
 	return ;

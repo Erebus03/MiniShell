@@ -116,6 +116,7 @@ t_command	*parse_command(t_general *ctx)
 	// print_tokens(all_tokens);
 	if (!check_syntax(ctx, all_tokens))
 	{
+		// free_tokens(&all_tokens);
 		printf("minishell syntax error : exited with %d\n", ctx->exit_status);
 		return (NULL);
 	}

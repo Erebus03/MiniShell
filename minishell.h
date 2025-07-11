@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:58 by araji             #+#    #+#             */
-/*   Updated: 2025/07/10 21:15:54 by araji            ###   ########.fr       */
+/*   Updated: 2025/07/11 04:31:18 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ typedef struct s_env_var
 typedef struct s_redir
 {
     t_token_type    type;
-     char            *index; 
+    char            *index; 
     char            *file;
     int             fd;
 	int				expand_in_heredec; //
@@ -116,6 +116,8 @@ typedef struct s_general
     int				inside_env_var;
     char			*pwd;
     char			*oldpwd ;
+
+     t_command        *cmnddd ;
 }	t_general;
 
 extern t_general generale;
@@ -201,7 +203,7 @@ void			print_commands(t_command *commands);
 
 size_t ftt_strlen(const char **s);
 int eroor_msg(t_general *data, int flag);
-void eroor_export(char *str);
+void eroor_export(char *str,t_general *data);
 void eroor_exit(char *str);
 void eroor_cd(char *str);
 int tokencomnd(t_redir *cout, t_general *data);
@@ -212,7 +214,7 @@ int size_list(t_command *var);
 void heredoc_sigint_handler();
 char *namefile();
 void child_herdoc(t_redir *var);
-int parent_herdoc(int pid,t_redir *var,char * name);
+int parent_herdoc(int pid,t_redir *var);
 int herdocc(t_redir *var, int index,t_general *data);
 int token_out(t_redir *temp);
 char *getenvp(char **p);
@@ -256,9 +258,9 @@ void execute_env(t_general *env);
 int chek_export(char *var);
 int  chek_exp(t_env_var **var,char *key);
 void afficher_exp(t_env_var *env);
-char *extract_key(char *cmd_arg, int j,t_general *data);
+char *extract_key(char *cmd_arg, int j);
 int variable_exists(t_env_var *env_list, char *key);
-char *extract_value(char *cmd_arg, int start_pos,t_general*data);
+char *extract_value(char *cmd_arg, int start_pos);
 void update_existing_variable(t_env_var *env_list, char *key, char *value);
 int handle_value_var(t_general *data, char *key, char *value);
 int handle_no_value_export(t_general *data, char *key);
@@ -276,11 +278,10 @@ void ft_control(t_general *data);
 void print_error(char * str, char *error_message);
 char **initialse_data(t_general *data);
 
+void afficher_envv(t_general *envv);
 
-
-
-
-
-
+void errror_path(t_general *data);
+int   ft_chekl(t_general *data);
+void	ft_free(char **p);
 
 #endif

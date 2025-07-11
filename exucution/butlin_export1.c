@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:33:19 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/08 15:37:47 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/08 18:35:18 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void afficher_exp(t_env_var *env)
 	{
 		if(chek_export(var->cmd[i]) == 0 )
 		{
-			eroor_export(var->cmd[i]);
+			eroor_export(var->cmd[i],data);
 			generale.exit_status = 0;
 			return ;
 		}
@@ -96,7 +96,7 @@ int chek_export(char *var)
 		j++;
 	if(arg[j] == '\0')
 	{
-		key = extract_key(arg, j,data);
+		key = extract_key(arg, j);
 		if (!key)
 			return 0;
 		return handle_no_value_export(data, key);

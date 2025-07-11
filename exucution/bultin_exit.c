@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:25:54 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/01 18:53:45 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/11 03:55:20 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ void exit_num(int n)
 
 void execute_exit(t_command * var)
 {
+	int n ;
+
 	if(ftt_strlen((const char **)var->cmd) == 1 && ft_strcmp(var->cmd[0],"exit") == 0)
 		singel_exit();
 	else if(ftt_strlen((const char **)var->cmd) == 2)
@@ -62,7 +64,7 @@ void execute_exit(t_command * var)
 		if(ft_strcmp(var->cmd[0],"exit") == 0 && chek_number(var->cmd[1]) == 1)
 		{
 			write(1,"exit\n",5);
-			int n = ft_atoi(var->cmd[1]); /// atttention atoi type de return ;
+			 n = ft_atoi(var->cmd[1]); /// atttention atoi type de return ;
 			if(n >= 0 && n <= 255)
 				exit_num_normal(n);
 			else 

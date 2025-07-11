@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:41:24 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/04 18:54:33 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/09 14:51:53 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ void edit_env(t_env_var *var,char *newpath)
 	{
 		if(strncmp(temp->key,"PWD",3) == 0)
 		{
-			temp->value = newpath ;
+			free(temp->value);
+			temp->value = ft_strdup(newpath) ;
 			return ;
 		}
 		temp= temp->next ;		

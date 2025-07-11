@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:23:54 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/05 15:28:14 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/09 16:10:11 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,17 +80,20 @@ char *getpath(t_env_var **pp)
 	return (NULL);
 }
 
-
 void execute_pwd(t_general *data)
 {
-	(void)data;
 
 		char *d = getcwd(NULL, 0);
 		if (d != NULL)
-				data->pwd = ft_strdup(d);
+		{	if(data->pwd != NULL)
+				free(data->pwd);
+			data->pwd = ft_strdup(d);
+		}
 		if (d == NULL)
 		{
-			generale.exit_status = 1;
+			if(data->pwd)
+				printf("%s\n",data->pwd);
+			generale.exit_status = 0;
 			return ;
 		}
 		printf("%s\n", d);
