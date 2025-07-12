@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:58 by araji             #+#    #+#             */
-/*   Updated: 2025/07/11 04:31:18 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/12 19:29:49 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ void			add_token(t_token **tokens, t_token *new_token);
 void			add_redir(t_redir **redirs, t_redir *new_redir);
 void			add_command(t_command **commands, t_command *new_cmd);
 void			add_variable(t_env_var **lst, t_env_var *new_var);
-void			join_tokens(t_token *tokens, t_token *new);
+void			join_tokens(t_token *tokens, t_token **new);
 int				tokens_size(t_token *lst);
 t_token			*last_token(t_token *lst);
 
@@ -167,7 +167,7 @@ int				process_quoted_token(t_general *ctx, int i, t_token **tokens, t_token **l
 int				process_operator_token(t_general *ctx, int i, t_token **tokens, t_token **last_added);
 int				process_dollar_token(t_general *ctx, int i, void **tkn_ptrs, int *skipped);
 int				process_word_token(t_general *ctx, int i, t_token **tokens, t_token **last_added);
-void			handle_token_joining(t_token *tokens, t_token *new, int skipped);
+void			handle_token_joining(t_token *tokens, t_token **new, int skipped);
 int				skip_whitespace_and_track(t_general *ctx, int *i, int *skipped);
 t_token			*split_update_tknvalue(char *token_value, int *skipped);
 
@@ -191,7 +191,7 @@ void			increment_val(int *value1, int *value2, int *value3, int *value4);
 bool	is_token_op(t_token *token);
 
 /* ========================== MEMORY FUNCTIONS ============================== */
-void			*allocate(t_general *ctx, size_t size);
+// void			*allocate(t_general *ctx, size_t size);
 t_memory		*new_addr(void *ptr);
 int				add_addr(t_general *ctx, t_memory *new_addr);
 

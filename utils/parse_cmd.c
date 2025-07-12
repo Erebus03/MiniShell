@@ -114,7 +114,7 @@ t_command	*parse_command(t_general *ctx)
 	all_tokens = tokenize_input(ctx);
 	if (!all_tokens)
 		return (NULL);
-	print_tokens(all_tokens);
+	// print_tokens(all_tokens);
 	if (!check_syntax(ctx, all_tokens))
 	{
 		write(2, "bash: syntax error\n", 19);

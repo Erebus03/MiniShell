@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 15:46:34 by araji             #+#    #+#             */
-/*   Updated: 2025/07/09 18:24:35 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/12 19:28:06 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static int	process_and_add_token(t_general *ctx, int *indx, void **tkn_ptrs)
 	if (lasttkn->type == TWORD && lasttkn->prev && (lasttkn->prev)->is_identif)
 		lasttkn->is_identif = 1;
 	if (tkn_ptrs[1])
-		handle_token_joining(tkn_ptrs[0], tkn_ptrs[1], indx[2]);
+		handle_token_joining(tkn_ptrs[0], (t_token **)&tkn_ptrs[1], indx[2]);
 	return (token_len);
 }
 
