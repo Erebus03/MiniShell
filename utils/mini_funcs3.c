@@ -12,6 +12,21 @@
 
 #include "../minishell.h"
 
+char	*expand_exitstat_pid(char val)
+{
+	char	*value;
+
+	if (val == '$')
+	{
+		value = ft_itoa(getpid());
+	}
+	if (val == '?')
+	{
+		value = ft_itoa(generale.exit_status);
+	}
+	return (value);
+}
+
 /* Helper function to skip whitespace and track if any was skipped */
 int	skip_whitespace_and_track(t_general *ctx, int *i, int *skipped)
 {
@@ -45,33 +60,6 @@ void join_tokens(t_token *tokens, t_token **new)
     if (next_node)
         next_node->prev = tokens;
 }
-
-// void	join_tokens(t_token *tokens, t_token **new)
-// {
-// 	t_token *(next_node);
-// 	t_token *(to_be_freed);
-// 	char *(str);
-// 	str = NULL;
-// 	while (tokens != (*new)->prev)
-// 		tokens = tokens->next;
-	
-// 	printf("\njoining [%s]-[%s]\n", tokens->value, (tokens->next)->value);
-
-// 	str = ft_strjoin(tokens->value, (tokens->next)->value);
-// 	free(tokens->value);
-// 	tokens->value = str;
-
-// 	next_node = (*new)->next;
-// 	to_be_freed = (*new);
-// 	if ((*new))
-// 		(*new) = (*new)->next;
-// 	free(to_be_freed->value);
-// 	free(to_be_freed);
-	
-// 	tokens->next = next_node;
-// 	if (next_node)
-// 		next_node->prev = tokens;
-// }
 
 /* Function to handle token joining logic */
 void	handle_token_joining(t_token *tokens, t_token **new, int skipped)

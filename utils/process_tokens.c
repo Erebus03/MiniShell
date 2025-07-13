@@ -47,7 +47,13 @@ static int	process_redir_token(t_command *cmd,
 
 	redir = new_redir(current->type, next->value);
 	if (current->type == THEREDOC)
-		redir->expand_in_heredec = (current->quoted_delim != 1);
+	{
+		if (current->next)
+		{
+			if (current->next->quoted_delim == 0)
+				redir->expand_in_heredoc = 1;
+		}
+	}
 	if (!redir)
 		return (0);
 	add_redir(&cmd->redirs, redir);

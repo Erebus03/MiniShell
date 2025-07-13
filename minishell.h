@@ -6,7 +6,7 @@
 /*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:58 by araji             #+#    #+#             */
-/*   Updated: 2025/07/12 19:29:49 by araji            ###   ########.fr       */
+/*   Updated: 2025/07/14 00:08:56 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ typedef struct s_redir
     char            *index; 
     char            *file;
     int             fd;
-	int				expand_in_heredec; //
+	int				expand_in_heredoc; //
     struct s_redir  *next;
 }	t_redir;
 
@@ -170,6 +170,7 @@ int				process_word_token(t_general *ctx, int i, t_token **tokens, t_token **las
 void			handle_token_joining(t_token *tokens, t_token **new, int skipped);
 int				skip_whitespace_and_track(t_general *ctx, int *i, int *skipped);
 t_token			*split_update_tknvalue(char *token_value, int *skipped);
+char			*expand_exitstat_pid(char val);
 
 /* ========================= EXPANSION FUNCTIONS =========================== */
 int				calculate_expansion_size(t_general *ctx, int start, char stop_char);

@@ -6,7 +6,7 @@
 /*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:53 by araji             #+#    #+#             */
-/*   Updated: 2025/07/13 17:20:02 by araji            ###   ########.fr       */
+/*   Updated: 2025/07/14 00:09:42 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int	main(int ac, char **av, char **envp)
 			continue;
 		add_history(generale.input);
 		cmds = parse_command(&generale);
+		// print_commands(cmds);
 		generale.cmnd = cmds;
 		generale.cmnddd = cmds;
 		if (ft_herdoc(&generale) == -1)

@@ -46,9 +46,10 @@ void	print_redirections(t_redir *redirs)
 	current = redirs;
 	while (current)
 	{
-		printf("  Redir: type=%s, file=%s\n",
+		printf("  Redir: type=%s, file=%s  (ExpandInHeredoc(%d))\n",
 			type_str[current->type],
-			current->file);
+			current->file,
+			current->expand_in_heredoc);
 		current = current->next;
 	}
 }
@@ -58,6 +59,8 @@ void	print_redirections(t_redir *redirs)
  */
 void	print_commands(t_command *commands)
 {
+	if (!commands)
+		return ;
 	int (i), (j);
 	t_command *(current);
 	i = 1;

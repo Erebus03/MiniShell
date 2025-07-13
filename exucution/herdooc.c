@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   herdooc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 17:34:22 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/11 04:05:25 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/13 23:59:42 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,79 @@ char *namefile(t_general *data)
 	char *res = ft_strjoin(r,name+9);
      add_addr(data,new_addr(res));
 	return res ;
+}
+
+static int	write_exit_status(int fd)
+{
+	char	*value;
+
+	value = ft_itoa(generale.exit_status);
+	write(fd, value, ft_strlen(value));
+	free(value);
+	return (2);
+}
+
+static int	write_env_value(int fd, char *str, int index)
+{
+	char	*value;
+	char	*name;
+	int		dollar_pos;
+	int		var_len;
+
+	value = NULL;
+	dollar_pos = index++;
+	var_len = 0;
+	while (str[index] && (ft_isalnum(str[index]) || str[index] == '_'))
+		increment_val(&index, &var_len, NULL, NULL);
+	// printf("******\nstr %s\n**********\n", str + dollar_pos);
+	name = (char *)malloc(var_len + 1); //free
+	if (!name)
+		return 0;
+	ft_memcpy(name, str + dollar_pos + 1, var_len);
+	name[var_len] = '\0';
+
+	// printf("******\nvarname = %s\n**********\n", name);
+	
+	if (var_len > 0)
+	{
+		value = get_env_value(name, generale.envlst);
+		// printf("getenvvalue ret %s\n", value);
+	}
+	else if (str[index] != '\0')
+		value = NULL;
+	free(name);
+	if (value)
+		write(fd, value, ft_strlen(value));
+	free(value);
+	// printf("returning %d\n", index - dollar_pos);
+	return (index - dollar_pos);
+}
+
+static void	expand_in_heredoc(int fd, char *str)
+{
+	int	i;
+	int	ret;
+
+	i = 0;
+	ret = 0;
+	while (str[i])
+	{
+		if (str[i] != '$')
+			ret = write(fd, &str[i], 1);
+		else if (str[i + 1] == '$')
+		{
+			int pid = getpid();
+			ft_putnbr_fd(pid, fd);
+			ret += 2;
+		}
+		else if (str[i + 1] == '?')
+			ret += write_exit_status(fd);
+		else if (str[i + 1] == '\0')
+			ret = write(fd, "$", 1);
+		else
+			ret = write_env_value(fd , str, i);
+		i += ret;
+	}
 }
 
 void child_herdoc(t_redir *var)
@@ -39,9 +112,10 @@ void child_herdoc(t_redir *var)
 			close(var->fd);     
 			exit(generale.exit_status);           
 		}
-        // if(var->file mafihax l quotes)
-        // pop = expande herd(char *str, ctx);
-		write(var->fd, pop, ft_strlen(pop));
+        if (var->expand_in_heredoc == 1)
+			expand_in_heredoc(var->fd, pop);
+		else
+			write(var->fd, pop, ft_strlen(pop));
 		write(var->fd, "\n", 1);
 		free(pop);
 	}

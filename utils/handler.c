@@ -12,12 +12,6 @@
 
 #include "../minishell.h"
 
-/* normal words with no whitespace or operators */
-/*
-	fixed "'ls ls'" => 'ls ls'
-	fixed echo$v (|ls|) => echo|ls|
-	problem in echo -
-*/
 // inside_env_var flag shuts off (kinda) operator check 
 int	handle_word(t_general *ctx, int i, char **value)
 {
@@ -120,9 +114,9 @@ int	handle_dollar(t_general *ctx, int i, char **value)
 	int (start), (var_len);
 	var_len = 0;
 	start = i++;
-	if (ctx->input[i] == '?')
+	if (ctx->input[i] == '?' || ctx->input[i] == '$')
 	{
-		*value = ft_itoa(generale.exit_status);
+		*value = expand_exitstat_pid(ctx->input[i]);
 		return (2);
 	}
 	while (ctx->input[i] && (ft_isalnum(ctx->input[i]) || ctx->input[i] == '_'))
