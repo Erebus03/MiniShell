@@ -1,38 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/27 16:57:21 by araji             #+#    #+#             */
-/*   Updated: 2025/07/13 22:42:22 by alamiri          ###   ########.fr       */
+/*   Created: 2025/07/01 18:23:07 by alamiri           #+#    #+#             */
+/*   Updated: 2025/07/13 22:09:35 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../minishell.h"
 
-char	*ft_strdup(const char *s)
+int	chek_type(t_redir *cc, t_general *data)
 {
-	char	*p;
-	int		i;
+	int	k;
 
-	if (s == NULL)
-		return (NULL);
-	i = 0;
-	while (s[i])
+	k = 6;
+	cc = data->cmnd->redirs;
+	while (cc)
 	{
-		i++;
+		if (cc->type == TREDIR_OUT)
+			k = ft_tokin_redir(cc, data);
+		else if (cc->type == TREDIR_APPEND)
+			k = ft_redir_append(cc, data);
+		else if (cc->type == TREDIR_IN)
+			k = ft_redir_in(cc, data);
+		else if (cc->type == THEREDOC)
+			k = ft_redir_herdoc(cc);
+		cc = cc->next;
 	}
-	p = (char *)malloc(sizeof(char) * (i + 1));
-	if (p == NULL)
-		return (NULL);
-	i = 0;
-	while (s[i])
-	{
-		p[i] = s[i];
-		i++;
-	}
-	p[i] = '\0';
-	return (p);
+	return (k);
 }

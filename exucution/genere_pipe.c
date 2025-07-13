@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:20:32 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/09 21:46:15 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/13 22:20:01 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	handle_child_process(t_general *data, int *fd_sa, int *fd)
 	t_redir	*cc;
 
 	cc = data->cmnd->redirs;
+	setup_child_signals();
 	if (fd_sa[0] != -1)
 	{
 		close(fd_sa[1]);
@@ -35,7 +36,7 @@ void	handle_child_process(t_general *data, int *fd_sa, int *fd)
 	exit(generale.exit_status);
 }
 
- void	handle_parent_process(int *fd_sa, int *fd, t_general *data)
+void	handle_parent_process(int *fd_sa, int *fd, t_general *data)
 {
 	if (fd_sa[0] != -1)
 	{
@@ -47,10 +48,9 @@ void	handle_child_process(t_general *data, int *fd_sa, int *fd)
 		fd_sa[0] = fd[0];
 		fd_sa[1] = fd[1];
 	}
-
+	return ;
 }
 
- 
 void	wait_all_processes(int *pids, int count)
 {
 	int	j;
@@ -63,12 +63,17 @@ void	wait_all_processes(int *pids, int count)
 		if (WIFEXITED(status))
 			generale.exit_status = WEXITSTATUS(status);
 		else if (WIFSIGNALED(status))
+		{
 			generale.exit_status = 128 + WTERMSIG(status);
+			if (WTERMSIG(status) == SIGINT)
+				write(1, "\n", 1);
+			else if (WTERMSIG(status) == SIGQUIT)
+				write(1, "Quit (core dumped)\n", 19);
+		}
 		j++;
 	}
+	return ;
 }
-
-
 
 int	*alloc_pids(t_general *data)
 {
@@ -80,7 +85,7 @@ int	*alloc_pids(t_general *data)
 		generale.exit_status = 1;
 		exit(generale.exit_status);
 	}
-	add_addr(data,new_addr(pids));
+	add_addr(data, new_addr(pids));
 	return (pids);
 }
 
@@ -90,8 +95,8 @@ void	ft_exucutepipe(t_general *data)
 	fd_sa[0] = -1;
 	fd_sa[1] = -1;
 	i = 0;
-
 	pids = alloc_pids(data);
+	signal(SIGINT, SIG_IGN);
 	while (data->cmnd)
 	{
 		if (data->cmnd->next)
@@ -99,9 +104,8 @@ void	ft_exucutepipe(t_general *data)
 		pid = fork();
 		if (pid < 0)
 			exit_error("fork");
-		else if (pid == 0) {
+		else if (pid == 0)
 			handle_child_process(data, fd_sa, fd);
-		}
 		else if (pid > 0)
 		{
 			pids[i++] = pid;

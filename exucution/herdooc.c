@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   herdooc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 17:34:22 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/13 23:59:42 by araji            ###   ########.fr       */
+/*   Updated: 2025/07/14 00:21:44 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,12 @@ void child_herdoc(t_redir *var)
 		write(var->fd, "\n", 1);
 		free(pop);
 	}
+    free(generale.input);
+	free_commands(&generale.cmnd);
+	cleanup(&generale);
+	free(generale.pwd);
+	free_envp(&generale, 'b');
+	clear_history();
 	return ;
 }
 

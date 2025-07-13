@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:53 by araji             #+#    #+#             */
-/*   Updated: 2025/07/14 00:09:42 by araji            ###   ########.fr       */
+/*   Updated: 2025/07/14 00:24:11 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +29,54 @@ void	init_general_struct(t_general *context, char *value)
 	context->oldpwd=NULL;
 }
 
-int	main(int ac, char **av, char **envp)
+int  ft_app(t_general *data)
 {
-	// t_general data ;
-	t_command	*cmds;
-	(void)av;
-	
-	init_general_struct(&generale, NULL);
+	if(data->input[0] == '\0')
+			return -1;
+	if (ft_herdoc(data) == -1)
+	{
+		free(data->input);
+		free_commands(&data->cmnd);
+		cleanup(data);
+		return -1;
+	}
+	return 0;
+}
+
+void app_bultin()
+{
+	int j= 0;
+	int fd = dup(STDIN_FILENO);
+	int k = dup(STDOUT_FILENO);
+	j = chek_type(generale.cmnd->redirs,&generale);
+	if (j != -1 )
+		aplementation_bultin(&generale);
+	dup2(fd,STDIN_FILENO);
+	dup2(k,STDOUT_FILENO);
+}
+void ft_genereac(int ac)
+{
 	if (ac != 1)
 	{
 		printf("$> ./Your Program\n");
-		return 0 ;
+		generale.exit_status = 1 ;
+		exit(generale.exit_status);
 	}
-	list_env_vars(&generale.envlst, envp);
+}
+void ft_freemain(t_command	*cmds)
+{
+	free(generale.input);
+	free_commands(&cmds);
+	cleanup(&generale);
+}
+int	main(int ac, char **av, char **envp)
+{
+	t_command	*cmds;
+	(void)av;
 
+	ft_genereac(ac);
+	init_general_struct(&generale, NULL);
+	list_env_vars(&generale.envlst, envp);
 	while (1)
 	{
 		signal(SIGINT, sighandler);
@@ -50,36 +84,16 @@ int	main(int ac, char **av, char **envp)
 		generale.input = readline("\001\033[32m\002minihell $> \001\033[0m\002");
 		if (!generale.input)
 			ft_control(&generale);
-		if (generale.input[0] == '\0')
-			continue;
-		add_history(generale.input);
 		cmds = parse_command(&generale);
 		// print_commands(cmds);
 		generale.cmnd = cmds;
-		generale.cmnddd = cmds;
-		if (ft_herdoc(&generale) == -1)
-		{
-		free(generale.input);
-		free_commands(&cmds);
-		cleanup(&generale);
-		continue;
-		}
+		if(ft_app(&generale) == -1)
+			continue;
 		if (size_list(generale.cmnd) == 1 && chek_bultin(generale.cmnd) == 1)
-		{	int j= 0;
-			int fd = dup(STDIN_FILENO);
-			int k = dup(STDOUT_FILENO);
-			j = chek_type(generale.cmnd->redirs,&generale);
-			if (j != -1 )
-				aplementation_bultin(&generale);
-			dup2(fd,STDIN_FILENO);
-			dup2(k,STDOUT_FILENO);
-		}
+			app_bultin();	
 		else
 			ft_exucutepipe(&generale);
-		
-		free(generale.input);
-		free_commands(&cmds);
-		cleanup(&generale);
+		ft_freemain(cmds);
 	}
 	return (0);
 }

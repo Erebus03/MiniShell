@@ -6,15 +6,15 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:41:24 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/09 14:51:53 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/13 20:58:42 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-size_t ftt_strlen(const char **s)
+size_t	ftt_strlen(const char **s)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	while (s && s[i])
@@ -22,60 +22,63 @@ size_t ftt_strlen(const char **s)
 	return (i);
 }
 
-int size_list(t_command *var)
+int	size_list(t_command *var)
 {
-	int i;
+	int	i;
+
 	i = 0;
 	while (var != NULL)
 	{
 		i++;
 		var = var->next;
 	}
-	return i;
+	return (i);
 }
 
-char *getenvp(char **p)
+char	*getenvp(char **p)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	while (p[i])
 	{
 		if (strncmp("PATH=", p[i], 5) == 0)
 		{
-			return p[i];
+			return (p[i]);
 		}
 		i++;
 	}
 	return (NULL);
 }
 
-
-char *cherche_path(t_env_var **env)
+char	*cherche_path(t_env_var **env)
 {
-	t_env_var *var = *env ;
+	t_env_var	*var;
 
-	while(var)
+	var = *env;
+	while (var)
 	{
-		if(strncmp(var->key,"PATH",4)==0)
+		if (strncmp(var->key, "PATH", 4) == 0)
 			return (var->value);
-		var = var->next	 ;	
+		var = var->next;
 	}
 	return (NULL);
 }
 
-void edit_env(t_env_var *var,char *newpath)
+void	edit_env(t_env_var *var, char *newpath)
 {
-	t_env_var *temp = var ;
-	while(temp)
+	t_env_var	*temp;
+
+	temp = var;
+	while (temp)
 	{
-		if(strncmp(temp->key,"PWD",3) == 0)
+		if (strncmp(temp->key, "PWD", 3) == 0)
 		{
 			free(temp->value);
-			temp->value = ft_strdup(newpath) ;
+			temp->value = ft_strdup(newpath);
 			return ;
 		}
-		temp= temp->next ;		
+		temp = temp->next;
 	}
 	return ;
 }

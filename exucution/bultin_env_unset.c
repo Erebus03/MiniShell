@@ -6,18 +6,11 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:27:41 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/11 01:46:35 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/13 22:47:36 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
- void	free_env_var(t_env_var *env_var)
-{
-	free(env_var->key);
-	free(env_var->value);
-	free(env_var);
-}
 
 void	remove_env_var(t_general *data, char *var_name)
 {
@@ -50,11 +43,10 @@ void	remove_env_var(t_general *data, char *var_name)
 
 void	execute_unset(t_general *data)
 {
-	int i;
-	t_command *temp;
+	int			i;
+	t_command	*temp;
 
 	temp = data->cmnd;
-
 	i = 1;
 	while (temp && temp->cmd && temp->cmd[i])
 	{
@@ -65,50 +57,52 @@ void	execute_unset(t_general *data)
 	return ;
 }
 
-char **initialse_data(t_general *data)
+char	**initialse_data(t_general *data)
 {
-	int i;
+	int		i;
+	char	*pwd;
+	char	**p;
 
-	char *pwd = getcwd(NULL,0);
-	data->oldpwd = getcwd(NULL,0);
-	char **p = malloc(sizeof(char *) * 5);
-	if(!p)
-		return NULL;
-	i=0;
-	p[0]=ft_strjoin("PWD=",pwd);
-	p[1]=ft_strjoin("SHLVL=","1");
-	p[2]=ft_strjoin("_=","/minishell");
-	p[3]=ft_strjoin("OLDPWD=",data->oldpwd);
-	p[4]= NULL;
-	while(p && p[i])
+	pwd = getcwd(NULL, 0);
+	data->oldpwd = getcwd(NULL, 0);
+	p = malloc(sizeof(char *) * 5);
+	if (!p)
+		return (NULL);
+	i = 0;
+	p[0] = ft_strjoin("PWD=", pwd);
+	p[1] = ft_strjoin("SHLVL=", "1");
+	p[2] = ft_strjoin("_=", "/minishell");
+	p[3] = ft_strjoin("OLDPWD=", data->oldpwd);
+	p[4] = NULL;
+	while (p && p[i])
 	{
-		add_addr(data,new_addr(p[i]));
+		add_addr(data, new_addr(p[i]));
 		i++;
 	}
-	add_addr(data,new_addr(p));
+	add_addr(data, new_addr(p));
 	free(pwd);
 	free(data->oldpwd);
-	return p;
+	return (p);
 }
 
-
-void execute_env(t_general *env)
+void	execute_env(t_general *env)
 {
-	t_env_var  *var ;
+	t_env_var	*var;
+
 	var = env->envlst;
-	if(var == NULL)
+	if (var == NULL)
 	{
-		afficher_envv(env);	
+		afficher_envv(env);
 		return ;
 	}
 	var = env->envlst;
-	while(var !=  NULL)
+	while (var != NULL)
 	{
-		if(var->key != NULL && var->value != NULL)
+		if (var->key != NULL && var->value != NULL)
 		{
-			printf("%s",var->key);
-			if(var->value != NULL)
-				printf("=%s",var->value);
+			printf("%s", var->key);
+			if (var->value != NULL)
+				printf("=%s", var->value);
 			printf("\n");
 		}
 		var = var->next;
@@ -117,34 +111,26 @@ void execute_env(t_general *env)
 	return ;
 }
 
-void afficher_envv(t_general *envv)
+void	afficher_envv(t_general *envv)
 {
-	t_env_var  *var ;
-	char ** res ;
+	t_env_var	*var;
+	char		**res;
 
 	res = initialse_data(envv);
-	list_env_vars(&envv->envlst,res);
+	list_env_vars(&envv->envlst, res);
 	var = envv->envlst;
-	while(var !=  NULL)
+	while (var != NULL)
 	{
-		if(ft_strcmp(var->key,"OLDPWD")== 0)
+		if (ft_strcmp(var->key, "OLDPWD") == 0)
 			var = var->next;
 		else
 		{
-			printf("%s",var->key);
-			printf("=%s",var->value);
+			printf("%s", var->key);
+			printf("=%s", var->value);
 			printf("\n");
-			var = var->next;		
+			var = var->next;
 		}
 	}
 	generale.exit_status = 0;
-	return ;
-}
-
-void three_exit()
-{
-	write(2,"exit\n",5);
-	write(2,"bash: exit: too many arguments\n",31);
-	generale.exit_status = 1;
 	return ;
 }

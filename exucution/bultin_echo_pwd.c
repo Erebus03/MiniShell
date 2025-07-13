@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bultin_echo_pwd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:23:54 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/11 15:24:10 by araji            ###   ########.fr       */
+/*   Updated: 2025/07/14 00:23:31 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	process_echo(t_general *data, int i)
 	var = data->cmnd;
 	while (var && var->cmd[i] && var->cmd[i][0])
 	{
-		write (1, var->cmd[i], ft_strlen(var->cmd[i]));
+		write(1, var->cmd[i], ft_strlen(var->cmd[i]));
 		i++;
 		if (var->cmd[i] != NULL)
 			write(1, " ", 1);
@@ -48,9 +48,9 @@ void	execute_echo(t_general *data)
 	int			i;
 	int			res;
 
-	i = 1;
 	var = data->cmnd;
 	res = -1;
+	i = 1;
 	while (var && var->cmd[i] && var->cmd[i][0])
 	{
 		if (var->cmd[i][0] == '-' && var->cmd[i][1] != '\0')
@@ -66,7 +66,7 @@ void	execute_echo(t_general *data)
 	}
 	process_echo(data, i);
 	if (res != 1)
-		write (1, "\n", 1);
+		write(1, "\n", 1);
 	generale.exit_status = 0;
 }
 

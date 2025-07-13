@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bultin_cd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:23:07 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/11 15:16:56 by araji            ###   ########.fr       */
+/*   Updated: 2025/07/14 00:23:16 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	handel_cdhome(t_general *data)
 			}
 			return ;
 		}
-		temp = temp ->next;
+		temp = temp->next;
 	}
 	if (temp == NULL)
 	{
@@ -92,7 +92,7 @@ void	oldedit_env(t_env_var *var, char *newpath)
 	temp = var;
 	while (temp)
 	{
-		if (ft_strncmp(temp->key, "OLDPWD", 6) == 0)
+		if (strncmp(temp->key, "OLDPWD", 6) == 0)
 		{
 			free(temp->value);
 			temp->value = ft_strdup(newpath);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:58 by araji             #+#    #+#             */
-/*   Updated: 2025/07/14 00:08:56 by araji            ###   ########.fr       */
+/*   Updated: 2025/07/14 00:21:02 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,14 @@
 #include <string.h>
 #include <ctype.h>
 #include <stdbool.h>
-#include <unistd.h>
-#include <readline/readline.h>
-#include <readline/history.h>
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdbool.h>
+
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <unistd.h>
 #include <sys/wait.h>
 #include <fcntl.h>
 #include <limits.h>
-#define	MAX_TOKENS 1024
 #include <sys/stat.h>
 #include <signal.h>
 /* ================================ ENUMS =================================== */
@@ -81,7 +74,7 @@ typedef struct s_env_var
 typedef struct s_redir
 {
     t_token_type    type;
-    char            *index; 
+    char            *index;
     char            *file;
     int             fd;
 	int				expand_in_heredoc; //
@@ -117,7 +110,6 @@ typedef struct s_general
     char			*pwd;
     char			*oldpwd ;
 
-     t_command        *cmnddd ;
 }	t_general;
 
 extern t_general generale;
@@ -219,7 +211,6 @@ int parent_herdoc(int pid,t_redir *var);
 int herdocc(t_redir *var, int index,t_general *data);
 int token_out(t_redir *temp);
 char *getenvp(char **p);
-char **reserve_space(t_general *var);
 void exucutecmd(char **env, char *path,t_general *var);
 char *cherche_path(t_env_var **env);
 int  chek_eroorsplit(t_general *data);
@@ -285,4 +276,11 @@ void errror_path(t_general *data);
 int   ft_chekl(t_general *data);
 void	ft_free(char **p);
 
+void ft_freeee(t_general *data);
+void child_sigint_handler(int sig);
+void child_sigquit_handler(int sig);
+void setup_child_signals(void);
+
+int chek_doublenumber(char **s);
+void ft_generenumbre(t_command *var);
 #endif
