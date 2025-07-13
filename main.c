@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:53 by araji             #+#    #+#             */
-/*   Updated: 2025/07/11 04:45:06 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/13 17:20:02 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,11 @@ int	main(int ac, char **av, char **envp)
 		signal(SIGINT, sighandler);
 		signal(SIGQUIT, SIG_IGN);
 		generale.input = readline("\001\033[32m\002minihell $> \001\033[0m\002");
-		add_history(generale.input);
 		if (!generale.input)
 			ft_control(&generale);
-		if(generale.input[0] == '\0')
+		if (generale.input[0] == '\0')
 			continue;
+		add_history(generale.input);
 		cmds = parse_command(&generale);
 		generale.cmnd = cmds;
 		generale.cmnddd = cmds;
