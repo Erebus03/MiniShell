@@ -106,6 +106,7 @@ t_command	*parse_command(t_general *ctx)
 	t_token		*last_cmd_start;
 	t_command	*commands;
 
+	commands = NULL;
 	if (validate_quotes(ctx->input) == 0)
 	{
 		generale.exit_status = 2;
@@ -115,8 +116,10 @@ t_command	*parse_command(t_general *ctx)
 	all_tokens = tokenize_input(ctx);
 	if (!all_tokens)
 		return (NULL);
+	print_tokens(all_tokens);
 	if (!check_syntax(ctx, all_tokens))
 	{
+		free_tokens(&all_tokens);
 		write(2, "bash: syntax error\n", 19);
 		return (NULL);
 	}
