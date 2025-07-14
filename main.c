@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:53 by araji             #+#    #+#             */
-/*   Updated: 2025/07/14 00:24:11 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/14 01:44:19 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ int  ft_app(t_general *data)
 			return -1;
 	if (ft_herdoc(data) == -1)
 	{
-		free(data->input);
-		free_commands(&data->cmnd);
-		cleanup(data);
+		// free(data->input);
+		// free_commands(&data->cmnd);
+		// cleanup(data);
 		return -1;
 	}
 	return 0;
@@ -84,8 +84,8 @@ int	main(int ac, char **av, char **envp)
 		generale.input = readline("\001\033[32m\002minihell $> \001\033[0m\002");
 		if (!generale.input)
 			ft_control(&generale);
+		add_history(generale.input);
 		cmds = parse_command(&generale);
-		// print_commands(cmds);
 		generale.cmnd = cmds;
 		if(ft_app(&generale) == -1)
 			continue;

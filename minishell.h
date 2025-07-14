@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:58 by araji             #+#    #+#             */
-/*   Updated: 2025/07/14 00:21:02 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/14 00:48:20 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,7 +206,7 @@ int tokeappend(t_redir *cout,t_general *data);
 int size_list(t_command *var);
 void heredoc_sigint_handler();
 char *namefile();
-void child_herdoc(t_redir *var);
+int child_herdoc(t_redir *var);
 int parent_herdoc(int pid,t_redir *var);
 int herdocc(t_redir *var, int index,t_general *data);
 int token_out(t_redir *temp);

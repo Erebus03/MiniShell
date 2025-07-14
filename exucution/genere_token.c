@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 17:32:27 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/13 22:44:29 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/14 01:49:00 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ int	tokencomnd(t_redir *cout, t_general *data)
 	struct stat	info;
 	int			fd;
 
-	if (stat(cout->file, &info) == 0 && S_ISDIR(info.st_mode))
-		return (eroor_msg(data, 1));
 	if (ft_strchr(cout->file, ' '))
 		return (eroor_msg(data, 5));
+	if (stat(cout->file, &info) == 0 && S_ISDIR(info.st_mode))
+		return (eroor_msg(data, 1));
 	fd = open(cout->file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (fd < 0)
 		return (eroor_msg(data, 2));
@@ -51,10 +51,10 @@ int	tokeappend(t_redir *cout, t_general *data)
 	struct stat	info;
 	int			fd;
 
-	if (stat(cout->file, &info) == 0 && S_ISDIR(info.st_mode))
-		return (eroor_msg(data, 1));
 	if (ft_strchr(cout->file, ' '))
 		return (eroor_msg(data, 5));
+	if (stat(cout->file, &info) == 0 && S_ISDIR(info.st_mode))
+		return (eroor_msg(data, 1));
 	fd = open(cout->file, O_CREAT | O_WRONLY | O_APPEND, 0644);
 	if (fd < 0)
 		return (eroor_msg(data, 2));

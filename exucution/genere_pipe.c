@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:20:32 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/13 22:20:01 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/14 01:39:32 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,14 @@ void	handle_child_process(t_general *data, int *fd_sa, int *fd)
 	chek_type(cc, data);
 	if (data->cmnd->cmd[0] != NULL)
 		split_chek(data);
+	else 
+		{
+		free(generale.input);
+        free_commands(&generale.cmnd);
+        cleanup(&generale);
+        free(generale.pwd);
+        free_envp(&generale, 'b');
+		}
 	exit(generale.exit_status);
 }
 

@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 17:34:22 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/14 00:21:44 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/14 01:41:17 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ static void	expand_in_heredoc(int fd, char *str)
 	}
 }
 
-void child_herdoc(t_redir *var)
+int child_herdoc(t_redir *var)
 {
 	char *pop;		 
            
@@ -109,8 +109,9 @@ void child_herdoc(t_redir *var)
 		if (!pop || ft_strcmp(pop, var->file) == 0)  
 		{
 			generale.exit_status = 0;
-			close(var->fd);     
-			exit(generale.exit_status);           
+			close(var->fd);
+            free(pop);
+            return 1;         
 		}
         if (var->expand_in_heredoc == 1)
 			expand_in_heredoc(var->fd, pop);
@@ -119,13 +120,7 @@ void child_herdoc(t_redir *var)
 		write(var->fd, "\n", 1);
 		free(pop);
 	}
-    free(generale.input);
-	free_commands(&generale.cmnd);
-	cleanup(&generale);
-	free(generale.pwd);
-	free_envp(&generale, 'b');
-	clear_history();
-	return ;
+	return 0;
 }
 
 int parent_herdoc(int pid,t_redir *var)
@@ -155,8 +150,7 @@ int herdocc(t_redir *var, int index,t_general *data)
 {
     int pid;
 	char (*name),(*s);
-	// char *s;
-    // var->index =NULL ;
+
     name = namefile(data);
 	s = ft_itoa(index);
 	var->index = ft_strjoin(name,s);
@@ -167,7 +161,16 @@ int herdocc(t_redir *var, int index,t_general *data)
         return (perror("open"),-1);
     pid = fork();
     if (pid == 0)
-		child_herdoc(var);
+	{
+        child_herdoc(var);
+        free(generale.input);
+        free_commands(&generale.cmnd);
+        cleanup(&generale);
+        free(generale.pwd);
+        free_envp(&generale, 'b');
+        clear_history();
+        exit(data->exit_status);
+    }
     else if (pid > 0)
 		return (parent_herdoc(pid,var));
     else
