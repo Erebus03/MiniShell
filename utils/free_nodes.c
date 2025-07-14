@@ -29,7 +29,6 @@ void	free_commands(t_command **commands)
 				free(current->cmd[i]);
 			free(current->cmd);
 		}
-
 		free_redirs(&current->redirs);
 		free_tokens(&current->tokens);
 		free(current);

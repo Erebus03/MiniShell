@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:58 by araji             #+#    #+#             */
-/*   Updated: 2025/07/14 00:48:20 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/14 01:55:23 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,7 @@ int				handle_quotes(t_general *ctx, int i, char **value);
 int				handle_word(t_general *ctx, int i, char **value);
 int				handle_operator(t_general *ctx, int i, t_token_type *type, char **value);
 int				handle_dollar(t_general *ctx, int i, char **value);
+int				handel_doller_helper(char **value, char val_kind);
 int				process_single_token(t_general *ctx, int i, void **tkn_ptrs, int *skipped);
 int				process_quoted_token(t_general *ctx, int i, t_token **tokens, t_token **last_added);
 int				process_operator_token(t_general *ctx, int i, t_token **tokens, t_token **last_added);

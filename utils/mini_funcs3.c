@@ -40,25 +40,24 @@ int	skip_whitespace_and_track(t_general *ctx, int *i, int *skipped)
 	return (*i > start_pos);
 }
 
-void join_tokens(t_token *tokens, t_token **new)
+void	join_tokens(t_token *tokens, t_token **new)
 {
-    t_token *(next_node);
-    t_token *(to_be_freed);
-    char *(str);
-    while (tokens != (*new)->prev)
-        tokens = tokens->next;
-    // printf("\njoining [%s]-[%s]\n", tokens->value, (tokens->next)->value);
-    str = ft_strjoin(tokens->value, (tokens->next)->value);
-    free(tokens->value);
-    tokens->value = str;
-    to_be_freed = *new;
-    next_node = (*new)->next;
-    *new = next_node;
-    free(to_be_freed->value);
-    free(to_be_freed);
-    tokens->next = next_node;
-    if (next_node)
-        next_node->prev = tokens;
+	t_token *(next_node);
+	t_token *(to_be_freed);
+	char *(str);
+	while (tokens != (*new)->prev)
+		tokens = tokens->next;
+	str = ft_strjoin(tokens->value, (tokens->next)->value);
+	free(tokens->value);
+	tokens->value = str;
+	to_be_freed = *new;
+	next_node = (*new)->next;
+	*new = next_node;
+	free(to_be_freed->value);
+	free(to_be_freed);
+	tokens->next = next_node;
+	if (next_node)
+		next_node->prev = tokens;
 }
 
 /* Function to handle token joining logic */
