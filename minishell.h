@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:58 by araji             #+#    #+#             */
-/*   Updated: 2025/07/14 00:21:02 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/14 01:15:59 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,7 @@ int				handle_quotes(t_general *ctx, int i, char **value);
 int				handle_word(t_general *ctx, int i, char **value);
 int				handle_operator(t_general *ctx, int i, t_token_type *type, char **value);
 int				handle_dollar(t_general *ctx, int i, char **value);
+int				handel_doller_helper(char **value, char val_kind);
 int				process_single_token(t_general *ctx, int i, void **tkn_ptrs, int *skipped);
 int				process_quoted_token(t_general *ctx, int i, t_token **tokens, t_token **last_added);
 int				process_operator_token(t_general *ctx, int i, t_token **tokens, t_token **last_added);

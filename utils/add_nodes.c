@@ -76,3 +76,10 @@ void	add_variable(t_env_var **lst, t_env_var *new_var)
 		tmp = tmp->next;
 	tmp->next = new_var;
 }
+
+/* handle_dollar helper to reduce lines */
+int	handel_doller_helper(char **value, char val_kind)
+{
+	*value = expand_exitstat_pid(val_kind);
+	return (2);
+}

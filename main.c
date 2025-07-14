@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:53 by araji             #+#    #+#             */
-/*   Updated: 2025/07/14 00:24:11 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/14 01:20:02 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ int	main(int ac, char **av, char **envp)
 		if (!generale.input)
 			ft_control(&generale);
 		cmds = parse_command(&generale);
-		// print_commands(cmds);
 		generale.cmnd = cmds;
 		if(ft_app(&generale) == -1)
 			continue;

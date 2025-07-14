@@ -115,14 +115,11 @@ int	handle_dollar(t_general *ctx, int i, char **value)
 	var_len = 0;
 	start = i++;
 	if (ctx->input[i] == '?' || ctx->input[i] == '$')
-	{
-		*value = expand_exitstat_pid(ctx->input[i]);
-		return (2);
-	}
+		return (handel_doller_helper(value, ctx->input[i]));
 	while (ctx->input[i] && (ft_isalnum(ctx->input[i]) || ctx->input[i] == '_'))
 		increment_val(&i, &var_len, NULL, NULL);
 	var_name = (char *)malloc(var_len + 1);
-	add_addr(ctx,new_addr(var_name));
+	add_addr(ctx, new_addr(var_name));
 	if (!var_name)
 		return (0);
 	ft_memcpy(var_name, ctx->input + start + 1, var_len);
