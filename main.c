@@ -35,9 +35,9 @@ int  ft_app(t_general *data)
 			return -1;
 	if (ft_herdoc(data) == -1)
 	{
-		// free(data->input);
-		// free_commands(&data->cmnd);
-		// cleanup(data);
+		free(data->input);
+		free_commands(&data->cmnd);
+		cleanup(data);
 		return -1;
 	}
 	return 0;

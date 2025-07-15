@@ -96,6 +96,6 @@ int	process_tokens(t_command *cmd)
 	arg_count = count_args(cmd->tokens);
 	cmd->cmd = (char **)malloc(sizeof(char *) * (arg_count + 1));
 	if (!cmd->cmd)
-		return (0);
+		{return (0);}
 	return (fill_cmd_array(cmd));
 }

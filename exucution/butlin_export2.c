@@ -43,6 +43,7 @@ int	variable_exists(t_env_var *env_list, char *key)
 	{
 		if (ft_strcmp(key, env_list->key) == 0)
 		{
+			free(key);
 			return (1);
 		}
 		env_list = env_list->next;

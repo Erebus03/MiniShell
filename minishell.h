@@ -284,4 +284,6 @@ void setup_child_signals(void);
 
 int chek_doublenumber(char **s);
 void ft_generenumbre(t_command *var);
+
+void save_cd(t_general *data);
 #endif

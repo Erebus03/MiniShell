@@ -103,8 +103,8 @@ int child_herdoc(t_redir *var)
 	while (1)
 	{
         signal(SIGINT, heredoc_sigint_handler); 
-	    signal(SIGQUIT, SIG_IGN);  
-        signal(SIGINT, SIG_DFL);
+	    // signal(SIGQUIT, SIG_IGN);  
+        // // signal(SIGINT, SIG_DFL);
 		pop = readline("> ");
 		if (!pop || ft_strcmp(pop, var->file) == 0)  
 		{

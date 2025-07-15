@@ -67,7 +67,7 @@ int	chek_export(char *var)
 	int	i;
 
 	i = 0;
-	if (!var || !var[0])
+	if (!var || var[0] == '\0')
 		return (0);
 	if (!((var[0] >= 'a' && var[0] <= 'z') || (var[0] >= 'A' && var[0] <= 'Z')
 			|| var[0] == '_'))

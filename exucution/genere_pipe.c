@@ -34,13 +34,7 @@ void	handle_child_process(t_general *data, int *fd_sa, int *fd)
 	if (data->cmnd->cmd[0] != NULL)
 		split_chek(data);
 	else 
-	{
-		free(generale.input);
-        free(generale.pwd);
-        free_commands(&generale.cmnd);
-        free_envp(&generale, 'b');
-        cleanup(&generale);
-	}
+		ft_freeee(data);
 	exit(generale.exit_status);
 }
 

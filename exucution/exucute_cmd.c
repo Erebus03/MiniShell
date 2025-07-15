@@ -99,6 +99,7 @@ void	split_chek(t_general *data)
 	if (chek_bultin(data->cmnd) == 1)
 	{
 		aplementation_bultin(data);
+		ft_freeee(data);
 		return ;
 	}
 	copy_envp(data);

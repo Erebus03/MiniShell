@@ -75,6 +75,7 @@ int	process_dollar_token(t_general *ctx, int i, void **tkn_ptrs, int *skipped)
 					&& lst_tkn->is_identif == 0 && !is_token_op(lst_tkn))))
 		{
 			new = split_update_tknvalue(token_value, skipped);
+			free(token_value);
 		}
 		else
 			new = new_token(token_value, TWORD, true);

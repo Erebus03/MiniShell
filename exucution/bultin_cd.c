@@ -37,7 +37,19 @@ void	handel_cdhome(t_general *data)
 	}
 	return ;
 }
+void save_cd(t_general *data)
+{
+	char	*path;
 
+	path = getcwd(NULL, 0);
+	if(path != NULL)
+	{
+		free(data->pwd);
+		data->pwd = ft_strdup(path);
+	}
+	free(path);
+	return ;
+}
 void	execute_cd(t_general *data)
 {
 	char	*path;
@@ -46,7 +58,9 @@ void	execute_cd(t_general *data)
 	add_addr(data, new_addr(data->oldpwd));
 	if (data->cmnd->cmd[0] && data->cmnd->cmd[1] == NULL)
 		handel_cdhome(data);
-	else if (chdir(data->cmnd->cmd[1]) != 0)
+	else if (chdir(data->cmnd->cmd[1]) == 0)
+		save_cd(data);
+	else
 		return (eroor_cd(data->cmnd->cmd[1]));
 	path = getcwd(NULL, 0);
 	add_addr(data, new_addr(path));
@@ -68,11 +82,9 @@ void	errror_path(t_general *data)
 	perror("cd: error retrieving current directory");
 	generale.exit_status = 1;
 	jon = ft_strjoin(data->pwd, "/..");
-	if (data->pwd != NULL)
-	{
+	if(data->pwd !=NULL)
 		free(data->pwd);
-		data->pwd = ft_strdup(jon);
-	}
+	data->pwd = ft_strdup(jon);
 	add_addr(data, new_addr(jon));
 	edit_env(data->envlst, jon);
 	return ;

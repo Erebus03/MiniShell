@@ -64,24 +64,20 @@ void	ft_generenumbre(t_command *var)
 
 void	execute_exit(t_command *var)
 {
-	if (ftt_strlen((const char **)var->cmd) == 1 && ft_strcmp(var->cmd[0],
-			"exit") == 0)
+	if (ftt_strlen((const char **)var->cmd) == 1 && ft_strcmp(var->cmd[0],"exit") == 0)
 		singel_exit();
 	else if (ftt_strlen((const char **)var->cmd) == 2)
 	{
-		if (ft_strcmp(var->cmd[0], "exit") == 0
-			&& chek_number(var->cmd[1]) == 1)
+		if (ft_strcmp(var->cmd[0], "exit") == 0 && chek_number(var->cmd[1]) == 1)
 			ft_generenumbre(var);
-		else if (ft_strcmp(var->cmd[0], "exit") == 0
-			&& chek_number(var->cmd[1]) == -1)
+		else if (ft_strcmp(var->cmd[0], "exit") == 0 && chek_number(var->cmd[1]) == -1)
 		{
 			generale.exit_status = 2;
 			eroor_exit(var->cmd[1]);
 			exit(generale.exit_status);
 		}
 	}
-	else if (ftt_strlen((const char **)var->cmd) > 2
-		&& chek_doublenumber(var->cmd) == 1)
+	else if (ftt_strlen((const char **)var->cmd) > 2  && chek_number(var->cmd[1]) == 1)
 	{
 		write(2, "exit\n", 5);
 		write(2, "bash: exit: too many arguments\n", 31);

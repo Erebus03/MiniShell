@@ -14,6 +14,12 @@
 
 void	heredoc_sigint_handler(void)
 {
+	free(generale.input);
+	free_commands(&generale.cmnd);
+	cleanup(&generale);
+	free(generale.pwd);
+	free_envp(&generale, 'b');
+	clear_history();
 	write(1, "\n", 1);
 	rl_replace_line("", 0);
 	rl_redisplay();

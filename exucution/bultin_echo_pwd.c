@@ -32,7 +32,7 @@ void	process_echo(t_general *data, int i)
 	t_command	*var;
 
 	var = data->cmnd;
-	while (var && var->cmd[i] && var->cmd[i][0])
+	while (var && var->cmd[i])
 	{
 		write(1, var->cmd[i], ft_strlen(var->cmd[i]));
 		i++;
@@ -51,7 +51,7 @@ void	execute_echo(t_general *data)
 	var = data->cmnd;
 	res = -1;
 	i = 1;
-	while (var && var->cmd[i] && var->cmd[i][0])
+	while (var && var->cmd[i])
 	{
 		if (var->cmd[i][0] == '-' && var->cmd[i][1] != '\0')
 		{
@@ -86,19 +86,13 @@ char	*getpath(t_env_var **pp)
 
 void	execute_pwd(t_general *data)
 {
+	(void)data;
 	char	*d;
 
 	d = getcwd(NULL, 0);
-	if (d != NULL)
-	{
-		if (data->pwd != NULL)
-			free(data->pwd);
-		data->pwd = ft_strdup(d);
-	}
 	if (d == NULL)
 	{
-		if (data->pwd)
-			printf("%s\n", data->pwd);
+		printf("%s\n", data->pwd);
 		generale.exit_status = 0;
 		return ;
 	}
