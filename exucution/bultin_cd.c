@@ -6,7 +6,7 @@
 /*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:23:07 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/15 16:09:51 by araji            ###   ########.fr       */
+/*   Updated: 2025/07/15 18:25:47 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	errror_path(t_general *data)
 
 void	exit_error(char *msg)
 {
-	if (generale.cmnd)
+	if (generale.cmnd) //chof hadi wach khas tkon hna
 		free_commands(&generale.cmnd);
 	perror(msg);
 	generale.exit_status = 1;
