@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 23:33:19 by araji             #+#    #+#             */
-/*   Updated: 2025/07/14 01:00:33 by araji            ###   ########.fr       */
+/*   Updated: 2025/07/15 18:18:03 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,12 @@ int	process_dollar_token(t_general *ctx, int i, void **tkn_ptrs, int *skipped)
 	t_token *(lst_tkn);
 	int (len);
 	len = handle_dollar(ctx, i, &token_value);
+	printf("handel dollar skipped %d\n", len);
 	if (len < 0)
 		return (-1);
 	if (token_value)
 	{
+		printf("token value %s\n", token_value);
 		lst_tkn = last_token(tkn_ptrs[0]);
 		if (to_be_split(token_value) && (tkn_ptrs[0] == NULL || (lst_tkn
 					&& lst_tkn->is_identif == 0 && !is_token_op(lst_tkn))))

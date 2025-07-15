@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   genere_pipe.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:20:32 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/14 01:39:32 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/15 16:14:22 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,13 @@ void	handle_child_process(t_general *data, int *fd_sa, int *fd)
 	if (data->cmnd->cmd[0] != NULL)
 		split_chek(data);
 	else 
-		{
+	{
 		free(generale.input);
-        free_commands(&generale.cmnd);
-        cleanup(&generale);
         free(generale.pwd);
+        free_commands(&generale.cmnd);
         free_envp(&generale, 'b');
-		}
+        cleanup(&generale);
+	}
 	exit(generale.exit_status);
 }
 
@@ -99,7 +99,7 @@ int	*alloc_pids(t_general *data)
 
 void	ft_exucutepipe(t_general *data)
 {
-	int (pid), (i), (*pids), (fd_sa[2]), (fd[2]);
+	int (pid), (i), (*pids), (fd_sa[2]), (fd[2]);// maymkench dir > 4 arguments f line asahbi
 	fd_sa[0] = -1;
 	fd_sa[1] = -1;
 	i = 0;

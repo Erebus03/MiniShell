@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_vars.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:58:07 by araji             #+#    #+#             */
-/*   Updated: 2025/07/08 20:35:11 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/15 16:02:32 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ void	copy_envp(t_general *ctx)
 	t_env_var	*tmp;
 	int			i;
 
+	if (ctx->envarr)
+		free_envp(ctx, 'a');
 	tmp = NULL;
 	i = 0;
 	tmp = ctx->envlst;

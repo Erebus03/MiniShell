@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <araji@student.42.fr>                +#+  +:+       +#+        */
+/*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:53 by araji             #+#    #+#             */
-/*   Updated: 2025/07/14 22:39:18 by araji            ###   ########.fr       */
+/*   Updated: 2025/07/15 18:17:22 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,10 @@ int	main(int ac, char **av, char **envp)
 		generale.input = readline("\001\033[32m\002minihell $> \001\033[0m\002");
 		if (!generale.input)
 			ft_control(&generale);
-		add_history(generale.input);
+		if (generale.input[0])
+			add_history(generale.input);
 		cmds = parse_command(&generale);
-		print_commands(cmds);
+		// print_commands(cmds);
 		generale.cmnd = cmds;
 		if(ft_app(&generale) == -1)
 			continue;

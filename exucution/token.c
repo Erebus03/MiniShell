@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:18:06 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/13 22:45:32 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/15 16:16:02 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int	chek_type(t_redir *cc, t_general *data)
 	int	k;
 
 	k = 6;
-	cc = data->cmnd->redirs;
+	cc = data->cmnd->redirs; //had l3iba 3awtiha 2 fois
 	while (cc)
 	{
 		if (cc->type == TREDIR_OUT)

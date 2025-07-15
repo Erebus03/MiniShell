@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:58 by araji             #+#    #+#             */
-/*   Updated: 2025/07/14 01:55:23 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/15 15:56:28 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ typedef struct s_general
     char			**envarr;
     int				error;
 	t_memory		*heap;
-    t_command        *cmnd ;
+    t_command        *cmnd;
     char			*error_msg;
     int				exit_status;
     int				no_expand_heredoc;

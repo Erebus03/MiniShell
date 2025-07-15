@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bultin_cd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:23:07 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/14 00:23:16 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/15 16:09:51 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ void	errror_path(t_general *data)
 
 void	exit_error(char *msg)
 {
+	if (generale.cmnd)
+		free_commands(&generale.cmnd);
 	perror(msg);
 	generale.exit_status = 1;
 	exit(generale.exit_status);
