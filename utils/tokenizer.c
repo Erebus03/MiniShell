@@ -6,7 +6,7 @@
 /*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 15:46:34 by araji             #+#    #+#             */
-/*   Updated: 2025/07/15 18:23:27 by araji            ###   ########.fr       */
+/*   Updated: 2025/07/15 20:21:12 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,9 @@ static void	init_tokenizer_state(int *indx, void **ptrs, t_general *ctx)
 
 static void	check_export_ident(t_token *ident_tkn)
 {
-	if (ident_tkn->value)
+	if (ident_tkn->value && ident_tkn->value[0])
 	{
+		//recheck why are u checking this aslan
 		if (ident_tkn->value[ft_strlen(ident_tkn->value) - 1] == '=')
 		{
 			ident_tkn->is_identif = 1;

@@ -124,7 +124,6 @@ int	handle_dollar(t_general *ctx, int i, char **value)
 		return (0);
 	ft_memcpy(var_name, ctx->input + start + 1, var_len);
 	var_name[var_len] = '\0';
-	printf("handel dollar extracted (%s) as varname\n", var_name);
 	if (var_len > 0 && ctx->no_expand_heredoc == 0)
 		*value = get_env_value(var_name, ctx->envlst);
 	else if (var_len > 0 && ctx->no_expand_heredoc == 1)
@@ -133,6 +132,5 @@ int	handle_dollar(t_general *ctx, int i, char **value)
 		*value = NULL;
 	else
 		*value = ft_strdup("$");
-	printf("handel dollar got value (%s)\n", *value);
 	return (i - start);
 }
