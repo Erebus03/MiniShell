@@ -87,7 +87,6 @@ int	main(int ac, char **av, char **envp)
 		if (generale.input[0])
 			add_history(generale.input);
 		cmds = parse_command(&generale);
-		// print_commands(cmds);
 		generale.cmnd = cmds;
 		if(ft_app(&generale) == -1)
 			continue;

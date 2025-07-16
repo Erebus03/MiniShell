@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:14:44 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/13 22:49:32 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/16 22:09:21 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ void	ft_freeee(t_general *data)
 {
 	free(data->input);
 	free(data->pwd);
-	free_commands(&data->cmnd);
+	free_commands(&data->tmp);
 	cleanup(data);
 	free_envp(data, 'b');
 	clear_history();

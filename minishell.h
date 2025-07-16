@@ -103,6 +103,7 @@ typedef struct s_general
     int				error;
 	t_memory		*heap;
     t_command        *cmnd;
+    t_command        *tmp;
     char			*error_msg;
     int				exit_status;
     int				no_expand_heredoc;

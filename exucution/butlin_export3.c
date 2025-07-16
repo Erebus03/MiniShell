@@ -37,7 +37,6 @@ int	chek_exp(t_env_var **var, char *key)
 	{
 		if (ft_strcmp(key, env->key) == 0)
 		{
-			// free(key);
 			return (1);
 		}
 		env = env->next;
@@ -47,7 +46,8 @@ int	chek_exp(t_env_var **var, char *key)
 
 void	update_existing_variable(t_env_var *env_list, char *key, char *value)
 {
-	char *temp ;
+	char	*temp ;
+
 	while (env_list)
 	{
 		if (ft_strcmp(key, env_list->key) == 0)

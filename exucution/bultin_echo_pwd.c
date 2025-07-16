@@ -86,7 +86,6 @@ char	*getpath(t_env_var **pp)
 
 void	execute_pwd(t_general *data)
 {
-	(void)data;
 	char	*d;
 
 	d = getcwd(NULL, 0);

@@ -33,7 +33,7 @@ void	handle_child_process(t_general *data, int *fd_sa, int *fd)
 	chek_type(cc, data);
 	if (data->cmnd->cmd[0] != NULL)
 		split_chek(data);
-	else 
+	else
 		ft_freeee(data);
 	exit(generale.exit_status);
 }
@@ -93,12 +93,13 @@ int	*alloc_pids(t_general *data)
 
 void	ft_exucutepipe(t_general *data)
 {
-	int (pid), (i), (*pids), (fd_sa[2]), (fd[2]);// maymkench dir > 4 arguments f line asahbi
+	int (pid), (i), (*pids), (fd_sa[2]), (fd[2]);
 	fd_sa[0] = -1;
 	fd_sa[1] = -1;
 	i = 0;
 	pids = alloc_pids(data);
 	signal(SIGINT, SIG_IGN);
+	data->tmp = data->cmnd;
 	while (data->cmnd)
 	{
 		if (data->cmnd->next)

@@ -50,3 +50,12 @@ void	setup_child_signals(void)
 	signal(SIGINT, child_sigint_handler);
 	signal(SIGQUIT, child_sigquit_handler);
 }
+
+void	exit_error(char *msg)
+{
+	if (generale.cmnd)
+		free_commands(&generale.cmnd);
+	perror(msg);
+	generale.exit_status = 1;
+	exit(generale.exit_status);
+}

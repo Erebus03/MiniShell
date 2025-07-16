@@ -37,12 +37,13 @@ void	handel_cdhome(t_general *data)
 	}
 	return ;
 }
-void save_cd(t_general *data)
+
+void	save_cd(t_general *data)
 {
 	char	*path;
 
 	path = getcwd(NULL, 0);
-	if(path != NULL)
+	if (path != NULL)
 	{
 		free(data->pwd);
 		data->pwd = ft_strdup(path);
@@ -50,6 +51,7 @@ void save_cd(t_general *data)
 	free(path);
 	return ;
 }
+
 void	execute_cd(t_general *data)
 {
 	char	*path;
@@ -82,21 +84,12 @@ void	errror_path(t_general *data)
 	perror("cd: error retrieving current directory");
 	generale.exit_status = 1;
 	jon = ft_strjoin(data->pwd, "/..");
-	if(data->pwd !=NULL)
+	if (data->pwd != NULL)
 		free(data->pwd);
 	data->pwd = ft_strdup(jon);
 	add_addr(data, new_addr(jon));
 	edit_env(data->envlst, jon);
 	return ;
-}
-
-void	exit_error(char *msg)
-{
-	if (generale.cmnd) //chof hadi wach khas tkon hna
-		free_commands(&generale.cmnd);
-	perror(msg);
-	generale.exit_status = 1;
-	exit(generale.exit_status);
 }
 
 void	oldedit_env(t_env_var *var, char *newpath)
