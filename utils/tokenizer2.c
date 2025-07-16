@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
+/*   By: araji <araji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 23:33:19 by araji             #+#    #+#             */
-/*   Updated: 2025/07/15 18:29:20 by araji            ###   ########.fr       */
+/*   Updated: 2025/07/16 22:16:42 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,7 @@ int	process_operator_token(t_general *ctx, int i, t_token **tokens,
 int	process_dollar_token(t_general *ctx, int i, void **tkn_ptrs, int *skipped)
 {
 	char *(token_value);
-	t_token *(new);
-	t_token *(lst_tkn);
+	t_token *(new), *(lst_tkn);
 	int (len);
 	len = handle_dollar(ctx, i, &token_value);
 	if (len < 0)

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   expende_hedoc.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: araji <araji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 22:02:02 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/16 22:04:45 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/16 22:21:27 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 static int	write_exit_status(int fd)
 {
@@ -50,7 +50,7 @@ static int	write_env_value(int fd, char *str, int index)
 	return (index - dollar_pos);
 }
 
-static void	expand_in_heredoc(int fd, char *str)
+void	expand_in_heredoc(int fd, char *str)
 {
 	int	i;
 	int	ret;

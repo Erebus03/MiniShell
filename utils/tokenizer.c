@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
+/*   By: araji <araji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 15:46:34 by araji             #+#    #+#             */
-/*   Updated: 2025/07/15 20:21:12 by araji            ###   ########.fr       */
+/*   Updated: 2025/07/16 22:16:00 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ static void	check_export_ident(t_token *ident_tkn)
 {
 	if (ident_tkn->value && ident_tkn->value[0])
 	{
-		//recheck why are u checking this aslan
 		if (ident_tkn->value[ft_strlen(ident_tkn->value) - 1] == '=')
 		{
 			ident_tkn->is_identif = 1;
@@ -44,9 +43,11 @@ static int	process_and_add_token(t_general *ctx, int *indx, void **tkn_ptrs)
 	lasttkn = last_token(tkn_ptrs[0]);
 	if (lasttkn)
 	{
-		if (lasttkn->type == TWORD && lasttkn->prev && (lasttkn->prev)->is_export)
+		if (lasttkn->type == TWORD
+			&& lasttkn->prev && (lasttkn->prev)->is_export)
 			check_export_ident(lasttkn);
-		if (lasttkn->type == TWORD && lasttkn->prev && (lasttkn->prev)->is_identif)
+		if (lasttkn->type == TWORD
+			&& lasttkn->prev && (lasttkn->prev)->is_identif)
 			lasttkn->is_identif = 1;
 	}
 	if (tkn_ptrs[1])

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
+/*   By: araji <araji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:58 by araji             #+#    #+#             */
-/*   Updated: 2025/07/15 15:56:28 by araji            ###   ########.fr       */
+/*   Updated: 2025/07/16 22:20:20 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ typedef struct s_redir
     char            *index;
     char            *file;
     int             fd;
-	int				expand_in_heredoc; //
+	int				expand_in_heredoc;
     struct s_redir  *next;
 }	t_redir;
 
@@ -165,6 +165,7 @@ void			handle_token_joining(t_token *tokens, t_token **new, int skipped);
 int				skip_whitespace_and_track(t_general *ctx, int *i, int *skipped);
 t_token			*split_update_tknvalue(char *token_value, int *skipped);
 char			*expand_exitstat_pid(char val);
+void            expand_in_heredoc(int fd, char *str);
 
 /* ========================= EXPANSION FUNCTIONS =========================== */
 int				calculate_expansion_size(t_general *ctx, int start, char stop_char);
@@ -189,11 +190,6 @@ bool	is_token_op(t_token *token);
 // void			*allocate(t_general *ctx, size_t size);
 t_memory		*new_addr(void *ptr);
 int				add_addr(t_general *ctx, t_memory *new_addr);
-
-/* ========================== DEBUG FUNCTIONS ============================== */
-void			print_tokens(t_token *tokens);
-void			print_commands(t_command *commands);
-
 
 
 size_t ftt_strlen(const char **s);

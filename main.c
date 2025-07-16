@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
+/*   By: araji <araji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:53 by araji             #+#    #+#             */
-/*   Updated: 2025/07/15 18:17:22 by araji            ###   ########.fr       */
+/*   Updated: 2025/07/16 22:18:33 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-t_general generale;
+
+t_general	generale;
 
 void	init_general_struct(t_general *context, char *value)
 {
@@ -71,9 +72,8 @@ void ft_freemain(t_command	*cmds)
 }
 int	main(int ac, char **av, char **envp)
 {
-	t_command	*cmds;
+	t_command	*(cmds);
 	(void)av;
-
 	ft_genereac(ac);
 	init_general_struct(&generale, NULL);
 	list_env_vars(&generale.envlst, envp);
