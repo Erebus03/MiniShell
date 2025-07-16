@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_syntax.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <araji@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 16:15:40 by araji             #+#    #+#             */
-/*   Updated: 2025/07/10 21:15:27 by araji            ###   ########.fr       */
+/*   Updated: 2025/07/17 00:47:35 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static int	valid_heredoc_count(t_token *tkns)
 static int	s_exitcode_nd_ret(t_general *ctx, int ret_value, int exit_stat)
 {
 	(void)ctx;
-	generale.exit_status = exit_stat;
+	g_generale.exit_status = exit_stat;
 	return (ret_value);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expende_hedoc.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <araji@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 22:02:02 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/16 22:21:27 by araji            ###   ########.fr       */
+/*   Updated: 2025/07/17 00:47:35 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int	write_exit_status(int fd)
 {
 	char	*value;
 
-	value = ft_itoa(generale.exit_status);
+	value = ft_itoa(g_generale.exit_status);
 	write(fd, value, ft_strlen(value));
 	free(value);
 	return (2);
@@ -40,7 +40,7 @@ static int	write_env_value(int fd, char *str, int index)
 	ft_memcpy(name, str + dollar_pos + 1, var_len);
 	name[var_len] = '\0';
 	if (var_len > 0)
-		value = get_env_value(name, generale.envlst);
+		value = get_env_value(name, g_generale.envlst);
 	else if (str[index] != '\0')
 		value = NULL;
 	free(name);

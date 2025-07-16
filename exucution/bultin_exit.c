@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:25:54 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/13 22:45:56 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/17 00:47:35 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,40 +14,40 @@
 
 void	singel_exit(void)
 {
-	free(generale.input);
-	free_commands(&generale.cmnd);
-	cleanup(&generale);
-	free(generale.pwd);
-	free_envp(&generale, 'b');
+	free(g_generale.input);
+	free_commands(&g_generale.cmnd);
+	cleanup(&g_generale);
+	free(g_generale.pwd);
+	free_envp(&g_generale, 'b');
 	clear_history();
 	write(1, "exit\n", 5);
-	generale.exit_status = 0;
-	exit(generale.exit_status);
+	g_generale.exit_status = 0;
+	exit(g_generale.exit_status);
 }
 
 void	exit_num_normal(int n)
 {
-	free(generale.input);
-	free_commands(&generale.cmnd);
-	cleanup(&generale);
-	free(generale.pwd);
-	free_envp(&generale, 'b');
+	free(g_generale.input);
+	free_commands(&g_generale.cmnd);
+	cleanup(&g_generale);
+	free(g_generale.pwd);
+	free_envp(&g_generale, 'b');
 	clear_history();
-	generale.exit_status = n;
-	exit(generale.exit_status);
+	g_generale.exit_status = n;
+	exit(g_generale.exit_status);
 }
 
 void	exit_num(int n)
 {
-	free(generale.input);
-	free_commands(&generale.cmnd);
-	cleanup(&generale);
-	free(generale.pwd);
-	free_envp(&generale, 'b');
+	free(g_generale.input);
+	free_commands(&g_generale.cmnd);
+	cleanup(&g_generale);
+	free(g_generale.pwd);
+	free_envp(&g_generale, 'b');
 	clear_history();
 	n = n % 256;
-	generale.exit_status = n;
-	exit(generale.exit_status);
+	g_generale.exit_status = n;
+	exit(g_generale.exit_status);
 }
 
 void	ft_generenumbre(t_command *var)
@@ -75,9 +75,9 @@ void	execute_exit(t_command *var)
 		else if (ft_strcmp(var->cmd[0], "exit") == 0
 			&& chek_number(var->cmd[1]) == -1)
 		{
-			generale.exit_status = 2;
+			g_generale.exit_status = 2;
 			eroor_exit(var->cmd[1]);
-			exit(generale.exit_status);
+			exit(g_generale.exit_status);
 		}
 	}
 	else if (ftt_strlen((const char **)var->cmd) > 2
@@ -85,7 +85,7 @@ void	execute_exit(t_command *var)
 	{
 		write(2, "exit\n", 5);
 		write(2, "bash: exit: too many arguments\n", 31);
-		generale.exit_status = 1;
+		g_generale.exit_status = 1;
 	}
 	else
 		return (three_exit());

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   genere_pipe.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
+/*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:20:32 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/15 16:14:22 by araji            ###   ########.fr       */
+/*   Updated: 2025/07/17 00:47:35 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	handle_child_process(t_general *data, int *fd_sa, int *fd)
 		split_chek(data);
 	else
 		ft_freeee(data);
-	exit(generale.exit_status);
+	exit(g_generale.exit_status);
 }
 
 void	handle_parent_process(int *fd_sa, int *fd, t_general *data)
@@ -55,22 +55,26 @@ void	handle_parent_process(int *fd_sa, int *fd, t_general *data)
 
 void	wait_all_processes(int *pids, int count)
 {
-	int	j;
-	int	status;
-
+	int (status), (j);
 	j = 0;
 	while (j < count)
 	{
 		waitpid(pids[j], &status, 0);
 		if (WIFEXITED(status))
-			generale.exit_status = WEXITSTATUS(status);
+			g_generale.exit_status = WEXITSTATUS(status);
 		else if (WIFSIGNALED(status))
 		{
-			generale.exit_status = 128 + WTERMSIG(status);
+			g_generale.exit_status = 128 + WTERMSIG(status);
 			if (WTERMSIG(status) == SIGINT)
+			{
 				write(1, "\n", 1);
+				return ;
+			}
 			else if (WTERMSIG(status) == SIGQUIT)
+			{
 				write(1, "Quit (core dumped)\n", 19);
+				return ;
+			}
 		}
 		j++;
 	}
@@ -84,8 +88,8 @@ int	*alloc_pids(t_general *data)
 	pids = malloc(sizeof(int) * size_list(data->cmnd));
 	if (!pids)
 	{
-		generale.exit_status = 1;
-		exit(generale.exit_status);
+		g_generale.exit_status = 1;
+		exit(g_generale.exit_status);
 	}
 	add_addr(data, new_addr(pids));
 	return (pids);

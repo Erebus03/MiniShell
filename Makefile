@@ -8,7 +8,7 @@ SRC = main.c utils/env_vars.c utils/parse_cmd.c utils/add_nodes.c utils/free_nod
 		exucution/eroor_msg.c  exucution/genere_token.c exucution/herdooc.c  exucution/bultin_cd.c exucution/bultin_echo_pwd.c \
 		exucution/bultin_env_unset.c  exucution/bultin_exit.c  exucution/bultin.c exucution/butlin_export1.c exucution/butlin_export2.c \
 		exucution/butlin_export3.c exucution/exucute_cmd.c exucution/fonctionn.c  exucution/genere_pipe.c exucution/signale.c  exucution/token.c \
-		exucution/fonction2.c exucution/expende_hedoc.c
+		exucution/fonction2.c exucution/expende_hedoc.c exucution/fonction3.c 
 
 OBJ = $(SRC:.c=.o)
 

@@ -25,7 +25,8 @@ static t_command	*create_and_process_command(t_general *ctx,
 {
 	t_command	*new_cmd;
 
-	new_cmd = new_command(ctx);
+	(void)ctx;
+	new_cmd = new_command();
 	if (!new_cmd)
 		return (NULL);
 	new_cmd->tokens = cmd_start;
@@ -109,7 +110,7 @@ t_command	*parse_command(t_general *ctx)
 	commands = NULL;
 	if (validate_quotes(ctx->input) == 0)
 	{
-		generale.exit_status = 2;
+		g_generale.exit_status = 2;
 		write(2, "bash: syntax error\n", 19);
 		return (NULL);
 	}
@@ -122,7 +123,7 @@ t_command	*parse_command(t_general *ctx)
 		write(2, "bash: syntax error\n", 19);
 		return (NULL);
 	}
-	generale.exit_status = 0;
+	g_generale.exit_status = 0;
 	commands = process_cmd_tokens(ctx, all_tokens, &last_cmd_start);
 	return (finalize_last_command(ctx, commands, last_cmd_start));
 }

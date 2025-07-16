@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bultin_cd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
+/*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:23:07 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/15 18:25:47 by araji            ###   ########.fr       */
+/*   Updated: 2025/07/17 00:47:35 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	handel_cdhome(t_general *data)
 			if (chdir(temp->value) != 0)
 			{
 				eroor_cd(temp->value);
-				generale.exit_status = 1;
+				g_generale.exit_status = 1;
 			}
 			return ;
 		}
@@ -33,7 +33,7 @@ void	handel_cdhome(t_general *data)
 	if (temp == NULL)
 	{
 		write(2, "bash: cd: HOME not set\n", 23);
-		generale.exit_status = 1;
+		g_generale.exit_status = 1;
 	}
 	return ;
 }
@@ -73,7 +73,7 @@ void	execute_cd(t_general *data)
 		edit_env(data->envlst, path);
 		oldedit_env(data->envlst, data->oldpwd);
 	}
-	generale.exit_status = 0;
+	g_generale.exit_status = 0;
 	return ;
 }
 
@@ -82,7 +82,7 @@ void	errror_path(t_general *data)
 	char	*jon;
 
 	perror("cd: error retrieving current directory");
-	generale.exit_status = 1;
+	g_generale.exit_status = 1;
 	jon = ft_strjoin(data->pwd, "/..");
 	if (data->pwd != NULL)
 		free(data->pwd);

@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:33:19 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/13 20:42:01 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/17 00:47:35 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	process_all_export_args(t_general *data)
 		}
 		if (!process_single_export_arg(data, var->cmd[i]))
 		{
-			generale.exit_status = 1;
+			g_generale.exit_status = 1;
 			return ;
 		}
 		i++;

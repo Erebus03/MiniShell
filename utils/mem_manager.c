@@ -68,5 +68,5 @@ void	clean_exit(t_general *ctx, char *errmsg, int errcode)
 	cleanup(ctx);
 	free_envp(ctx, 'b');
 	free_commands(&ctx->cmnd);
-	generale.exit_status = errcode;
+	g_generale.exit_status = errcode;
 }

@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:38:48 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/13 22:47:02 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/17 00:47:35 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,6 @@ void	eroor_exucutecmn(char *strjoncmd)
 {
 	write(2, ": Permission denied\n", 21);
 	free(strjoncmd);
-	generale.exit_status = 126;
+	g_generale.exit_status = 126;
 	return ;
 }

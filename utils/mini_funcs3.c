@@ -22,7 +22,7 @@ char	*expand_exitstat_pid(char val)
 	}
 	if (val == '?')
 	{
-		value = ft_itoa(generale.exit_status);
+		value = ft_itoa(g_generale.exit_status);
 	}
 	return (value);
 }

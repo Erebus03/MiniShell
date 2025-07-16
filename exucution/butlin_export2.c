@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:36:27 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/13 20:48:28 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/17 00:47:35 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*extract_key(char *cmd_arg, int j)
 	key = malloc(j + 1);
 	if (!key)
 	{
-		generale.exit_status = 1;
+		g_generale.exit_status = 1;
 		return (NULL);
 	}
 	ft_memcpy(key, cmd_arg, j);
@@ -58,7 +58,7 @@ int	handle_value_var(t_general *data, char *key, char *value)
 	variable = new_var(key, value);
 	if (!variable)
 	{
-		generale.exit_status = 1;
+		g_generale.exit_status = 1;
 		return (0);
 	}
 	add_variable(&data->envlst, variable);

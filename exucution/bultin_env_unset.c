@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:27:41 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/13 22:47:36 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/17 00:47:35 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	execute_unset(t_general *data)
 		remove_env_var(data, temp->cmd[i]);
 		i++;
 	}
-	generale.exit_status = 0;
+	g_generale.exit_status = 0;
 	return ;
 }
 
@@ -107,7 +107,7 @@ void	execute_env(t_general *env)
 		}
 		var = var->next;
 	}
-	generale.exit_status = 0;
+	g_generale.exit_status = 0;
 	return ;
 }
 
@@ -131,6 +131,6 @@ void	afficher_envv(t_general *envv)
 			var = var->next;
 		}
 	}
-	generale.exit_status = 0;
+	g_generale.exit_status = 0;
 	return ;
 }

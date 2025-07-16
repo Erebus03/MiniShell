@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:30:41 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/13 22:46:08 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/17 00:47:35 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,15 +90,15 @@ void	free_env_var(t_env_var *env_var)
 
 void	three_exit(void)
 {
-	free(generale.input);
-	free_commands(&generale.cmnd);
-	cleanup(&generale);
-	free(generale.pwd);
-	free_envp(&generale, 'b');
+	free(g_generale.input);
+	free_commands(&g_generale.cmnd);
+	cleanup(&g_generale);
+	free(g_generale.pwd);
+	free_envp(&g_generale, 'b');
 	clear_history();
 	write(2, "exit\n", 5);
 	write(2, "bash: exit: numeric argument required\n", 38);
-	generale.exit_status = 1;
-	exit(generale.exit_status);
+	g_generale.exit_status = 1;
+	exit(g_generale.exit_status);
 	return ;
 }

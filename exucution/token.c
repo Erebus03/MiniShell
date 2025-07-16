@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:18:06 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/16 22:06:00 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/17 00:47:35 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ int	ft_tokin_redir(t_redir *com, t_general *data)
 	fd = tokencomnd(com, data);
 	if (fd < 0)
 	{
-		generale.exit_status = 1;
+		g_generale.exit_status = 1;
 		return (-1);
 	}
 	if (dup2(fd, STDOUT_FILENO) < 0)
 	{
 		perror("minishell: dup2");
 		close(fd);
-		generale.exit_status = 1;
+		g_generale.exit_status = 1;
 		return (-1);
 	}
 	close(fd);
@@ -40,14 +40,14 @@ int	ft_redir_append(t_redir *com, t_general *data)
 	fd = tokeappend(com, data);
 	if (fd < 0)
 	{
-		generale.exit_status = 1;
+		g_generale.exit_status = 1;
 		return (-1);
 	}
 	if (dup2(fd, STDOUT_FILENO) < 0)
 	{
 		perror("minishell: dup2");
 		close(fd);
-		generale.exit_status = 1;
+		g_generale.exit_status = 1;
 		return (-1);
 	}
 	close(fd);
@@ -61,14 +61,14 @@ int	ft_redir_in(t_redir *com, t_general *data)
 	fd = tokeredir(com, data);
 	if (fd < 0)
 	{
-		generale.exit_status = 1;
+		g_generale.exit_status = 1;
 		return (-1);
 	}
 	if (dup2(fd, STDIN_FILENO) < 0)
 	{
 		perror("minishell: dup2");
 		close(fd);
-		generale.exit_status = 1;
+		g_generale.exit_status = 1;
 		return (-1);
 	}
 	close(fd);
@@ -83,14 +83,14 @@ int	ft_redir_herdoc(t_redir *com)
 	if (fd < 0)
 	{
 		perror("minishell: heredoc");
-		generale.exit_status = 1;
+		g_generale.exit_status = 1;
 		return (-1);
 	}
 	if (dup2(fd, STDIN_FILENO) < 0)
 	{
 		perror("minishell: dup2");
 		close(fd);
-		generale.exit_status = 1;
+		g_generale.exit_status = 1;
 		return (-1);
 	}
 	close(fd);

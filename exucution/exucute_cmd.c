@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:14:44 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/16 22:09:21 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/17 00:47:35 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,15 @@ void	exucutecmd(char **env, char *path, t_general *data)
 	{
 		print_error(path, ": Is a directory\n");
 		ft_freeee(data);
-		generale.exit_status = 126;
-		exit(generale.exit_status);
+		g_generale.exit_status = 126;
+		exit(g_generale.exit_status);
 	}
 	else
 	{
 		execve(path, var->cmd, env);
 		perror("Erooorrrr execve\n");
 		ft_freeee(data);
-		generale.exit_status = 127;
+		g_generale.exit_status = 127;
 	}
 	return ;
 }
@@ -41,7 +41,7 @@ int	chek_eroorsplit(t_general *data)
 	{
 		print_error(data->cmnd->cmd[0], ": command not found\n");
 		ft_freeee(data);
-		return (generale.exit_status = 127, -1);
+		return (g_generale.exit_status = 127, -1);
 	}
 	if (data->cmnd->cmd && data->cmnd->cmd[0] && (data->cmnd->cmd[0][0] == '/'
 		|| data->cmnd->cmd[0][0] == '.'))
@@ -50,13 +50,13 @@ int	chek_eroorsplit(t_general *data)
 		{
 			print_error(data->cmnd->cmd[0], ": No such file or directory\n");
 			ft_freeee(data);
-			return (generale.exit_status = 127, -1);
+			return (g_generale.exit_status = 127, -1);
 		}
 		if (access(data->cmnd->cmd[0], X_OK) != 0)
 		{
 			print_error(data->cmnd->cmd[0], ": Permission denied\n");
 			ft_freeee(data);
-			return (generale.exit_status = 126, -1);
+			return (g_generale.exit_status = 126, -1);
 		}
 		exucutecmd(data->envarr, data->cmnd->cmd[0], data);
 	}
@@ -115,7 +115,7 @@ void	split_chek(t_general *data)
 	split_pathexucutecmd(path, data);
 	print_error(data->cmnd->cmd[0], ": command not found\n");
 	ft_freeee(data);
-	generale.exit_status = 127;
+	g_generale.exit_status = 127;
 	return ;
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   genere_token.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <rajianwar421@gmail.com>             +#+  +:+       +#+        */
+/*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 17:32:27 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/15 19:29:46 by araji            ###   ########.fr       */
+/*   Updated: 2025/07/17 00:47:35 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	tokencomnd(t_redir *cout, t_general *data)
 	fd = open(cout->file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (fd < 0)
 		return (eroor_msg(data, 2));
-	generale.exit_status = 0;
+	g_generale.exit_status = 0;
 	return (fd);
 }
 
@@ -42,7 +42,7 @@ int	tokeredir(t_redir *cout, t_general *data)
 	fd = open(cout->file, O_RDONLY, 0644);
 	if (fd < 0)
 		return (eroor_msg(data, 2));
-	generale.exit_status = 0;
+	g_generale.exit_status = 0;
 	return (fd);
 }
 
@@ -58,6 +58,6 @@ int	tokeappend(t_redir *cout, t_general *data)
 	fd = open(cout->file, O_CREAT | O_WRONLY | O_APPEND, 0644);
 	if (fd < 0)
 		return (eroor_msg(data, 2));
-	generale.exit_status = 0;
+	g_generale.exit_status = 0;
 	return (fd);
 }

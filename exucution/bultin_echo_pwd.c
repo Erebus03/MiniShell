@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:23:54 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/14 00:23:31 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/17 00:47:35 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	execute_echo(t_general *data)
 	process_echo(data, i);
 	if (res != 1)
 		write(1, "\n", 1);
-	generale.exit_status = 0;
+	g_generale.exit_status = 0;
 }
 
 char	*getpath(t_env_var **pp)
@@ -92,11 +92,11 @@ void	execute_pwd(t_general *data)
 	if (d == NULL)
 	{
 		printf("%s\n", data->pwd);
-		generale.exit_status = 0;
+		g_generale.exit_status = 0;
 		return ;
 	}
 	printf("%s\n", d);
 	free(d);
-	generale.exit_status = 0;
+	g_generale.exit_status = 0;
 	return ;
 }
