@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expende_hedoc.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: araji <araji@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 22:02:02 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/17 01:09:08 by araji            ###   ########.fr       */
+/*   Updated: 2025/07/17 01:35:17 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,10 @@ static int	write_exit_status(int fd)
 
 static int	write_env_value(int fd, char *str, int index)
 {
-	char	*value;
-	char	*name;
-	int		dollar_pos;
-	int		var_len;
-
+	char *(value);
+	char *(name);
+	int (dollar_pos);
+	int (var_len);
 	value = NULL;
 	dollar_pos = index++;
 	var_len = 0;
@@ -78,4 +77,14 @@ void	expand_in_heredoc(int fd, char *str)
 			ret = write_env_value(fd, str, i);
 		i += ret;
 	}
+}
+
+void	ft_freeeea(t_general *data)
+{
+	free(data->input);
+	free(data->pwd);
+	free_commands(&data->cmnd);
+	cleanup(data);
+	free_envp(data, 'b');
+	clear_history();
 }

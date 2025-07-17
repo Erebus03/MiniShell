@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 17:34:22 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/17 00:47:35 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/17 01:33:26 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	herdocc(t_redir *var, int index, t_general *data)
 	if (pid == 0)
 	{
 		child_herdoc(var);
-		ft_freeee(data);
+		ft_freeeea(data);
 		exit(data->exit_status);
 	}
 	else if (pid > 0)
