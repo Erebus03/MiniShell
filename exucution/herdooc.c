@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 17:34:22 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/17 01:33:26 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/17 21:52:10 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*namefile(t_general *data)
 	char	*res;
 
 	name = ttyname(STDIN_FILENO);
-	r = "/tmp/herdoc_";
+	r = "/tmp/herddoc_";
 	res = ft_strjoin(r, name + 9);
 	add_addr(data, new_addr(res));
 	return (res);
@@ -84,7 +84,7 @@ int	herdocc(t_redir *var, int index, t_general *data)
 	var->index = ft_strjoin(name, s);
 	add_addr(data, new_addr(s));
 	add_addr(data, new_addr(var->index));
-	var->fd = open(var->index, O_RDWR | O_CREAT | O_TRUNC, 0644);
+	var->fd = open(var->index, O_RDWR | O_CREAT | O_TRUNC, 0777);
 	if (var->fd < 0)
 		return (perror("open"), -1);
 	pid = fork();

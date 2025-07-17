@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:20:32 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/17 00:47:35 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/17 21:35:52 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,10 @@ void	handle_parent_process(int *fd_sa, int *fd, t_general *data)
 
 void	wait_all_processes(int *pids, int count)
 {
-	int (status), (j);
+	int (status), (j), (tempin), (tempig);
 	j = 0;
+	tempin = 0;
+	tempig = 0;
 	while (j < count)
 	{
 		waitpid(pids[j], &status, 0);
@@ -66,18 +68,16 @@ void	wait_all_processes(int *pids, int count)
 		{
 			g_generale.exit_status = 128 + WTERMSIG(status);
 			if (WTERMSIG(status) == SIGINT)
-			{
-				write(1, "\n", 1);
-				return ;
-			}
+				tempin = 1;
 			else if (WTERMSIG(status) == SIGQUIT)
-			{
-				write(1, "Quit (core dumped)\n", 19);
-				return ;
-			}
+				tempig = 1;
 		}
 		j++;
 	}
+	if (tempin == 1)
+		write(1, "\n", 1);
+	else if (tempig == 1)
+		write(2, "Quit (core dumped)\n", 19);
 	return ;
 }
 

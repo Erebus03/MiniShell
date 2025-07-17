@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:18:06 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/17 00:47:35 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/17 22:00:23 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	ft_redir_herdoc(t_redir *com)
 {
 	int	fd;
 
-	fd = open(com->index, O_RDONLY, 0644);
+	fd = open(com->index, O_RDONLY, 0777);
 	if (fd < 0)
 	{
 		perror("minishell: heredoc");
