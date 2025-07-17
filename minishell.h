@@ -6,7 +6,7 @@
 /*   By: araji <araji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:58 by araji             #+#    #+#             */
-/*   Updated: 2025/07/17 01:40:07 by araji            ###   ########.fr       */
+/*   Updated: 2025/07/17 04:00:31 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,7 @@ int			handle_word(t_general *ctx, int i, char **value);
 int			handle_operator(t_general *ctx, int i, t_token_type *type,
 				char **value);
 int			handle_dollar(t_general *ctx, int i, char **value);
-int			handel_doller_helper(char **value, char val_kind);
+int			handel_doller_helper(char **value);
 int			process_single_token(t_general *ctx, int i, void **tkn_ptrs,
 				int *skipped);
 int			process_quoted_token(t_general *ctx, int i, t_token **tokens,
@@ -167,7 +167,6 @@ int			process_word_token(t_general *ctx, int i, t_token **tokens,
 void		handle_token_joining(t_token *tokens, t_token **new, int skipped);
 int			skip_whitespace_and_track(t_general *ctx, int *i, int *skipped);
 t_token		*split_update_tknvalue(char *token_value, int *skipped);
-char		*expand_exitstat_pid(char val);
 void		expand_in_heredoc(int fd, char *str);
 
 /* ========================= EXPANSION FUNCTIONS =========================== */

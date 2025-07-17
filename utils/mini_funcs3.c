@@ -12,19 +12,11 @@
 
 #include "../minishell.h"
 
-char	*expand_exitstat_pid(char val)
+/* handle_dollar helper to reduce lines */
+int	handel_doller_helper(char **value)
 {
-	char	*value;
-
-	if (val == '$')
-	{
-		value = ft_itoa(getpid());
-	}
-	if (val == '?')
-	{
-		value = ft_itoa(g_generale.exit_status);
-	}
-	return (value);
+	*value = ft_itoa(g_generale.exit_status);
+	return (2);
 }
 
 /* Helper function to skip whitespace and track if any was skipped */

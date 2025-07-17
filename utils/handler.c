@@ -114,8 +114,8 @@ int	handle_dollar(t_general *ctx, int i, char **value)
 	int (start), (var_len);
 	var_len = 0;
 	start = i++;
-	if (ctx->input[i] == '?' || ctx->input[i] == '$')
-		return (handel_doller_helper(value, ctx->input[i]));
+	if (ctx->input[i] == '?')
+		return (handel_doller_helper(value));
 	while (ctx->input[i] && (ft_isalnum(ctx->input[i]) || ctx->input[i] == '_'))
 		increment_val(&i, &var_len, NULL, NULL);
 	var_name = (char *)malloc(var_len + 1);
@@ -126,9 +126,11 @@ int	handle_dollar(t_general *ctx, int i, char **value)
 	var_name[var_len] = '\0';
 	if (var_len > 0 && ctx->no_expand_heredoc == 0)
 		*value = get_env_value(var_name, ctx->envlst);
-	else if (var_len > 0 && ctx->no_expand_heredoc == 1)
+	else if (ctx->no_expand_heredoc == 1)
 		*value = ft_strjoin("$", var_name);
-	else if (ctx->input[i] != '\0')
+	else if ((ctx->input[i] != '\0' && ctx->input[i] != ' ')
+		|| (start > 0 && ctx->input[start - 1] != '\0'
+			&& ctx->input[start - 1] != ' '))
 		*value = NULL;
 	else
 		*value = ft_strdup("$");
