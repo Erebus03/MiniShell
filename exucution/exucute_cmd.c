@@ -6,7 +6,7 @@
 /*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:14:44 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/17 01:31:40 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/18 00:04:05 by alamiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,10 @@ void	split_pathexucutecmd(char *path, t_general *data)
 			if (access(strjoncmd, X_OK) == 0)
 			{
 				exucutecmd(data->envarr, strjoncmd, data);
-				return (free(strjoncmd));
+				return (ft_free(split_env), free(strjoncmd));
 			}
 			else
-				return (eroor_exucutecmn(strjoncmd));
+				return (ft_free(split_env), eroor_exucutecmn(strjoncmd));
 		}
 		free(strjoncmd);
 		i++;
