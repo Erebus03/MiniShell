@@ -12,11 +12,6 @@
 
 #include "../minishell.h"
 
-// void	check_ambigiuos_redir(void)
-// {
-// 	return ;
-// }
-
 /*
 	* Split tokens into commands based on pipe operators
 */

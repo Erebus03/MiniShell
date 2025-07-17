@@ -6,7 +6,7 @@
 /*   By: araji <araji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:58 by araji             #+#    #+#             */
-/*   Updated: 2025/07/17 01:03:39 by araji            ###   ########.fr       */
+/*   Updated: 2025/07/17 01:40:07 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -272,6 +272,7 @@ void		errror_path(t_general *data);
 int			ft_chekl(t_general *data);
 void		ft_free(char **p);
 void		ft_freeee(t_general *data);
+void		ft_freeeea(t_general *data);
 void		child_sigint_handler(int sig);
 void		child_sigquit_handler(int sig);
 void		setup_child_signals(void);
