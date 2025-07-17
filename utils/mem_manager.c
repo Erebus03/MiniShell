@@ -60,13 +60,3 @@ void	cleanup(t_general *ctx)
 	}
 	ctx->heap = NULL;
 }
-
-void	clean_exit(t_general *ctx, char *errmsg, int errcode)
-{
-	if (errmsg)
-		printf("%s\n", errmsg);
-	cleanup(ctx);
-	free_envp(ctx, 'b');
-	free_commands(&ctx->cmnd);
-	g_generale.exit_status = errcode;
-}

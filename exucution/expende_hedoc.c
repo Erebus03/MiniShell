@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expende_hedoc.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: araji <araji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 22:02:02 by alamiri           #+#    #+#             */
-/*   Updated: 2025/07/17 00:47:35 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/17 01:09:08 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,10 @@ static int	write_env_value(int fd, char *str, int index)
 		value = NULL;
 	free(name);
 	if (value)
+	{
 		write(fd, value, ft_strlen(value));
-	free(value);
+		free(value);
+	}
 	return (index - dollar_pos);
 }
 

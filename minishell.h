@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alamiri <alamiri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: araji <araji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:57:58 by araji             #+#    #+#             */
-/*   Updated: 2025/07/17 00:49:55 by alamiri          ###   ########.fr       */
+/*   Updated: 2025/07/17 01:03:39 by araji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,6 @@ void		free_redirs(t_redir **redirs);
 void		free_commands(t_command **commands);
 void		free_envp(t_general *ctx, int mode);
 void		cleanup(t_general *ctx);
-void		clean_exit(t_general *ctx, char *errmsg, int errcode);
 
 /* ======================== ENVIRONMENT FUNCTIONS ========================== */
 void		list_env_vars(t_env_var **envlst, char **envp);
